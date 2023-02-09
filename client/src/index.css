@@ -1,0 +1,75 @@
+*{
+  margin:0;
+  font-family: 'Courier New', Courier, monospace;  
+}
+
+:root{
+  --mainColor: #0C2D48;
+  --mainColorLight: #FFF;
+  --textColor: whitesmoke;
+}
+
+
+.page{
+  
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  background-image: url("../src/img/login.jpeg");
+  background-size: cover;
+  background-position: center;
+  /*image*/
+}
+.loginForm{
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  margin-top: 60px;
+  padding: 50px;
+  padding-bottom: 20px;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background-color: white;
+  opacity: 0.9;
+  width: 40%;
+  max-width: 500px;  
+}
+
+.loginForm img{
+  height: 100px;
+  margin-bottom: 50px;
+}
+
+.loginForm input{
+  height: 25px;
+  width: 80%;
+  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  background-color: whitesmoke;
+  color: var(--mainColor);
+  font-size: 20px;
+}
+
+
+.loginForm button{
+  background-color: green;
+  color: white;
+  font-size: 20px;
+  padding: 15px;
+  margin-bottom: 0px;
+  margin-top: 40px;
+  border-radius: 10px;
+  border:none;
+  width:50%
+}
+
+.loginForm button:hover{
+  background-color: whitesmoke;
+  color:#0C2D48;
+}
+
+
+

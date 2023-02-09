@@ -1,0 +1,85 @@
+.ProfilePage{
+    background-color: #0C2D48;
+    width: 100vw;
+    height: 150vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+}
+
+.component{
+    margin-top: 30px;
+    width: 90%;
+    border: 1px solid whitesmoke; 
+    
+}
+.buttons{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 20px;
+    
+}
+.buttons button{
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-left: 20px;
+    background-color: #86BD41;
+}
+.buttons button:hover{
+    transition: 1s;
+    background-color: #F2AA40;
+}
+
+.profile{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    
+}
+.profilePic{
+    height: 350px;
+    border-radius: 15px;
+    box-shadow: rgba(0,0,0,0.1) 3px 3px  0px 0px;
+}
+.profileHeader{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color:whitesmoke;
+    margin: 10px 0;
+}
+.profileHeader h1{
+    margin-bottom: 10px;
+}
+.profileInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px;
+    height: 90%;
+    color:whitesmoke;
+    box-shadow: rgba(0,0,0,0.) 5px 5px  0px 0px;
+    border-radius: 15px;
+    
+}
+.profileName{
+    font-size: 40px;
+    color: whitesmoke;
+    margin-bottom: 5px;
+}
+
+.profileInfo p{
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: 30px;
+}

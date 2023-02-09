@@ -1,0 +1,11 @@
+.homepage{
+    background-color: green;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    
+    background-image: url('../img/boje.png');
+    background-position: center;
+    background-size: cover;
+}
