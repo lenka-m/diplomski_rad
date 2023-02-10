@@ -8,10 +8,12 @@ import { updateActivity } from '../Actions/ActivityActions';
 
 function AllActivities(user) {
     const [activities, setActivities] = useState([]);
-    
+    const [filteredActivities, setFilteredActivities] = useState([]);
+    const [filterValue, setFilterValue] = useState(false);
     useEffect(()=>{   
         getAllActivities().then(data => {
             setActivities(data);
+            setFilteredActivities(data);
         });
     }, [])  
     function handleAccept(activity) {
@@ -22,12 +24,23 @@ function AllActivities(user) {
         updateActivity(activity.id ,user.user.userId, inputValue);
         // do any other necessary updates/operations
     }
-  
+    
+    function handleFilter(value){
+        setFilteredActivities(activities.filter(activity => activity.status === value))
+    }
 
   
   return (
     <div className='tableContainer'>
         <h1> Aktivnosti </h1>
+        <div className='filterButtons'>
+            <button onClick={()=> setFilteredActivities(activities)}> Sve Aktivnosti</button>
+            <button  onClick={()=>handleFilter("created")}>Potvrdjeno</button>
+            <button  onClick={()=> handleFilter("pending")}> Nisu potvrdjeni</button>
+        </div>
+     {filteredActivities.length == 0 ? (<div> Nema aktivnosti</div>) : (
+
+     
     <table className = 'content-table'>
         <thead>
             <tr>
@@ -37,10 +50,12 @@ function AllActivities(user) {
                 <td> Podoblast</td>
                 <td> Opis</td>
                 <td> Broj poena</td>
+                <td> Potvrdjeno</td>
+                <td> Poništi</td>
             </tr>
         </thead>
         <tbody>
-        {activities.map(activity => (
+        {filteredActivities.map(activity => (
             <tr key={activity.id}>
                 <td >{activity.user.firstName} {activity.user.lastName}</td>
                 <td>{activity.project.name}</td>
@@ -48,13 +63,17 @@ function AllActivities(user) {
                 <td>{activity.subarea.name}</td>
                 <td>ss</td>
                 <td> <input id={`input-${activity.id}`}/></td>
-                <td><button onClick={() => handleAccept(activity)}><BsCheckCircleFill /></button></td>
+                <td>
+                    {activity.status === 'created'? (<p>Da</p>):(<button onClick={() => handleAccept(activity)}><BsCheckCircleFill /></button>)}
+                    
+                </td>
                 <td><button>Odbij</button></td>
             </tr>  
           
         ))}
       </tbody>
     </table>
+    )}   
     </div>
   )
 }

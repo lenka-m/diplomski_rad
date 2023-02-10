@@ -1,31 +1,44 @@
 import React, {useState, useEffect } from 'react';
 import { getAllUsers } from '../Actions/userActions';
+import RegisterNewUser from './RegisterNewUser';
 
 function AllUsers() {
-  const [allUsers, setAllUsers] = useState([]);
+  const [users, setAllUsers] = useState([]);
+  const [newUserComponent, setNewUserComponent]  = useState(false);
   useEffect(()=>{
-    
     getAllUsers().then(data => {
         setAllUsers(data);
     });
   }, [])  
   return (
-    <div className='EditableComponent'>AllUsers
-    <table>
-        <tbody>
-        {allUsers.map(user => (
-            <tr key={user.id}>
-                <td >{user.email}</td>
-                <td>{user.userRole}</td>
-                <td>{user.firstName}</td>
-                <td >{user.lastName}</td>
-            </tr>  
-          
-        ))}
-      </tbody>
-    </table>
-    
-    </div>
+    <div className='tableContainer'>
+      
+    <h1> Projekti </h1>
+    <table className = 'content-table'>
+    <thead>
+        <tr>
+            <td> Ime</td>
+            <td> Skracenica</td>
+            <td> Sajt</td>
+            <td> Vidljivo</td>
+            <td> Edit</td>
+            
+        </tr>
+    </thead>
+    <tbody>
+     {users.map(user => (
+        <tr key={user.id}>
+            <td >{user.firstName}</td>
+            <td> {user.lastName}</td>
+            <td>{user.userRole}</td>
+        </tr>  
+      
+    ))} 
+  </tbody>
+</table>
+{newUserComponent ? (<RegisterNewUser setNewUserComponent={setNewUserComponent} setAllUsers={setAllUsers} />
+) : (<button onClick={()=>setNewUserComponent(true)}> Dodaj novog korisnika</button>)}
+</div>
     
   )
 }

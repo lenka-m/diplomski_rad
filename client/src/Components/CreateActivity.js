@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from 'react'
 import { createActiviry } from '../Actions/ActivityActions';
-import { getAllAreas, getAllProjects, getAllSubAreas } from '../Actions/returnAll';
+import { getAllTeams, getAllProjects, getAllSubAreas } from '../Actions/returnAll';
 
 function CreateActivity(user) {    
     
@@ -12,7 +12,7 @@ function CreateActivity(user) {
     
     useEffect(() => {
         getAllProjects().then(data => { setProjects(data); })
-        getAllAreas().then(data => {setAreas(data); })
+        getAllTeams().then(data => {setAreas(data); })
         getAllSubAreas().then(data => {setSubareas(data)});
     }, [])
 

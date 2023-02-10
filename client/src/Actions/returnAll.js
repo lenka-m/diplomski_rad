@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getAllAreas(){
+export async function getAllTeams(){
     const res = await axios.get("http://localhost:3001/areas", {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
