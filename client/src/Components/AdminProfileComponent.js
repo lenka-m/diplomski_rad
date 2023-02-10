@@ -10,6 +10,7 @@ function AdminProfileComponent() {
   const {user} = useContext(UserContext);
   return (
     <div className='component'>
+      <div className='boxContainter'>
       <div className='profile'>
         <img className = "profilePic" src = {require ("../img/profilepic.png")}></img>
         <div className='profileInfo'>
@@ -21,6 +22,7 @@ function AdminProfileComponent() {
             <p><GrMail/> <i>{user.email}</i></p>            
             <p><i><BsFillTelephoneFill/> +381637771409</i></p>            
         </div>
+      </div>
       </div>
     </div>
   )
