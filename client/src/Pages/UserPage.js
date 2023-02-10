@@ -1,6 +1,6 @@
 import React from 'react'
 import { useContext } from 'react';
-import AdminProfileComponent from '../Components/AdminProfileComponent';
+import ProfileComponent from '../Components/ProfileComponent';
 import CreateActivity from '../Components/CreateActivity';
 import { UserContext } from '../Hooks/UserContext';
 
@@ -9,10 +9,8 @@ function UserPage() {
     const {user} = useContext(UserContext);
   return (
     <div className='ProfilePage'>
-      
-        <AdminProfileComponent/>
+        <ProfileComponent/>
         <CreateActivity user = {user}/>
-        <p>kk</p>
     </div>
   )
 }

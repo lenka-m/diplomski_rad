@@ -9,4 +9,13 @@ export class Project {
 
     @Column({unique:true})
     name: string;
+
+    @Column({unique:true})
+    short: string;
+
+    @Column()
+    website: string;
+
+    @Column()
+    visible: boolean;
 }

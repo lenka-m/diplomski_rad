@@ -6,7 +6,7 @@ import {BsFillTelephoneFill} from 'react-icons/bs';
 import {GrMail} from 'react-icons/gr';
 import {FaUserAlt} from 'react-icons/fa';
 
-function AdminProfileComponent() {
+function ProfileComponent() {
   const {user} = useContext(UserContext);
   return (
     <div className='component'>
@@ -28,4 +28,4 @@ function AdminProfileComponent() {
   )
 }
 
-export default AdminProfileComponent
+export default ProfileComponent
