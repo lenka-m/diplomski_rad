@@ -38,7 +38,7 @@ function AllActivities(user) {
             <button  onClick={()=>handleFilter("created")}>Potvrdjeno</button>
             <button  onClick={()=> handleFilter("pending")}> Nisu potvrdjeni</button>
         </div>
-     {filteredActivities.length == 0 ? (<div> Nema aktivnosti</div>) : (
+     {filteredActivities.length == 0 ? (<h1> Nema aktivnosti</h1>) : (
 
      
     <table className = 'content-table'>

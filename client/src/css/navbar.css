@@ -5,11 +5,14 @@
 }
 
 header{
-  background-color: #0C2D48;
+  background-image: url('../img/navCover.png');
+  background-position: center;
+  background-size: cover;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid whitesmoke;
+  
   
 }
 img{

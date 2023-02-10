@@ -42,7 +42,22 @@
     font-size: 20px;
 }
 
+.filterButtons{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+}
 
+.filterButtons button{
+    margin: 5px 25px;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #F2AA40;
+}
 
 
 .buttonCell{
