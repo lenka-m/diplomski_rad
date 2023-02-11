@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export async function createActiviry(userId, projectId, areaId, subareaId, date){
+export async function createActivity(userId, projectId, teamId, taskId, date){
     const token = localStorage.getItem('token');
-    await axios.post("http://localhost:3001/activity",{userId, projectId, areaId, subareaId, date},
+    await axios.post("http://localhost:3001/activity",{userId, projectId, teamId, taskId, date},
         {
         headers: {
             Authorization: `Bearer ${token}`,

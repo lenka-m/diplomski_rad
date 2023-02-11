@@ -1,15 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm"
-import { Area } from "./Area";
+import { Team } from "./Team";
 
 
-@Entity({name: "subareas"})
-export class SubArea {
+@Entity({name: "tasks"})
+export class Task {
 
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(()=>Area)
-    area: Area;
+    @ManyToOne(()=>Team)
+    team: Team;
 
     @Column()
     name: string;

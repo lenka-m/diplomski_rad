@@ -1,24 +1,24 @@
 import {Request, Response} from "express";
 import {AppDataSource } from "../data-source";
 import {Activity} from "../entity/Activity";
-import { Area } from "../entity/Area";
+import { Team } from "../entity/Team";
 import { Project } from "../entity/Project";
-import { SubArea } from "../entity/SubArea";
 import { User } from "../entity/User";
+import { Task } from "../entity/Task";
 
 export async function createActivity(req:Request, res:Response){
     console.log(req.body);
     const user = await AppDataSource.getRepository(User).findOne({where: {id: req.body.userId}});
     const project = await AppDataSource.getRepository(Project).findOne({where: {id: req.body.projectId}})
-    const area = await AppDataSource.getRepository(Area).findOne({where: {id: req.body.areaId}})    
-    const subarea = await AppDataSource.getRepository(SubArea).findOne({where: {id: req.body.subareaId}})
+    const team = await AppDataSource.getRepository(Team).findOne({where: {id: req.body.teamId}})    
+    const task = await AppDataSource.getRepository(Task).findOne({where: {id: req.body.taskId}})
     
     const activity = await AppDataSource.getRepository(Activity).save({         
        user: user,
        date: req.body.date,
        project: project,
-       area:area,
-       subarea:subarea,
+       team:team,
+       task:task,
        status: "created",
        confirmation: false
     })
@@ -52,8 +52,8 @@ export async function getAllActivities(req: Request, res:Response){
    const activities = await AppDataSource.getRepository(Activity).find({
          relations: {
          project:true,
-         area: true,
-         subarea:true,
+         team: true,
+         task:true,
          user: true,
          userConfirmed:true
        }

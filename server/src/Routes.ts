@@ -2,10 +2,10 @@ import {Request, Response} from "express";
 
 import path = require("path")
 import { createActivity, finalUpdateActivity, getAllActivities, updateActivity } from "./actions/ActivityActions";
-import { getAllAreas } from "./actions/AreaActions";
 import { getAllProjects , insertNewProject} from "./actions/ProjectActions";
-import { getAllSubAreas } from "./actions/SubAreaActions";
-import {getAllUsers, isAdmin, isEditor, registerNewUser} from "./actions/UserActions";
+import {getAllUsers, isAdmin, isEditor, registerNewUser, searchUsers} from "./actions/UserActions";
+import { getAllTeams } from "./actions/TeamActions";
+import { getAllTasks } from "./actions/TaskActions";
 
 
 export interface Route {
@@ -21,16 +21,20 @@ export const Routes: Route[] = [
     actions: [getAllProjects]
 },{
     method: 'get', 
-    route: '/areas',
-    actions: [getAllAreas]
+    route: '/teams',
+    actions: [getAllTeams]
 },{
     method: 'get',
-    route:'/subareas',
-    actions:[getAllSubAreas]
+    route:'/tasks',
+    actions:[getAllTasks]
 },{
     method: 'get',
     route: '/users',
     actions:[isAdmin, getAllUsers]
+},{
+    method: 'get',
+    route: '/users/search',
+    actions: [isAdmin, searchUsers]
 },{
     method: 'post',
     route: '/projects',
@@ -43,6 +47,10 @@ export const Routes: Route[] = [
     method:'post',
     route:'/activity',
     actions: [createActivity]
+},{
+    method: 'patch',
+    route: '/updateActivity',
+    actions: [isEditor, updateActivity]
 },{
     method: 'patch',
     route: '/activity',

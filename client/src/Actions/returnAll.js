@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function getAllTeams(){
-    const res = await axios.get("http://localhost:3001/areas", {
+    const res = await axios.get("http://localhost:3001/teams", {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -9,8 +9,8 @@ export async function getAllTeams(){
     return await res.data;
 }
 
-export async function getAllSubAreas(){
-    const res = await axios.get("http://localhost:3001/subareas", {
+export async function getAllTasks(){
+    const res = await axios.get("http://localhost:3001/tasks", {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
         }

@@ -59,8 +59,8 @@ function AllActivities(user) {
             <tr key={activity.id}>
                 <td >{activity.user.firstName} {activity.user.lastName}</td>
                 <td>{activity.project.name}</td>
-                <td>{activity.area.name}</td>
-                <td>{activity.subarea.name}</td>
+                <td>{activity.team.name}</td>
+                <td>{activity.task.name}</td>
                 <td>ss</td>
                 <td> <input id={`input-${activity.id}`}/></td>
                 <td>

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, ManyToOne } from "typeorm"
+import { User } from "./User";
 
 
 @Entity({name: "projects"})
@@ -18,4 +19,7 @@ export class Project {
 
     @Column()
     visible: boolean;
+
+    @ManyToOne(()=> User)
+    coordinator: User;
 }

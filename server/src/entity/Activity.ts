@@ -2,8 +2,9 @@ import internal = require("stream");
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm"
 import { User } from "./User";
 import {Project} from "./Project"
-import { Area } from "./Area";
-import { SubArea } from "./SubArea";
+import { Team } from "./Team";
+import { Task } from "./Task";
+
 
 @Entity({name: "activities"})
 export class Activity {
@@ -20,11 +21,11 @@ export class Activity {
     @ManyToOne(()=> Project)
     project: Project;
 
-    @ManyToOne(()=> Area)
-    area:Area;
+    @ManyToOne(()=> Team)
+    team:Team;
 
-    @ManyToOne(()=> SubArea)
-    subarea:Area;
+    @ManyToOne(()=> Task)
+    task:Task;
 
     @Column()
     confirmation: boolean;

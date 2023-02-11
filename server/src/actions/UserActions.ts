@@ -38,3 +38,31 @@ export async function registerNewUser(req:Request, res:Response){
         })
         res.json(movie)
 }
+
+export async function searchUsers(req: Request, res:Response){
+    const email = req.query.email;
+    const firstName = req.query.firstName;
+    const lastName = req.query.lastName;
+    const userRole = req.query.userRole;
+
+    const query = AppDataSource.getRepository(User).createQueryBuilder("user");
+
+    if (email) {
+        query.andWhere("user.email = :email", { email: email });
+    }
+
+    if (firstName) {
+        query.andWhere("user.firstName = :firstName", { firstName: firstName });
+    }
+
+    if (lastName) {
+        query.andWhere("user.lastName = :lastName", { lastName: lastName });
+    }
+
+    if (userRole) {
+        query.andWhere("user.userRole = :userRole", { userRole: userRole });
+    }
+
+    const users = await query.getMany();
+    res.json(users);
+}

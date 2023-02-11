@@ -1,19 +1,19 @@
 import React, {useEffect, useState } from 'react'
-import { createActiviry } from '../Actions/ActivityActions';
-import { getAllTeams, getAllProjects, getAllSubAreas } from '../Actions/returnAll';
+import { createActivity } from '../Actions/ActivityActions';
+import { getAllTeams, getAllProjects, getAllTasks } from '../Actions/returnAll';
 
 function CreateActivity(user) {    
     
-    const [areas, setAreas] = useState([]);
-    const [subareas, setSubareas] = useState([]);
+    const [teams, setTeams] = useState([]);
+    const [tasks, setTasks] = useState([]);
     const [projects, setProjects] = useState([]);
     const [formData, setFormData] = useState({userId: user.user.id, date:""});
    
     
     useEffect(() => {
         getAllProjects().then(data => { setProjects(data); })
-        getAllTeams().then(data => {setAreas(data); })
-        getAllSubAreas().then(data => {setSubareas(data)});
+        getAllTeams().then(data => {setTeams(data); })
+        getAllTasks().then(data => {setTasks(data)});
     }, [])
 
     useEffect(() => {
@@ -21,14 +21,14 @@ function CreateActivity(user) {
             setFormData({...formData, projectId:projects[0].id})
     }, [projects])
     useEffect(() => {
-        if(areas.length>0)
-            setFormData({...formData, areaId:areas[0].id})
-    }, [areas])
+        if(tasks.length>0)
+            setFormData({...formData, taskId:tasks[0].id})
+    }, [tasks])
 
     useEffect(() => {
-        if(subareas.length>0)
-            setFormData({...formData, subareaId:subareas[0].id})
-    }, [ subareas])
+        if(teams.length>0)
+            setFormData({...formData, teamId:teams[0].id})
+    }, [ teams])
     
     
 
@@ -44,7 +44,7 @@ const handleChange = e => {
     async function handleSubmit (e){
         e.preventDefault();
         console.log(formData);
-        createActiviry(formData.userId, formData.projectId, formData.areaId, formData.subareaId, formData.date);
+        createActivity(formData.userId, formData.projectId, formData.teamId, formData.taskId, formData.date);
     }
   return (
     <div className='registerComponent'>        
@@ -59,14 +59,14 @@ const handleChange = e => {
                     <option key ={project.id} name = "projectId" onChange={handleChange} value = {project.id}> {project.name}</option>
                 ))}
             </select>
-            <select className='registerInput' onChange={handleChange} value = {formData.areaId}>
-                {areas && areas.map(area => (
-                    <option key ={area.id} name = "areaId" onChange={handleChange} value = {area.id}> {area.name}</option>
+            <select className='registerInput' onChange={handleChange} value = {formData.teamId}>
+                {teams && teams.map(team => (
+                    <option key ={team.id} name = "teamId" onChange={handleChange} value = {team.id}> {team.name}</option>
                 ))}
             </select>
-            <select className='registerInput' onChange={handleChange} value = {formData.subareaId}>
-                {subareas && subareas.map(subarea => (
-                    <option key ={subarea.id} name = "subareaId" onChange={handleChange} value = {subarea.id}> {subarea.name}</option>
+            <select className='registerInput' onChange={handleChange} value = {formData.taskId}>
+                {tasks && tasks.map(task => (
+                    <option key ={task.id} name = "taskId" onChange={handleChange} value = {task.id}> {task.name}</option>
                 ))}
             </select>
             <button className='registerSubmit' type = "submit"> Registruj novog korisnika</button>
