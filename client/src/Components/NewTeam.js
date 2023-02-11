@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "../css/register.css";
 import { searchUsers } from '../Actions/userActions';
 import { postTeam } from '../Actions/TeamActions';
-import { getAllTeams } from '../Actions/returnAll';
+import { getAllTeams } from '../Actions/TeamActions';
 
 
 function NewTeam({ setNewTeamComponent, setTeams}) { 
@@ -15,8 +15,8 @@ function NewTeam({ setNewTeamComponent, setTeams}) {
     }
 
     useEffect(() => {
-        searchUsers('editor').then(data=> {
-            console.log(data);
+        searchUsers({userRole:'editor'}).then(data=> {
+            //console.log(data);
             setUsers(data)
         });
     }, [])
@@ -29,7 +29,7 @@ function NewTeam({ setNewTeamComponent, setTeams}) {
 
     async function handleSubmit (e){
         e.preventDefault();
-        await postTeam(formData.name, formData.coordinatorId);
+        await postTeam(formData);
         getAllTeams()
             .then((data) =>{
                 setTeams(data);

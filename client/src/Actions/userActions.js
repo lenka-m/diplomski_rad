@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAll, postObject, searchObject } from './AbstractActions';
 
 export async function getUser(){
     const res = await axios.get("http://localhost:3001/check");
@@ -10,39 +11,18 @@ export async function loginUser(email, password){
     localStorage.setItem('token',res.data.token);
     return await res.data.user;
 }
-export async function registerNewUser(firstName, lastName,password, email, userRole){
-    const token = localStorage.getItem('token');
-    await axios.post("http://localhost:3001/register",{firstName, lastName,password, email, userRole }
-    , {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })    
+export async function postUser(formData){
+    await postObject('/register', formData)
 }
 export async function getAllUsers(){
-    const token = localStorage.getItem('token');
-    console.log(localStorage.getItem('token'));
-    const res = await axios.get("http://localhost:3001/users", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-    return await res.data;
+    return await getAll('/users');
 }
 
-export async function searchUsers(userRole){
-    const token = localStorage.getItem('token');
-    const res = await axios.get("http://localhost:3001/users/search", {
-        params: { userRole },
-        headers : {
-            Authorization: `Bearer ${token}`
-        }
-    })
-    return await res.data;
+export async function searchUsers(formData){
+    return await searchObject('/users/search', formData);
 }
 
-
- export async function logoutUser(){
+export async function logoutUser(){
       localStorage.clear();
  }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../css/register.css";
 import { postTask } from '../Actions/TaskActivities';
-import { getAllTeams } from '../Actions/returnAll';
+import { getAllTeams } from '../Actions/TeamActions';
 
 
 
@@ -16,16 +16,14 @@ function NewTask({ setNewTaskComponent, teams, setTeams}) {
 
     async function handleSubmit (e){
         e.preventDefault();
-        
-
-     await postTask(formData.name, formData.teamId, formData.points).then(()=>{
-        getAllTeams().then((data)=>{
-      
-            setTeams(data);
-            setNewTaskComponent(false);
-          })
-         })
+        await postTask(formData)
     }
+    
+    useEffect(() => {
+      getAllTeams().then((data) => {
+        setTeams(data);
+      });
+    }, []);
 
   return (
     <div className='registerComponent'>      

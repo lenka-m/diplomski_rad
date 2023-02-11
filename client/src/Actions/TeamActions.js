@@ -1,13 +1,11 @@
 import axios from "axios";
+import { getAll, postObject } from "./AbstractActions";
 
 
-export async function postTeam(name, coordinatorId){
-    const token = localStorage.getItem('token');
-    await axios.post("http://localhost:3001/teams",{name, coordinatorId},
-        {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-        }
-    });   
+export async function postTeam(formData){
+    await postObject('/teams', formData) 
+}
+
+export async function getAllTeams(){
+    return getAll('/teams');
 }

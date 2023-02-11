@@ -1,22 +1,11 @@
 import axios from "axios";
+import { getAll, postObject } from "./AbstractActions";
 
 
-export async function getAllProjects(){
-    const res = await axios.get("http://localhost:3001/projects", {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-    });
-    return await res.data;
+export async function createProject(formData){ 
+    await postObject('/projects', formData) 
 }
 
-export async function createProject(name, short, website, visible){
-    const token = localStorage.getItem('token');
-    await axios.post("http://localhost:3001/projects",{name, short, website, visible},
-        {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-        }
-    });   
+export async function getAllProjects(){
+    return await getAll('/projects');
 }

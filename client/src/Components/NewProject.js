@@ -10,7 +10,7 @@ function NewProject({setNewProjectComponent, setProjects}) {
     }
     async function handleSubmit (e){
         e.preventDefault();
-        await createProject(formData.name, formData.short, formData.website, formData.visible);
+        await createProject(formData);
         getAllProjects()
             .then((data) => {
                 setProjects(data);

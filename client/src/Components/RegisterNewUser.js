@@ -1,25 +1,18 @@
 import React from 'react'
 import { useState } from 'react';
-import { registerNewUser } from '../Actions/userActions';
+import { postUser } from '../Actions/userActions';
 import "../css/register.css";
 import { postData } from '../Hooks/postData';
 
-function RegisterNewUser() {
+function NewUser() {
 
     const [formData, setFormData] = useState({firstName:'', lastName:'', password:'', email:'',userRole:''});
     const handleChange = (e) =>{
         setFormData({...formData, [e.target.name]: e.target.value });
     }
     async function handleSubmit (e){
-        e.preventDefault();
-        const error = await postData('http://localhost:3001/register', localStorage.getItem('token'), formData);
-        if(!error){
-            console.log(error);
-        }
-        console.log(error);
-        //registerNewUser(formData.firstName, formData.lastName, formData.password, formData.email, formData.userRole)      
-        //const user1 = await loginUser(loginData.email, loginData.password);
-        //setUser(user1);     
+        e.preventDefault();   
+        await postUser(formData);
     }
     return (
     <div className='RegisterComponent'>
@@ -50,4 +43,4 @@ function RegisterNewUser() {
   )
 }
 
-export default RegisterNewUser
+export default NewUser

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import {getAllProjects} from '../Actions/ProjectActions'
+import { getAllProjects } from '../Actions/ProjectActions'
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import NewProject from './NewProject'
 
@@ -35,7 +35,7 @@ function AllProjekti() {
             <td >{project.name}</td>
             <td> {project.short}</td>
             <td>{project.website}</td>
-            <td className='buttonCell'>  {project.visible ? (<AiFillEye className='buttonImage' color='white'/>) : (<AiFillEyeInvisible className='buttonImage' color='red'/>)}</td>
+            <td className='editCell'>  {project.visible ? (<AiFillEye className='buttonImage' color='white'/>) : (<AiFillEyeInvisible className='buttonImage' color='red'/>)}</td>
         </tr>  
       
     ))} 

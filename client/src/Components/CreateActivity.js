@@ -1,6 +1,8 @@
 import React, {useEffect, useState } from 'react'
 import { createActivity } from '../Actions/ActivityActions';
-import { getAllTeams, getAllProjects, getAllTasks } from '../Actions/returnAll';
+import { getAllTeams } from '../Actions/TeamActions';
+import { getAllProjects } from '../Actions/ProjectActions';
+import { getAllTasks } from '../Actions/TaskActivities';
 
 function CreateActivity(user) {    
     
@@ -43,8 +45,7 @@ const handleChange = e => {
 };
     async function handleSubmit (e){
         e.preventDefault();
-        console.log(formData);
-        createActivity(formData.userId, formData.projectId, formData.teamId, formData.taskId, formData.date);
+        createActivity(formData);
     }
   return (
     <div className='registerComponent'>        

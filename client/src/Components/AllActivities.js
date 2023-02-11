@@ -1,5 +1,5 @@
 import React from 'react'
-import { getAllActivities } from '../Actions/returnAll';
+import { getAllActivities } from '../Actions/ActivityActions';
 import { useState, useEffect } from 'react';
 import "../css/tableComponent.css"
 import {BsCheckCircleFill} from 'react-icons/bs'

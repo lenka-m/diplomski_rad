@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { getAllTeams } from '../Actions/returnAll'
+import { getAllTeams } from '../Actions/TeamActions';
 import NewTeam from './NewTeam'
 import "../css/tableComponent.css";
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
@@ -48,7 +48,8 @@ function AllTeams() {
         {teams.map(team => (
           <tr key={team.id}>
             <td>{team.name}</td>
-            <td>{team.coordinator.firstName} {team.coordinator.lastName}</td>
+            {team.coordinator ? (<td>{team.coordinator.firstName} {team.coordinator.lastName}</td>) :(<td><i>Nema koord</i></td>)}
+            
             <td>
               {team.tasks.length==0 ? (<td> /</td>):(
                 <table className='task-table'>
