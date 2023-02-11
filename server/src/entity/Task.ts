@@ -8,9 +8,15 @@ export class Task {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(()=>Team)
+    @ManyToOne(()=>Team, team => team.tasks)
     team: Team;
 
     @Column()
     name: string;
+
+    @Column()
+    points: number;
+
+    @Column()
+    visible:boolean;
 }

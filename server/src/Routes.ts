@@ -4,8 +4,8 @@ import path = require("path")
 import { createActivity, finalUpdateActivity, getAllActivities, updateActivity } from "./actions/ActivityActions";
 import { getAllProjects , insertNewProject} from "./actions/ProjectActions";
 import {getAllUsers, isAdmin, isEditor, registerNewUser, searchUsers} from "./actions/UserActions";
-import { getAllTeams } from "./actions/TeamActions";
-import { getAllTasks } from "./actions/TaskActions";
+import { getAllTeams, postNewTeam } from "./actions/TeamActions";
+import { getAllTasks, postNewTask } from "./actions/TaskActions";
 
 
 export interface Route {
@@ -24,9 +24,17 @@ export const Routes: Route[] = [
     route: '/teams',
     actions: [getAllTeams]
 },{
+    method: 'post',
+    route: '/teams',
+    actions: [isAdmin, postNewTeam]
+},{
     method: 'get',
     route:'/tasks',
     actions:[getAllTasks]
+},{
+    method:'post',
+    route:'/tasks',
+    actions:[isAdmin, postNewTask]
 },{
     method: 'get',
     route: '/users',

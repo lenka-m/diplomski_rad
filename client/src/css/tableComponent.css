@@ -29,6 +29,10 @@
     color:white;
     text-align: center;    
 }
+.content-table tr {
+    
+    border-bottom: 1px solid white;
+}
 
 .content-table thead tr{
     border-radius: 10px;

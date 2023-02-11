@@ -16,11 +16,13 @@ export async function getAllTasks(req: Request, res:Response){
 
 export async function postNewTask(req:Request, res:Response){
      console.log(req.body);
-     const team = await AppDataSource.getRepository(Task).findOne({where: {id: req.body.teamId}});
+     const team = await AppDataSource.getRepository(Team).findOne({where: {id: req.body.teamId}});
      //console.log(team);
      const task = await AppDataSource.getRepository(Task).save({         
         name: req.body.name,
-        team: team
+        team: team,
+        points: req.body.points,
+        visible: req.body.visible
      })
-    res.json(team);
+    res.json(task);
 }

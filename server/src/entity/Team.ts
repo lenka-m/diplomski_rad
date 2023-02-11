@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm"
 import { User } from "./User";
-
+import { Task } from "./Task";
 
 @Entity({name: "teams"})
 export class Team {
@@ -13,5 +13,8 @@ export class Team {
 
     @ManyToOne(()=>User)
     coordinator: User;
+
+    @OneToMany(()=> Task, task=> task.team)
+    tasks: Task[]
     
 }
