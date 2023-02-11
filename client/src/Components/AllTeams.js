@@ -4,6 +4,7 @@ import { getAllTeams } from '../Actions/returnAll'
 import NewTeam from './NewTeam'
 import "../css/tableComponent.css";
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import NewTask from './NewTask';
 
 function TaskHeader() {
   return (
@@ -21,10 +22,12 @@ function AllTeams() {
 
   const [teams, setTeams] = useState([]);
   const [newTeamComponent, setNewTeamComponent] = useState(false);
+  const [newTaskComponent, setNewTaskComponent] = useState(false)
   useEffect(()=>{
     getAllTeams().then((data)=>{
       
       setTeams(data);
+      
     })
   }, [])
   return (
@@ -69,6 +72,9 @@ function AllTeams() {
 
     {newTeamComponent ? (<NewTeam setNewTeamComponent={setNewTeamComponent} setTeams={setTeams} />
     ) : (<button onClick={()=>setNewTeamComponent(true)}> Dodaj novi tim</button>)}
+
+    {newTaskComponent ? (<NewTask setNewTaskComponent = {setNewTaskComponent} setTeams = {setTeams} teams ={teams}/>
+    ): (<button onClick={()=> setNewTaskComponent(true)}> Dodaj novi task</button>) }
 
   </div>
   )

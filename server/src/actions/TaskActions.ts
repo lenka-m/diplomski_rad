@@ -22,7 +22,7 @@ export async function postNewTask(req:Request, res:Response){
         name: req.body.name,
         team: team,
         points: req.body.points,
-        visible: req.body.visible
+        visible: true
      })
     res.json(task);
 }

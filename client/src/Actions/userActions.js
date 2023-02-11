@@ -30,6 +30,17 @@ export async function getAllUsers(){
     return await res.data;
 }
 
+export async function searchUsers(userRole){
+    const token = localStorage.getItem('token');
+    const res = await axios.get("http://localhost:3001/users/search", {
+        params: { userRole },
+        headers : {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    return await res.data;
+}
+
 
  export async function logoutUser(){
       localStorage.clear();
