@@ -1,43 +1,51 @@
-
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Homepage from './Pages/Homepage';
 import LoginPage from './Pages/LoginPage';
 import ProfilePage from './Pages/ProfilePage';
-import { UserContext } from './Hooks/UserContext';
-
-import {  useState } from 'react';
-
+import { getUser } from './Actions/userActions';
+import {  useEffect, useState } from 'react';
 
 function App() {
+  const [loggedUser, setLoggedUser] = useState(null);
 
-  const [user,setUser] = useState(null);
-
+  useEffect(() => {
+    const savedUser = localStorage.getItem("loggedUser");
+    if (savedUser) {
+      setLoggedUser(JSON.parse(savedUser));
+    }
+    const token = localStorage.getItem("token");
+    if (token) {
+      getUser().then((user) => {
+        setLoggedUser(user);
+        localStorage.setItem("loggedUser", JSON.stringify(user));
+      });
+    }
+  }, []);
   
+  useEffect(() => {
+    localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
+  }, [loggedUser]);
 
   return (
     <Router>
       <div className='App'>
-      <UserContext.Provider value = {{user, setUser}}>
-        <Navbar value = {{user}}/>
-      </UserContext.Provider>
+        <Navbar loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
         <Switch>
           <Route exact path="/">
-            <Homepage/>
+            <Homepage />
           </Route>
-          <UserContext.Provider value = {{user, setUser}}>  
-         {user ? (
+          {loggedUser ? (
             <Route exact path="/profile">
-              <ProfilePage/>
+              <ProfilePage loggedUser={loggedUser} />
             </Route>
-         ) : (
+          ) : (
             <Route exact path="/login">
-              <LoginPage/>
+              <LoginPage loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
             </Route>
-         )}          
-          </UserContext.Provider>
-        </Switch>      
+          )}
+        </Switch>
       </div>
     </Router>
   );

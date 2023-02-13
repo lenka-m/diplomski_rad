@@ -1,18 +1,21 @@
-import { useContext } from "react";
-import { UserContext } from "../Hooks/UserContext";
 import AdminPage from "./AdminPage";
 import EditorPage from "./EditorPage";
 import UserPage from "./UserPage";
+import { Redirect } from "react-router-dom";
+function ProfilePage({loggedUser}){
+  console.log(loggedUser);
+  if (!loggedUser) {
 
-function ProfilePage(){
-    const {user} = useContext(UserContext);
+    console.log('nema korisnika');
+    return <Redirect to='/' />;
+  }
     
-    if (user.userRole === 'admin') {
-        return <AdminPage />;
-      } else if (user.userRole === 'editor') {
-        return <EditorPage />;
-      }  else if (user.userRole === 'none'){
-        return <UserPage/>
+    if (loggedUser.userRole === 'admin') {
+        return <AdminPage  loggedUser = {loggedUser}/>;
+      } else if (loggedUser.userRole === 'editor') {
+        return <EditorPage loggedUser = {loggedUser} />;
+      }  else if (loggedUser.userRole === 'none'){
+        return <UserPage />
       }
 }
 export default ProfilePage;

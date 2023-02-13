@@ -4,7 +4,7 @@ import { getAllTeams } from '../Actions/TeamActions';
 import { getAllProjects } from '../Actions/ProjectActions';
 import { getAllTasks } from '../Actions/TaskActivities';
 
-function CreateActivity(user) {    
+function NewActivity(user) {    
     
     const [teams, setTeams] = useState([]);
     const [tasks, setTasks] = useState([]);
@@ -76,4 +76,4 @@ const handleChange = e => {
   )
 }
 
-export default CreateActivity
+export default NewActivity

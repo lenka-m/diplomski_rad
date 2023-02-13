@@ -32,7 +32,7 @@ function AllActivities(user) {
   
   return (
     <div className='tableContainer'>
-        <h1> Aktivnosti </h1>
+        {activities ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Aktivnosti </h1>
         <div className='filterButtons'>
             <button onClick={()=> setFilteredActivities(activities)}> Sve Aktivnosti</button>
             <button  onClick={()=>handleFilter("created")}>Potvrdjeno</button>
@@ -73,7 +73,8 @@ function AllActivities(user) {
         ))}
       </tbody>
     </table>
-    )}   
+    )}   </div>)}
+        
     </div>
   )
 }

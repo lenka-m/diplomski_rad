@@ -59,7 +59,7 @@ function AllTeams() {
                       <tr key={task.id}>
                         <td>{task.name}</td>
                         <td>{task.points}</td>
-                        <td className='buttonCell'>  {task.visible ? (<AiFillEye className='buttonImage' color='white'/>) : (<AiFillEyeInvisible className='buttonImage' color='red'/>)}</td>
+                        <td className='buttonCell'>  {task.visible ? (<p/>) : (<AiFillEyeInvisible className='buttonImage' color='red'/>)}</td>
                       </tr>
                     ))}
                   </tbody>

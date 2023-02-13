@@ -1,13 +1,12 @@
 import React from 'react'
 import "../css/profile.css";
-import { UserContext } from '../Hooks/UserContext';
-import { useContext } from 'react';
 import {BsFillTelephoneFill} from 'react-icons/bs';
 import {GrMail} from 'react-icons/gr';
 import {FaUserAlt} from 'react-icons/fa';
 
-function ProfileComponent() {
-  const {user} = useContext(UserContext);
+function ProfileComponent({loggedUser}) {
+  const user = loggedUser;
+
   return (
     <div className='component'>
       <div className='boxContainter'>

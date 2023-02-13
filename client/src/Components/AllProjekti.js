@@ -4,7 +4,7 @@ import { getAllProjects } from '../Actions/ProjectActions'
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import NewProject from './NewProject'
 
-function AllProjekti() {
+function AllProjekti(user) {
 
   const [projects, setProjects] = useState([]);
   const [newProjectComponent, setNewProjectComponent] = useState(false);

@@ -1,15 +1,12 @@
 
-import React from "react";
+import React, {useState} from "react";
 import { loginUser } from "../Actions/userActions";
-import { useContext, useState} from "react";
-import { UserContext } from "../Hooks/UserContext";
 import { useHistory } from "react-router-dom";
 import logoPhoto from "../img/logo.png";
 
-function LoginPage(){
+function LoginPage({loggedUser, setLoggedUser}){
     const [loginData, setLoginData] = useState({email:'', password:''});
     const [error, setError] = useState(null);
-    const {setUser} = useContext(UserContext); 
     const history = useHistory();
     const handleChange = e =>{
         setLoginData({...loginData, [e.target.name]: e.target.value });
@@ -18,7 +15,7 @@ function LoginPage(){
         e.preventDefault();       
         try{ 
         const user1 = await loginUser(loginData.email, loginData.password);
-        setUser(user1); 
+        setLoggedUser(user1); 
         history.push('/profile');
         } catch(error){        
             setError(error);            

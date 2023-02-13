@@ -29,7 +29,7 @@ function NewProject({setNewProjectComponent, setProjects}) {
             <label className='registerLabel'>Skracenica:</label>
             <input className='registerInput' name = "short" type = "text" required value ={formData.short} onChange={handleChange}/>
 
-            <label className='registerLabel'>Naziv:</label>
+            <label className='registerLabel'>Sajt:</label>
             <input className='registerInput' name = "website" type = "text" required value ={formData.website} onChange={handleChange}/>
 
 

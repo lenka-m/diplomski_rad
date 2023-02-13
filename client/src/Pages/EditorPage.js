@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { UserContext } from "../Hooks/UserContext";
+
 import "../css/profile.css";
-function EditorPage(){
-    const {user} = useContext(UserContext);
+function EditorPage({loggedUser}){
+    const user = loggedUser;
     
     return(
        <div className="ProfilePage">

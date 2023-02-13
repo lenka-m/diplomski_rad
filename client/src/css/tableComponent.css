@@ -83,3 +83,11 @@
     height: 20px;
     width: 20px;
 }
+
+.btnAdd{
+    border:none;
+    padding:15px;
+    border-radius: 10px;
+    background-color: #162C46;
+    color: whitesmoke;
+}

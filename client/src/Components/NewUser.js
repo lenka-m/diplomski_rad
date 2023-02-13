@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState } from 'react';
-import { postUser } from '../Actions/userActions';
+import { getAllUsers, postUser } from '../Actions/userActions';
 import "../css/register.css";
-import { postData } from '../Hooks/postData';
+import {FcCancel} from 'react-icons/fc';
 
-function NewUser() {
+function NewUser({ setNewUserComponent, setAllUsers}) {
 
     const [formData, setFormData] = useState({firstName:'', lastName:'', password:'', email:'',userRole:''});
     const handleChange = (e) =>{
@@ -12,11 +12,18 @@ function NewUser() {
     }
     async function handleSubmit (e){
         e.preventDefault();   
-        await postUser(formData);
+        await postUser(formData)
+        getAllUsers()
+            .then((data) =>{
+                setAllUsers(data);
+            }).then(()=>{
+                setNewUserComponent(false);
+            })
     }
     return (
     <div className='RegisterComponent'>
-        <h1 className='registerTitle'>Novi profil</h1>
+        <h1 className='registerTitle'>Novi profil </h1>
+        <button className='btn-Exit' onClick={()=> setNewUserComponent(false)}><FcCancel className='btn-Exit-Icon'/></button>  
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
             <label className='registerLabel'>Ime:</label>
             <input className='registerInput' name = "firstName" type = "text" required value ={formData.firstName} onChange={handleChange}/>

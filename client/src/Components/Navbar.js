@@ -1,19 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, {  useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../Hooks/UserContext';
 import { logoutUser } from '../Actions/userActions';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import '../css/navbar.css';
 import logoPhoto from "../img/transparent_logo.png";
 
-function Navbar() {
-  const { user, setUser } = useContext(UserContext);
+function Navbar({loggedUser, setLoggedUser}) {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   const handleLogout = () => {
     logoutUser();
-    setUser(null);
+    setLoggedUser(null);
   };
 
   const handleToggle = () => {
@@ -24,7 +22,7 @@ function Navbar() {
     <header>
       <img src={logoPhoto}></img>
      
-      {user ? (
+      {loggedUser ? (
         <nav className={`navbarLinks ${isVisible ? 'active' : ''}`}>
           <Link className={`navbarLink ${isVisible ? 'active' : ''}`} to="/">
             Homepage
