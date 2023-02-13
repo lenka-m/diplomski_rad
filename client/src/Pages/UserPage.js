@@ -4,11 +4,10 @@ import NewActivity from '../Components/NewActivity';
 
 
 function UserPage({loggedUser}) {
-    const user = loggedUser;
   return (
     <div className='ProfilePage'>
-        <ProfileComponent/>
-        <NewActivity user = {user}/>
+        <ProfileComponent loggedUser = {loggedUser}/>
+        <NewActivity loggedUser = {loggedUser}/>
     </div>
   )
 }

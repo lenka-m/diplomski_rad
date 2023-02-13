@@ -6,7 +6,7 @@ import {BsCheckCircleFill} from 'react-icons/bs'
 import { updateActivity } from '../Actions/ActivityActions';
 
 
-function AllActivities(user) {
+function AllActivities() {
     const [activities, setActivities] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);
     const [filterValue, setFilterValue] = useState(false);
@@ -14,15 +14,11 @@ function AllActivities(user) {
         getAllActivities().then(data => {
             setActivities(data);
             setFilteredActivities(data);
+            console.log(activities)
         });
     }, [])  
     function handleAccept(activity) {
         const inputValue = document.querySelector(`#input-${activity.id}`).value;
-        console.log(inputValue);
-        console.log(user.user.id);
-        console.log(activity.id);
-        updateActivity(activity.id ,user.user.userId, inputValue);
-        // do any other necessary updates/operations
     }
     
     function handleFilter(value){
@@ -32,7 +28,7 @@ function AllActivities(user) {
   
   return (
     <div className='tableContainer'>
-        {activities ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Aktivnosti </h1>
+        {activities===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Aktivnosti </h1>
         <div className='filterButtons'>
             <button onClick={()=> setFilteredActivities(activities)}> Sve Aktivnosti</button>
             <button  onClick={()=>handleFilter("created")}>Potvrdjeno</button>

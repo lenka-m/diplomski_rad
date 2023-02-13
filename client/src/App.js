@@ -11,10 +11,6 @@ function App() {
   const [loggedUser, setLoggedUser] = useState(null);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("loggedUser");
-    if (savedUser) {
-      setLoggedUser(JSON.parse(savedUser));
-    }
     const token = localStorage.getItem("token");
     if (token) {
       getUser().then((user) => {

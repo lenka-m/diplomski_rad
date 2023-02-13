@@ -1,52 +1,63 @@
 import React, {useEffect, useState } from 'react'
-import { createActivity } from '../Actions/ActivityActions';
+import { postActivity } from '../Actions/ActivityActions';
 import { getAllTeams } from '../Actions/TeamActions';
 import { getAllProjects } from '../Actions/ProjectActions';
-import { getAllTasks } from '../Actions/TaskActivities';
 
-function NewActivity(user) {    
-    
+
+function NewActivity({loggedUser}) {    
+    const user = loggedUser;
     const [teams, setTeams] = useState([]);
+    const [selectedTeam, setSelectedTeam] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [projects, setProjects] = useState([]);
-    const [formData, setFormData] = useState({userId: user.user.id, date:""});
+    const [formData, setFormData] = useState({userId: user.id, date:"", opis: ""});
    
     
     useEffect(() => {
         getAllProjects().then(data => { setProjects(data); })
-        getAllTeams().then(data => {setTeams(data); })
-        getAllTasks().then(data => {setTasks(data)});
+        getAllTeams().then(data => {
+            setTeams(data); 
+            console.log(data);
+            setTasks(data[0].tasks)
+        })
     }, [])
+
+
 
     useEffect(() => {
         if(projects.length>0)
             setFormData({...formData, projectId:projects[0].id})
     }, [projects])
-    useEffect(() => {
-        if(tasks.length>0)
-            setFormData({...formData, taskId:tasks[0].id})
-    }, [tasks])
 
     useEffect(() => {
-        if(teams.length>0)
-            setFormData({...formData, teamId:teams[0].id})
+        if(teams.length>0){
+            setFormData({...formData, teamId:teams[0].id}) 
+            setFormData({... formData, taskId: teams[0].tasks[0].id})
+        }
     }, [ teams])
+    useEffect(() => {
+        console.log(' pt ');
+        if(teams.length>0){
+            setTasks(selectedTeam.tasks);
+        }
+    }, [ selectedTeam])
     
     
 
-const handleChange = e => {
-    let value;
-    if (e.target.name === "date") {
-        value = e.target.value;
-    } else {
-        value = parseInt(e.target.value, 10);
+    const handleChange = e => {
+        let value;
+        if (e.target.name === "date") {
+            value = e.target.value;
+        } 
+        setFormData({...formData, [e.target.name]: value});
+    };
+        async function handleSubmit (e){
+            e.preventDefault();
+            postActivity(formData);
+            console.log("proslo");
+
     }
-    setFormData({...formData, [e.target.name]: value});
-};
-    async function handleSubmit (e){
-        e.preventDefault();
-        createActivity(formData);
-    }
+
   return (
     <div className='registerComponent'>        
         <h1 className='registerTitle'>Nova Aktivnost</h1>
@@ -54,23 +65,32 @@ const handleChange = e => {
             <label className='registerLabel'>Datum:</label>
             <input className='registerInput' name = "date" type = "text" required value ={formData.date} onChange={handleChange}/>
 
-            <label className='registerLabel'>Tim:</label>
+            <label className='registerLabel'>Projekat:</label>
             <select className='registerInput' name = "projectId" value ={formData.projectId} onChange={handleChange}>
                 {projects && projects.map(project => (                    
                     <option key ={project.id} name = "projectId" onChange={handleChange} value = {project.id}> {project.name}</option>
                 ))}
             </select>
-            <select className='registerInput' onChange={handleChange} value = {formData.teamId}>
+            <label className='registerLabel'>Tim:</label>
+            <select className='registerInput' onChange={(e) => {
+                handleChange(e);
+                setSelectedTeam(teams.find(team => team.id === parseInt(e.target.value, 10)));
+                }} value = {formData.teamId}>
                 {teams && teams.map(team => (
-                    <option key ={team.id} name = "teamId" onChange={handleChange} value = {team.id}> {team.name}</option>
+                    <option key ={team.id} name = "teamId" value = {team.id}> {team.name}</option>
                 ))}
             </select>
-            <select className='registerInput' onChange={handleChange} value = {formData.taskId}>
+
+            <label className='registerLabel'>Pozicija:</label>
+             <select className='registerInput' onChange={handleChange} value = {formData.taskId}>
                 {tasks && tasks.map(task => (
                     <option key ={task.id} name = "taskId" onChange={handleChange} value = {task.id}> {task.name}</option>
                 ))}
-            </select>
-            <button className='registerSubmit' type = "submit"> Registruj novog korisnika</button>
+            </select> 
+            <label className='registerLabel'>Opis:</label>
+            <input className='registerInput' name = "opis" type = "text" required value ={formData.opis} onChange={handleChange}/>
+
+            <button className='registerSubmit' type = "submit"> Posalji zahtev</button>
         </form>
     </div>
   )

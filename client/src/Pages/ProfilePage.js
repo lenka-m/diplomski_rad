@@ -15,7 +15,7 @@ function ProfilePage({loggedUser}){
       } else if (loggedUser.userRole === 'editor') {
         return <EditorPage loggedUser = {loggedUser} />;
       }  else if (loggedUser.userRole === 'none'){
-        return <UserPage />
+        return <UserPage  loggedUser={ loggedUser}/>
       }
 }
 export default ProfilePage;

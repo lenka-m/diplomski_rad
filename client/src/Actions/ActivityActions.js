@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAll, patchObject, postObject } from "./AbstractActions";
 
-export async function createActivity(formData){   
+export async function postActivity(formData){   
     await postObject('/activity', formData);
 }
 
