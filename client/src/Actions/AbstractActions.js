@@ -11,11 +11,7 @@ const instance = axios.create({
 });
 
 export async function getAll(path){
-    const res = await axios.get(`${url}${path}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
+    const res = await instance.get(path);
     return await res.data;
 }
 export async function searchObject(path, formData){

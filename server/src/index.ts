@@ -34,6 +34,7 @@ AppDataSource.initialize().then(async () => {
             return;
         } 
         const token = jwt.sign({id: user.id}, 'jwttoken1252t', {expiresIn: '3h'});
+        console.log('setuje token');
         res.json({
             user, 
             token
@@ -51,7 +52,7 @@ AppDataSource.initialize().then(async () => {
 
         const splitted = authorization.split(' ');
         if(splitted.length !== 2 || splitted[0] != 'Bearer'){
-            res.json({error: 'Wrong type of request'})
+            res.status(401).json({error: 'Wrong type of request'});
             return;
         }
         const token = splitted[1];
@@ -60,16 +61,16 @@ AppDataSource.initialize().then(async () => {
             const user =await AppDataSource.getRepository(User).findOne({
                 where: {id: userId.id}
             });
-
+    
             if(!user){
-                res.json({error: 'unauthorized'});
+                res.status(401).json({error: 'unauthorized'});
                 return;
             }
             (req as any).user = user;
             next();
-
+    
         } catch(error){
-            res.send(401).json({error: 'niste authorised'})
+            res.status(401).json({error: 'niste authorised'});
         }
     })
 

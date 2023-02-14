@@ -14,11 +14,10 @@ function AllActivities() {
         getAllActivities().then(data => {
             setActivities(data);
             setFilteredActivities(data);
-            console.log(activities)
         });
     }, [])  
     function handleAccept(activity) {
-        const inputValue = document.querySelector(`#input-${activity.id}`).value;
+        //console.log(activity);
     }
     
     function handleFilter(value){
@@ -47,6 +46,7 @@ function AllActivities() {
                 <td> Opis</td>
                 <td> Broj poena</td>
                 <td> Potvrdjeno</td>
+                <td> Potvrdi </td>
                 <td> Poništi</td>
             </tr>
         </thead>
@@ -60,9 +60,10 @@ function AllActivities() {
                 <td>ss</td>
                 <td> <input id={`input-${activity.id}`}/></td>
                 <td>
-                    {activity.status === 'created'? (<p>Da</p>):(<button onClick={() => handleAccept(activity)}><BsCheckCircleFill /></button>)}
+                    
                     
                 </td>
+                <td> <button onClick={handleAccept(activity)}>Potvrdi</button></td>
                 <td><button>Odbij</button></td>
             </tr>  
           
