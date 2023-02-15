@@ -4,7 +4,7 @@ import NewUser from './NewUser';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 
 
-function AllUsers() {
+function AllUsers({loggedUser}) {
   const [users, setAllUsers] = useState([]);
   const [newUserComponent, setNewUserComponent]  = useState(false);
   useEffect(()=>{
@@ -12,6 +12,15 @@ function AllUsers() {
         setAllUsers(data);
     });
   }, [])  
+
+  function handleDeleteUser(user){
+    if(user === loggedUser){
+      alert('Ne mozete obrisati svoj profil');
+      return;
+    }
+    console.log(user);
+
+  }
   return (
     <div className='tableContainer'>
       
@@ -38,7 +47,7 @@ function AllUsers() {
               <td> {user.email}</td>
               <td> {user.userRole}</td>
               <td><AiFillEdit color='orange'/> </td>
-              <td><AiFillDelete color='red'/></td>
+              <td onClick={()=>{handleDeleteUser(user)}}><AiFillDelete color='red'/></td>
           </tr>  
         
       ))} 

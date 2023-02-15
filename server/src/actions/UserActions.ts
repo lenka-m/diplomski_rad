@@ -39,6 +39,21 @@ export async function registerNewUser(req:Request, res:Response){
         res.json(movie)
 }
 
+export async function deleteUser(req:Request, res:Response){
+    try {
+        console.log(`pozvanan funkcija + ${req.body.userId}`)
+      const user = await AppDataSource.getRepository(User).delete({
+        id:req.body.userId
+      });
+
+      
+      res.json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to delete user' });
+    }
+}
+
 export async function searchUsers(req: Request, res:Response){
     const email = req.query.email;
     const firstName = req.query.firstName;

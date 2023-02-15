@@ -13,7 +13,7 @@ function AdminPage({loggedUser}){
     const [projektiVisible, setProjektiVisible] = useState(false);
     const [teamsVisible, setTeamsVisible] = useState(false);
     const [usersVisible, setUsersVisible] = useState(false);
-    console.log(localStorage.getItem('token'));
+    
     return(
        <div className="ProfilePage">
 
@@ -34,7 +34,7 @@ function AdminPage({loggedUser}){
                         Timovi</button>
                     
             </div>
-            {usersVisible && <AllUsers/>}
+            {usersVisible && <AllUsers loggedUser = {loggedUser}/>}
             {projektiVisible && <AllProjekti/>}
             {teamsVisible && <AllTeams/>}
              

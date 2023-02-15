@@ -1,25 +1,27 @@
 import React from 'react'
-import { getAllActivities } from '../Actions/ActivityActions';
+import { getAllActivities, postActivity } from '../Actions/ActivityActions';
 import { useState, useEffect } from 'react';
 import "../css/tableComponent.css"
 import {BsCheckCircleFill} from 'react-icons/bs'
 import { updateActivity } from '../Actions/ActivityActions';
 
 
-function AllActivities() {
+function AllActivities({loggedUser}) {
     const [activities, setActivities] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);
-    const [filterValue, setFilterValue] = useState(false);
+    const [numOfPoints, setNumOfPoints] = useState(0);
+    
     useEffect(()=>{   
         getAllActivities().then(data => {
             setActivities(data);
             setFilteredActivities(data);
         });
     }, [])  
-    function handleAccept(activity) {
-        //console.log(activity);
-    }
     
+    function handleAccept(activity){
+        console.log(activity);
+        updateActivity({activityId: activity.id ,userConfirmedId: loggedUser.id, numOfPoints: 2})
+    }
     function handleFilter(value){
         setFilteredActivities(activities.filter(activity => activity.status === value))
     }
@@ -63,8 +65,8 @@ function AllActivities() {
                     
                     
                 </td>
-                <td> <button onClick={handleAccept(activity)}>Potvrdi</button></td>
-                <td><button>Odbij</button></td>
+                <td onClick={()=>{handleAccept(activity)}}> <button >Potvrdi</button></td>
+                <td ><button>Odbij</button></td>
             </tr>  
           
         ))}

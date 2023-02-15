@@ -61,3 +61,17 @@ export async function getAllActivities(req: Request, res:Response){
    res.json(activities);
 }
 
+export async function deleteActivity(req:Request, res:Response){
+   try {
+       console.log(`pozvanan funkcija + ${req.body.userId}`)
+     const user = await AppDataSource.getRepository(User).delete({
+       id:req.body.userId
+     });
+
+     
+     res.json(user);
+   } catch (error) {
+     console.error(error);
+     res.status(500).json({ message: 'Failed to delete user' });
+   }
+}

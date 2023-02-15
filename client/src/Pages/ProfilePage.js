@@ -3,7 +3,7 @@ import EditorPage from "./EditorPage";
 import UserPage from "./UserPage";
 import { Redirect } from "react-router-dom";
 function ProfilePage({loggedUser}){
-  console.log(loggedUser);
+  
   if (!loggedUser) {
 
     console.log('nema korisnika');
