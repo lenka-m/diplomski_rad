@@ -42,7 +42,7 @@ export async function registerNewUser(req:Request, res:Response){
 export async function deleteUser(req:Request, res:Response){
     try {
         console.log(`pozvanan funkcija + ${req.body.userId}`)
-      const user = await AppDataSource.getRepository(User).delete({
+        const user = await AppDataSource.getRepository(User).delete({
         id:req.body.userId
       });
 

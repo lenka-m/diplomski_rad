@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
 import {EncryptionTransformer} from "typeorm-encrypted";
+import { Activity } from "./Activity";
 
 
 @Entity({name: "users"})
@@ -32,5 +33,7 @@ export class User {
     @Column()
     userRole: string
 
+    @OneToMany(()=> Activity, activity=> activity.user, { onDelete: "CASCADE" })
+    activities: Activity[]
     
 }

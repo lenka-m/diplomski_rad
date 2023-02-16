@@ -14,7 +14,7 @@ export class Team {
     @ManyToOne(()=>User)
     coordinator: User;
 
-    @OneToMany(()=> Task, task=> task.team)
+    @OneToMany(()=> Task, task=> task.team, { onDelete: "CASCADE" })
     tasks: Task[]
     
 }

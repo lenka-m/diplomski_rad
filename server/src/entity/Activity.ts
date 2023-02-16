@@ -12,7 +12,7 @@ export class Activity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(()=> User)
+    @ManyToOne(()=> User, user=>user.activities)
     user: User;
 
     @Column({ type: 'date' })

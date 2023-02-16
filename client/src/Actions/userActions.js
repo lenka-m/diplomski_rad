@@ -25,6 +25,6 @@ export async function searchUsers(formData){
 }
 
 export async function logoutUser(){
-      localStorage.clear();
+    localStorage.clear();
  }
 
