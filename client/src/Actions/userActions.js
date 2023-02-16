@@ -7,9 +7,11 @@ export async function getUser(){
 }
 
 export async function loginUser(email, password){
-    const res = await axios.post("http://localhost:3001/login",{email, password})
-    localStorage.setItem('token',res.data.token);
-    return await res.data.user;
+    const res = await axios.post(`http://localhost:3001/login`, {email, password});
+    console.log(res);
+    localStorage.setItem('token', res.data.token);
+    console.log(`setovao token: ${localStorage.getItem('token')}`);
+    return res.data.user;
 }
 export async function postUser(formData){
     await postObject('/register', formData)

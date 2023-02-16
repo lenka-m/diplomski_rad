@@ -10,19 +10,34 @@ const instance = axios.create({
     },
 });
 
+export function getInstance() {
+    const token = localStorage.getItem('token');
+    return axios.create({
+      baseURL: url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
 export async function getAll(path){
+    const instance = getInstance();
     const res = await instance.get(path);
-    return await res.data;
+    return res.data;
 }
 export async function searchObject(path, formData){
-    const res = await instance.get(`${path}`, {params: formData });
-    return res.data;
+    const instance = getInstance();
+  const res = await instance.get(path, {params: formData});
+  return res.data;
 }
 
 export async function postObject(path, formData){
-    await instance.post(`${path}`,formData );
+    const instance = getInstance();
+    await instance.post(path, formData);
 }
 
 export async function patchObject(path, formData){
-    await instance.patch(`${path}`, formData)
+    const instance = getInstance();
+    await instance.patch(path, formData);
 }
