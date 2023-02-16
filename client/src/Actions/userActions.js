@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAll, postObject, searchObject } from './AbstractActions';
+import { deleteObject, getAll, postObject, searchObject } from './AbstractActions';
 
 export async function getUser(){
     const res = await axios.get("http://localhost:3001/check");
@@ -15,6 +15,11 @@ export async function loginUser(email, password){
 }
 export async function postUser(formData){
     await postObject('/register', formData)
+}
+
+export async function deleteUser(userId){
+    console.log({'userId':userId});
+    await deleteObject('/users', {'userId':userId});
 }
 export async function getAllUsers(){
     return await getAll('/users');

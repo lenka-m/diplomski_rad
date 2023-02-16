@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react';
-import { getAllUsers } from '../Actions/userActions';
+import { deleteUser, getAllUsers } from '../Actions/userActions';
 import NewUser from './NewUser';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 
@@ -18,8 +18,16 @@ function AllUsers({loggedUser}) {
       alert('Ne mozete obrisati svoj profil');
       return;
     }
-    console.log(user);
-
+    try{
+      deleteUser(user.id).then(
+          getAllUsers().then(data=>{
+            setAllUsers(data);
+          })
+      )
+      console.log("obrisan");
+    } catch(ex){
+        console.log(ex);
+    }
   }
   return (
     <div className='tableContainer'>

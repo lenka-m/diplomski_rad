@@ -32,6 +32,12 @@ export async function searchObject(path, formData){
   return res.data;
 }
 
+export async function deleteObject(path, formData) {
+  const instance = getInstance();
+  console.log('pozvan deleteObject');
+  await instance.delete(path, { data: formData });
+}
+
 export async function postObject(path, formData){
     const instance = getInstance();
     await instance.post(path, formData);
