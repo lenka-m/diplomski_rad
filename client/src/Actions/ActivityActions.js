@@ -1,4 +1,5 @@
 import axios from "axios";
+import { deleteObject } from "./AbstractActions";
 import { getAll, patchObject, postObject } from "./AbstractActions";
 
 export async function postActivity(formData){   
@@ -10,4 +11,8 @@ export async function updateActivity(formData){
 }
 export async function getAllActivities(){
     return await getAll('/activity');
+}
+
+export async function deleteActivity(activityId){
+    await deleteObject('/activity', {'activityId':activityId});
 }

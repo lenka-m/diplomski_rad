@@ -1,5 +1,5 @@
 import React from 'react'
-import { getAllActivities, postActivity } from '../Actions/ActivityActions';
+import { deleteActivity, getAllActivities, postActivity } from '../Actions/ActivityActions';
 import { useState, useEffect } from 'react';
 import "../css/tableComponent.css"
 import {BsCheckCircleFill} from 'react-icons/bs'
@@ -25,6 +25,18 @@ function AllActivities({loggedUser}) {
     function handleFilter(value){
         setFilteredActivities(activities.filter(activity => activity.status === value))
     }
+    function handleDeleteActivity(activity){
+        try{
+          deleteActivity(activity.id).then(
+              getAllActivities((data)=>{
+                setActivities(data);
+              })
+          )
+          console.log("obrisana aktivnost");
+        } catch(ex){
+            console.log(ex);
+        }
+      }
 
   
   return (
@@ -66,7 +78,7 @@ function AllActivities({loggedUser}) {
                     
                 </td>
                 <td onClick={()=>{handleAccept(activity)}}> <button >Potvrdi</button></td>
-                <td ><button>Odbij</button></td>
+                <td onClick={()=>{handleDeleteActivity(activity)}}><button>Odbij</button></td>
             </tr>  
           
         ))}
