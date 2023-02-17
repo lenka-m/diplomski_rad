@@ -5,7 +5,7 @@ import { Team } from "../entity/Team";
 import { Project } from "../entity/Project";
 import { User } from "../entity/User";
 import { Task } from "../entity/Task";
-
+import { Brackets } from "typeorm";
 export async function createActivity(req:Request, res:Response){
     console.log(req.body);
     const user = await AppDataSource.getRepository(User).findOne({where: {id: req.body.userId}});
@@ -44,7 +44,8 @@ export async function finalUpdateActivity(req:Request, res:Response){
 
    await AppDataSource.getRepository(Activity).update(activityId, {
       numOfPoints: req.body.numOfPoints,
-      status: "complete"
+      status: "complete",
+      confirmation:true
    })
 }
 
@@ -114,10 +115,19 @@ export async function searchActivities(req: Request, res:Response){
          query.andWhere("activity.taskId = :taskId", { taskId: taskId });
       }
       if(userRole === 'none'){
+         query.andWhere("activity.status = 'complete'");
          query.andWhere("activity.id = : userId")
       } else if (userRole==='editor' && coordinatorId) {
-         query.orWhere("projectCoordinator.id = :coordinatorId", { coordinatorId: coordinatorId });
-         query.orWhere("teamCoordinator.id = :coordinatorId", {coordinatorId : coordinatorId});
+         query.andWhere("activity.status != :status", { status: 'complete' });
+         query.andWhere(
+    new Brackets((qb) => {
+      qb.where("projectCoordinator.id = :coordinatorId", {
+        coordinatorId: coordinatorId,
+      }).orWhere("teamCoordinator.id = :coordinatorId", {
+        coordinatorId: coordinatorId,
+      });
+    })
+  );
       }      
   
       const activities = await query.getMany();

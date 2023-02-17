@@ -92,7 +92,7 @@ function NewActivity({loggedUser}) {
                 ))}
             </select> 
             <label className='registerLabel'>Opis:</label>
-            <input className='registerInput' name = "opis" type = "text" required value ={formData.opis} onChange={handleChange}/>
+            <input className='registerInput' name = "opis" type = "text" placeholder='nije obavezno' value ={formData.opis} onChange={handleChange}/>
 
             <button className='registerSubmit' type = "submit"> Posalji zahtev</button>
         </form>
