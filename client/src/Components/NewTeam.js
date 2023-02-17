@@ -14,6 +14,11 @@ function NewTeam({ setNewTeamComponent, setTeams}) {
         setFormData({...formData, [e.target.name]: e.target.value });
     }
 
+    const handleCoordinatorChange = (e) => {
+        setFormData({...formData, coordinatorId: e.target.value });
+    }
+
+
     useEffect(() => {
         searchUsers({userRole:'editor'}).then(data=> {
             //console.log(data);
@@ -45,7 +50,7 @@ function NewTeam({ setNewTeamComponent, setTeams}) {
             <label className='registerLabel'>Naziv:</label>
             <input className='registerInput' name = "name" type = "text" required value ={formData.name} onChange={handleChange}/>
 
-            <select className='registerInput' onChange={handleChange} value = {formData.coordinatorId}>
+            <select className='registerInput' onChange={(e)=>handleCoordinatorChange(e)} value = {formData.coordinatorId}>
                 {users && users.map(user => (
                     <option key ={user.id} name = "coordinatorId" onChange={handleChange} value = {user.id}> {user.email}</option>
                 ))}

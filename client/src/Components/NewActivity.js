@@ -21,8 +21,9 @@ function NewActivity({loggedUser}) {
             setTasks(data[0].tasks)
         })
     }, [])
-
-
+    const handleTaskChange = (e) => {
+        setFormData({...formData, taskId: e.target.value });
+    }
 
     useEffect(() => {
         if(projects.length>0)
@@ -82,9 +83,9 @@ function NewActivity({loggedUser}) {
             </select>
 
             <label className='registerLabel'>Pozicija:</label>
-             <select className='registerInput' onChange={handleChange} value = {formData.taskId}>
+             <select className='registerInput' onChange={(e)=> handleTaskChange(e)} value = {formData.taskId}>
                 {tasks && tasks.map(task => (
-                    <option key ={task.id} name = "taskId" onChange={handleChange} value = {task.id}> {task.name}</option>
+                    <option key ={task.id} name = "taskId" onChange={(e)=> handleTaskChange(e)} value = {task.id}> {task.name}</option>
                 ))}
             </select> 
             <label className='registerLabel'>Opis:</label>

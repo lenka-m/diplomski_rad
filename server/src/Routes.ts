@@ -70,11 +70,11 @@ export const Routes: Route[] = [
 },{
     method: 'patch',
     route: '/updateActivity',
-    actions: [isEditor, updateActivity]
+    actions: [updateActivity]
 },{
     method: 'patch',
     route: '/activity',
-    actions: [isAdmin, updateActivity]
+    actions: [ updateActivity]
 },{
     method:'get',
     route:'/activity',
