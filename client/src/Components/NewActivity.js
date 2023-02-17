@@ -24,6 +24,9 @@ function NewActivity({loggedUser}) {
     const handleTaskChange = (e) => {
         setFormData({...formData, taskId: e.target.value });
     }
+    const handleTeamChange = (e) =>{
+        setFormData({...formData, teamId: e.target.value})
+    }
 
     useEffect(() => {
         if(projects.length>0)
@@ -74,6 +77,7 @@ function NewActivity({loggedUser}) {
             <label className='registerLabel'>Tim:</label>
             <select className='registerInput' onChange={(e) => {
                 handleChange(e);
+                handleTeamChange(e);
                 setSelectedTeam(teams.find(team => team.id === parseInt(e.target.value, 10)));
                 }} value = {formData.teamId}>
                 {teams && teams.map(team => (

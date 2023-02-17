@@ -14,7 +14,7 @@ function AllActivitiesAdmin({loggedUser}) {
     
     useEffect(()=>{   
         searchActivity().then(data => {
-        
+            console.log(data);
             setActivities(data);
             setFilteredActivities(data);
         });
@@ -75,9 +75,9 @@ function AllActivitiesAdmin({loggedUser}) {
                 <td>{activity.team.name}</td>
                 <td>{activity.task.name}</td>
                 <td>ss</td>
-                <td> <input id={`input-${activity.id}`}/></td>
+                <td> <input id={`input-${activity.id}`} value = {activity.task.points} /></td>
                 <td>
-                    
+                   {activity.confirmation && <p>activity.user.</p>} 
                     
                 </td>
                 {userRole == 'admin' && <td onClick={()=>{handleAccept(activity)}}> <button >Potvrdi</button></td>}

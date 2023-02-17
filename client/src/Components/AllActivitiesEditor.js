@@ -25,16 +25,17 @@ function AllActivitiesEditor({loggedUser}) {
       
     function handleDeleteActivity(activity){
         try{
-          deleteActivity(activity.id).then(
-              getAllActivities((data)=>{
-                setActivities(data);
-              })
-          )
-          console.log("obrisana aktivnost");
-        } catch(ex){
-            console.log(ex);
-        }
-      }
+            deleteActivity(activity.id).then(
+                searchActivity(userData).then(data => {
+                    console.log(data);
+                    setActivities(data);
+                })
+            )
+            console.log("obrisana aktivnost");
+          } catch(ex){
+              console.log(ex);
+          }
+    }
 
   
   return (
@@ -63,7 +64,7 @@ function AllActivitiesEditor({loggedUser}) {
                 <td>{activity.team.name}</td>
                 <td>{activity.task.name}</td>
                 <td>ss</td>
-                <td> <input id={`input-${activity.id}`}/></td>
+                <td> <input id={`input-${activity.id}`} value={activity.task.points}/></td>
                 
                 <td onClick={()=>{handleAccept(activity)}}> <AiFillCheckCircle className='buttonImage' color='white' /></td>
                 <td onClick={()=>{handleDeleteActivity(activity)}}> <AiFillCloseCircle className='buttonImage' color='red'/> </td>
