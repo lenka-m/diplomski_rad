@@ -26,9 +26,9 @@ export async function getAll(path){
     const res = await instance.get(path);
     return res.data;
 }
-export async function searchObject(path, formData){
-    const instance = getInstance();
-  const res = await instance.get(path, {params: formData});
+export async function searchObject(path, formData) {
+  const instance = getInstance();
+  const res = await instance.get(path, { params: formData });
   return res.data;
 }
 

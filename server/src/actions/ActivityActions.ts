@@ -62,26 +62,28 @@ export async function getAllActivities(req: Request, res:Response){
 }
 
 export async function searchActivities(req: Request, res:Response){
-      const userId = req.body.userId;
-      const date = req.body.date;
-      const confirmation = req.body.confirmation;
-      const numOfPoints = req.body.numOfPoints;
-      const status = req.body.status;
-      const projectId = req.body.projectId;
-      const userConfirmedId = req.body.UserActions;    
-      const teamId = req.body.teamId;
-      const taskId = req.body.taskId;
-      const coordinatorId = req.body.coordinatorId;
-      console.log(coordinatorId);
-
+   console.log(`Zahtev za search: ${req.query}`);
+   const userId = req.query.userId;
+   const date = req.query.date;
+   const confirmation = req.query.confirmation;
+   const numOfPoints = req.query.numOfPoints;
+   const status = req.query.status;
+   const projectId = req.query.projectId;
+   const userConfirmedId = req.query.UserActions;
+   const teamId = req.query.teamId;
+   const taskId = req.query.taskId;
+   const coordinatorId = req.query.coordinatorId;
+   const userRole = req.query.userRole;
+   console.log(coordinatorId);
       const query = AppDataSource.getRepository(Activity)
       .createQueryBuilder("activity")
       .leftJoinAndSelect("activity.user", "user")
+      .leftJoinAndSelect("activity.task","task")
       .leftJoinAndSelect("activity.project", "project")
       .leftJoinAndSelect("activity.team", "team")
       .leftJoinAndSelect("project.coordinator", "projectCoordinator")
       .leftJoinAndSelect("team.coordinator", "teamCoordinator");
-  
+      
       if (userId) {
           query.andWhere("activity.userId = :userId", { userId: userId });
       }
@@ -109,13 +111,17 @@ export async function searchActivities(req: Request, res:Response){
       }
       if (taskId) {
          query.andWhere("activity.taskId = :taskId", { taskId: taskId });
-      }  
-      if (coordinatorId) {
+      }
+      if(userRole === 'none'){
+         query.andWhere("activity.id = : userId")
+      } else if (userRole==='editor' && coordinatorId) {
          query.orWhere("projectCoordinator.id = :coordinatorId", { coordinatorId: coordinatorId });
          query.orWhere("teamCoordinator.id = :coordinatorId", {coordinatorId : coordinatorId});
       }      
   
       const activities = await query.getMany();
+      console.log(activities);
+      console.log(req.query);
       res.json(activities);
   
 }

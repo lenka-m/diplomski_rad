@@ -1,18 +1,20 @@
 import React from 'react'
-import { deleteActivity, getAllActivities, postActivity } from '../Actions/ActivityActions';
+import { deleteActivity, updateActivity,getAllActivities, postActivity, searchActivity } from '../Actions/ActivityActions';
 import { useState, useEffect } from 'react';
 import "../css/tableComponent.css"
-import {BsCheckCircleFill} from 'react-icons/bs'
-import { updateActivity } from '../Actions/ActivityActions';
 
 
-function AllActivities({loggedUser}) {
+
+
+function AllActivitiesAdmin({loggedUser}) {
     const [activities, setActivities] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);
-    const [numOfPoints, setNumOfPoints] = useState(0);
+    
+    const userRole = 'none';
     
     useEffect(()=>{   
-        getAllActivities().then(data => {
+        searchActivity().then(data => {
+        
             setActivities(data);
             setFilteredActivities(data);
         });
@@ -22,9 +24,10 @@ function AllActivities({loggedUser}) {
         console.log(activity);
         updateActivity({activityId: activity.id ,userConfirmedId: loggedUser.id, numOfPoints: 2})
     }
-    function handleFilter(value){
-        setFilteredActivities(activities.filter(activity => activity.status === value))
-    }
+    function handleFilter(value) {
+        setFilteredActivities(activities.filter(activity => activity.status === value));
+      }
+      
     function handleDeleteActivity(activity){
         try{
           deleteActivity(activity.id).then(
@@ -55,13 +58,13 @@ function AllActivities({loggedUser}) {
             <tr>
                 <td> Ime i prezime</td>
                 <td> Projekat</td>
-                <td> Oblast</td>
-                <td> Podoblast</td>
-                <td> Opis</td>
+                <td> Tim</td>
+                <td> Pozicija</td>
+                <td> Opis*</td>
                 <td> Broj poena</td>
                 <td> Potvrdjeno</td>
-                <td> Potvrdi </td>
-                <td> Poništi</td>
+                {userRole == 'admin' && <td> Potvrdi </td>}
+                {userRole == 'admin' && <td> Ponisti </td>}
             </tr>
         </thead>
         <tbody>
@@ -77,8 +80,9 @@ function AllActivities({loggedUser}) {
                     
                     
                 </td>
-                <td onClick={()=>{handleAccept(activity)}}> <button >Potvrdi</button></td>
-                <td onClick={()=>{handleDeleteActivity(activity)}}><button>Odbij</button></td>
+                {userRole == 'admin' && <td onClick={()=>{handleAccept(activity)}}> <button >Potvrdi</button></td>}
+                {userRole == 'admin' && <td onClick={()=>{handleDeleteActivity(activity)}}><button>Odbij</button></td>}
+                
             </tr>  
           
         ))}
@@ -90,4 +94,4 @@ function AllActivities({loggedUser}) {
   )
 }
 
-export default AllActivities
+export default AllActivitiesAdmin

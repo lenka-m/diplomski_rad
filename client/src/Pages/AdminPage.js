@@ -2,9 +2,9 @@ import { useContext, useState,   } from "react";
 import ProfileComponent from "../Components/ProfileComponent";
 import AllUsers from "../Components/AllUsers";
 import "../css/profile.css";
-import AllActivities from "../Components/AllActivities";
 import AllProjekti from "../Components/AllProjekti";
 import AllTeams from "../Components/AllTeams";
+import AllActivitiesAdmin from "../Components/AllActivitiesAdmin";
 
 
 
@@ -18,7 +18,7 @@ function AdminPage({loggedUser}){
        <div className="ProfilePage">
 
             <ProfileComponent loggedUser={ loggedUser}/>
-            <AllActivities loggedUser = {loggedUser}/>
+            <AllActivitiesAdmin loggedUser = {loggedUser}/>
             <div className="buttons">
             <button onClick= {()=> { setUsersVisible(true);
                     setTeamsVisible(false);

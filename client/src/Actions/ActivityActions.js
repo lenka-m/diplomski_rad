@@ -1,5 +1,5 @@
 import axios from "axios";
-import { deleteObject } from "./AbstractActions";
+import { deleteObject, searchObject } from "./AbstractActions";
 import { getAll, patchObject, postObject } from "./AbstractActions";
 
 export async function postActivity(formData){   
@@ -15,4 +15,12 @@ export async function getAllActivities(){
 
 export async function deleteActivity(activityId){
     await deleteObject('/activity', {'activityId':activityId});
+}
+
+export async function EditorPatchActivity(formData){
+    await patchObject('/activity', formData);
+}
+
+export async function searchActivity(formData){
+    return await searchObject('/activity/search', formData);
 }
