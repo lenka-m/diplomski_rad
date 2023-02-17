@@ -80,6 +80,7 @@ export async function searchActivities(req: Request, res:Response){
       .leftJoinAndSelect("activity.user", "user")
       .leftJoinAndSelect("activity.task","task")
       .leftJoinAndSelect("activity.project", "project")
+      .leftJoinAndSelect("activity.userConfirmed","userConfirmed")
       .leftJoinAndSelect("activity.team", "team")
       .leftJoinAndSelect("project.coordinator", "projectCoordinator")
       .leftJoinAndSelect("team.coordinator", "teamCoordinator");

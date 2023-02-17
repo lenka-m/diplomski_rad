@@ -1,6 +1,7 @@
 import React from 'react'
 import { deleteActivity, updateActivity,getAllActivities, postActivity, searchActivity } from '../Actions/ActivityActions';
 import { useState, useEffect } from 'react';
+import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import "../css/tableComponent.css"
 
 
@@ -30,16 +31,18 @@ function AllActivitiesAdmin({loggedUser}) {
       
     function handleDeleteActivity(activity){
         try{
-          deleteActivity(activity.id).then(
-              getAllActivities((data)=>{
-                setActivities(data);
-              })
-          )
-          console.log("obrisana aktivnost");
-        } catch(ex){
-            console.log(ex);
-        }
-      }
+            deleteActivity(activity.id).then(
+                searchActivity().then(data => {
+                    console.log(data);
+                    setActivities(data);
+                    setFilteredActivities(data);
+                })
+            )
+            console.log("obrisana aktivnost");
+          } catch(ex){
+              console.log(ex);
+          }
+    }
 
   
   return (
@@ -63,8 +66,8 @@ function AllActivitiesAdmin({loggedUser}) {
                 <td> Opis*</td>
                 <td> Broj poena</td>
                 <td> Potvrdjeno</td>
-                {userRole == 'admin' && <td> Potvrdi </td>}
-                {userRole == 'admin' && <td> Ponisti </td>}
+                
+                
             </tr>
         </thead>
         <tbody>
@@ -75,13 +78,12 @@ function AllActivitiesAdmin({loggedUser}) {
                 <td>{activity.team.name}</td>
                 <td>{activity.task.name}</td>
                 <td>ss</td>
-                <td> <input id={`input-${activity.id}`} value = {activity.task.points} /></td>
+                <td> <input id={`input-${activity.id}`} defaultValue = {activity.task.points} /></td>
                 <td>
-                   {activity.confirmation && <p>activity.user.</p>} 
-                    
+                   {activity.confirmation ?  (<p>{activity.userConfirmed.email}</p>) :(<p>/</p>)} 
                 </td>
-                {userRole == 'admin' && <td onClick={()=>{handleAccept(activity)}}> <button >Potvrdi</button></td>}
-                {userRole == 'admin' && <td onClick={()=>{handleDeleteActivity(activity)}}><button>Odbij</button></td>}
+                <td onClick={()=>{handleAccept(activity)}}> <AiFillCheckCircle className='buttonImage' color='white' /></td>
+                <td onClick={()=>{handleDeleteActivity(activity)}}> <AiFillCloseCircle className='buttonImage' color='red'/> </td>
                 
             </tr>  
           

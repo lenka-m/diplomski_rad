@@ -51,7 +51,6 @@ function AllActivitiesEditor({loggedUser}) {
                 <td> Pozicija</td>
                 <td> Opis*</td>
                 <td> Broj poena</td>
-                
                 <td> Potvrdi </td>
                 <td> Ponisti </td>
             </tr>
@@ -64,7 +63,7 @@ function AllActivitiesEditor({loggedUser}) {
                 <td>{activity.team.name}</td>
                 <td>{activity.task.name}</td>
                 <td>ss</td>
-                <td> <input id={`input-${activity.id}`} value={activity.task.points}/></td>
+                <td> <input id={`input-${activity.id}`} defaultValue={activity.task.points}/></td>
                 
                 <td onClick={()=>{handleAccept(activity)}}> <AiFillCheckCircle className='buttonImage' color='white' /></td>
                 <td onClick={()=>{handleDeleteActivity(activity)}}> <AiFillCloseCircle className='buttonImage' color='red'/> </td>
