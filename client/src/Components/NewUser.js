@@ -31,12 +31,12 @@ function NewUser({ setNewUserComponent, setAllUsers}) {
             <label className='registerLabel'>Prezime:</label>
             <input className='registerInput' name = "lastName" type = "text" required value = {formData.lastName} onChange={handleChange}/>
 
-            <label className='registerLabel'>Lozinka:</label>
-            <input className='registerInput' name = "password" type = "password" required value = {formData.password} onChange={handleChange}/>
-
             <label className='registerLabel'>Email:</label>
             <input  className='registerInput'name = "email" type = "text" required value = {formData.email} onChange={handleChange}/>
             
+            <label className='registerLabel'>Lozinka:</label>
+            <input className='registerInput' name = "password" type = "password" required value = {formData.password} onChange={handleChange}/>
+
             <label className='registerLabel'>Uloga:</label>
             <select className='registerInput' name = "userRole" onChange={ handleChange}>
                 <option value = "admin"> Admin</option>

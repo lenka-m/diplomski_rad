@@ -32,8 +32,7 @@ function NewActivity({loggedUser}) {
 
     useEffect(() => {
         if(teams.length>0){
-            setFormData({...formData, teamId:teams[0].id}) 
-            setFormData({... formData, taskId: teams[0].tasks[0].id})
+            setFormData({...formData, teamId:teams[0].id, taskId: teams[0].tasks[0].id}) 
         }
     }, [ teams])
     useEffect(() => {
