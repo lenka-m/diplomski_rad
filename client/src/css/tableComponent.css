@@ -10,6 +10,12 @@
     align-items: center;
     padding:30px
 }
+.buttonContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start !important;
+    justify-content: center;
+}
 .tableContainer{
     border-collapse: collapse;
 }

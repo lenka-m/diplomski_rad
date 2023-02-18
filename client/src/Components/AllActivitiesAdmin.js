@@ -32,7 +32,7 @@ function AllActivitiesAdmin({loggedUser}) {
     function handleDeleteActivity(activity){
         try{
             deleteActivity(activity.id).then(
-                searchActivity().then(data => {
+                searchActivity({userRole: loggedUser.userRole}).then(data => {
                     console.log(data);
                     setActivities(data);
                     setFilteredActivities(data);
@@ -47,7 +47,8 @@ function AllActivitiesAdmin({loggedUser}) {
   
   return (
     <div className='tableContainer'>
-        {activities===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Aktivnosti </h1>
+        {activities.length===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Aktivnosti </h1>
+        
         <div className='filterButtons'>
             <button onClick={()=> setFilteredActivities(activities)}> Sve Aktivnosti</button>
             <button  onClick={()=>handleFilter("created")}>Potvrdjeno</button>

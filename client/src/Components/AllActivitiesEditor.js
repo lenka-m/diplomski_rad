@@ -40,7 +40,7 @@ function AllActivitiesEditor({loggedUser}) {
   
   return (
     <div className='tableContainer'>
-        {activities===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Aktivnosti </h1></div>)}
+         {activities.length===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Aktivnosti </h1>
        
     <table className = 'content-table'>
         <thead>
@@ -75,6 +75,7 @@ function AllActivitiesEditor({loggedUser}) {
     </table>
     
         
+    </div>)}
     </div>
   )
 }

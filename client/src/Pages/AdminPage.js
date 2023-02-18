@@ -19,25 +19,28 @@ function AdminPage({loggedUser}){
 
             <ProfileComponent loggedUser={ loggedUser}/>
             <AllActivitiesAdmin loggedUser = {loggedUser}/>
-            <div className="buttons">
-            <button onClick= {()=> { setUsersVisible(true);
-                    setTeamsVisible(false);
-                    setProjektiVisible(false);}}>Korisnici</button>
-                <button onClick= {()=> { setProjektiVisible(true);
-                setUsersVisible(false);
-                    ;setTeamsVisible(false); }} >
-                        Projekti</button>
-                <button onClick= {()=> { 
-                    setTeamsVisible(true);
-                    setUsersVisible(false);
-                    setProjektiVisible(false);}}>
-                        Timovi</button>
-                    
+            <div className="tableContainer">
+                <div className="buttonContainer buttons">
+                    <button onClick= {()=> { 
+                        setUsersVisible(!usersVisible);
+                        setTeamsVisible(false);
+                        setProjektiVisible(false);}}>
+                            Korisnici</button>
+                    <button onClick= {()=> { 
+                        setProjektiVisible(true);
+                        setUsersVisible(false);
+                        setTeamsVisible(false); }} >
+                            Projekti</button>
+                    <button onClick= {()=> { 
+                        setTeamsVisible(true);
+                        setUsersVisible(false);
+                        setProjektiVisible(false);}}>
+                            Timovi</button>        
+                </div>
+                {usersVisible && <AllUsers loggedUser = {loggedUser}/>}
+                {projektiVisible && <AllProjekti/>}
+                {teamsVisible && <AllTeams/>}
             </div>
-            {usersVisible && <AllUsers loggedUser = {loggedUser}/>}
-            {projektiVisible && <AllProjekti/>}
-            {teamsVisible && <AllTeams/>}
-             
             
        </div>
     )
