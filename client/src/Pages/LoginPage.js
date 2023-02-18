@@ -18,6 +18,7 @@ function LoginPage({loggedUser, setLoggedUser}){
         setLoggedUser(user1); 
         history.push('/profile');
         } catch(error){        
+            console.log("uhvatio error")
             setError(error);            
         }    
     }
@@ -34,7 +35,7 @@ function LoginPage({loggedUser, setLoggedUser}){
                 <label>Password:</label>
                 <input name = "password" type = "password" required value = {loginData.password} onChange={handleChange}/>
                 
-                {error ? (<div>{error.response.data.message}</div>) : (<div></div>)}
+                {error ? (<div>{error.response.data}</div>) : (<div></div>)}
                 
                 <button type = "submit"> Login</button>
             </form>

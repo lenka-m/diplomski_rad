@@ -1,17 +1,18 @@
 
 import React from 'react'
-import Modal from '../Components/Modal'
+import Modal from '../Components/Modals/Modal'
 import { useState } from 'react'
 import "../css/homepage.css";
 
 function Homepage() {
-    const [isOpenModal, setIsOpenModal] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);   
 
     return (
     
     <div className='homepage'>
-    
-    {isOpenModal && <Modal text = "Uspešno ste se ulogovali na svoj profil!" closeModal={setIsOpenModal}/>}
+      <h1> hey, click the button to open the modal.</h1>
+      <button className='openModalBtn' onClick={()=> setIsOpen(true)}> Open</button>
+      {isOpen && <Modal setIsOpen = { setIsOpen} />}
     </div>
   )
 }
