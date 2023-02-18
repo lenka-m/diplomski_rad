@@ -1,5 +1,5 @@
 import React from 'react'
-import { deleteActivity, updateActivity,getAllActivities, postActivity, searchActivity } from '../Actions/ActivityActions';
+import { deleteActivity, updateActivity, adminPatchActivity, searchActivity } from '../Actions/ActivityActions';
 import { useState, useEffect } from 'react';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import "../css/tableComponent.css"
@@ -14,7 +14,7 @@ function AllActivitiesAdmin({loggedUser}) {
     const userRole = 'none';
     
     useEffect(()=>{   
-        searchActivity().then(data => {
+        searchActivity({userRole: loggedUser.userRole}).then(data => {
             console.log(data);
             setActivities(data);
             setFilteredActivities(data);
@@ -23,7 +23,7 @@ function AllActivitiesAdmin({loggedUser}) {
     
     function handleAccept(activity){
         console.log(activity);
-        updateActivity({activityId: activity.id ,userConfirmedId: loggedUser.id, numOfPoints: 2})
+        adminPatchActivity({activityId: activity.id ,userConfirmedId: loggedUser.id, numOfPoints: 2})
     }
     function handleFilter(value) {
         setFilteredActivities(activities.filter(activity => activity.status === value));
@@ -80,7 +80,7 @@ function AllActivitiesAdmin({loggedUser}) {
                 <td>ss</td>
                 <td> <input id={`input-${activity.id}`} defaultValue = {activity.task.points} /></td>
                 <td>
-                   {activity.confirmation ?  (<p>{activity.userConfirmed.email}</p>) :(<p>/</p>)} 
+                   {activity.userConfirmed ?  (<p>{activity.userConfirmed.email}</p>) :(<p>/</p>)} 
                 </td>
                 <td onClick={()=>{handleAccept(activity)}}> <AiFillCheckCircle className='buttonImage' color='white' /></td>
                 <td onClick={()=>{handleDeleteActivity(activity)}}> <AiFillCloseCircle className='buttonImage' color='red'/> </td>

@@ -6,9 +6,6 @@ export async function postActivity(formData){
     await postObject('/activity', formData);
 }
 
-export async function updateActivity(formData){
-    await patchObject('/activity', formData)  
-}
 export async function getAllActivities(){
     return await getAll('/activity');
 }
@@ -18,7 +15,11 @@ export async function deleteActivity(activityId){
 }
 
 export async function EditorPatchActivity(formData){
-    await patchObject('/activity', formData);
+    await patchObject('/patch-activity', formData);
+}
+
+export async function adminPatchActivity(formData){
+    await patchObject('/activity-final', formData);
 }
 
 export async function searchActivity(formData){

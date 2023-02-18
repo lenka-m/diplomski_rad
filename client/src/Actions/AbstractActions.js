@@ -5,8 +5,10 @@ const token = localStorage.getItem('token');
 const instance = axios.create({
     baseURL: `${url}`,
     headers: {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Methods': 'PATCH',//Access-Control-Allow-Methods
+      'Access-Control-Allow-Origin': 'http://localhost:3000',
+      'Access-Control-Allow-Headers': 'Authorization, Content-Type'
     },
 });
 
@@ -44,6 +46,6 @@ export async function postObject(path, formData){
 }
 
 export async function patchObject(path, formData){
-    const instance = getInstance();
-    await instance.patch(path, formData);
+  const instance = getInstance();
+  return instance.patch(path,{data: formData});
 }

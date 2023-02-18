@@ -26,27 +26,31 @@ export async function createActivity(req:Request, res:Response){
 }
 
 export async function updateActivity(req:Request, res:Response){
-   const userConfirmed = await AppDataSource.getRepository(User).findOne({where: {id: req.body.userConfirmedId}});
-   const activityId = req.body.activityId;
-   console.log(req.body);
-   await AppDataSource.getRepository(Activity).update(activityId, {
-      confirmation: true,
-      numOfPoints: req.body.numOfPoints,
-      userConfirmed: userConfirmed,
-      status: "pending"
-   })
+   const userConfirmed = await AppDataSource.getRepository(User).findOne({where: {id: req.body.data.userConfirmedId}});
+   const activityId = req.body.data.activityId;
+   console.log(req.body.data);
+   await AppDataSource.getRepository(Activity).update(
+      { id: activityId },
+      {
+        confirmation: true,
+        numOfPoints: req.body.data.numOfPoints,
+        userConfirmed: userConfirmed,
+        status: "pending"
+      }
+    );
    res.send('ok');
 }
 
 export async function finalUpdateActivity(req:Request, res:Response){
    
-   const activityId = req.body.activityId;
-
-   await AppDataSource.getRepository(Activity).update(activityId, {
-      numOfPoints: req.body.numOfPoints,
+   const activityId = req.body.data.activityId;
+   console.log('pokusao da ranuje');
+   await AppDataSource.getRepository(Activity).update({ id: activityId }, {
+      numOfPoints: req.body.data.numOfPoints,
       status: "complete",
       confirmation:true
    })
+   res.send('ok');
 }
 
 export async function getAllActivities(req: Request, res:Response){
@@ -120,15 +124,17 @@ export async function searchActivities(req: Request, res:Response){
       } else if (userRole==='editor' && coordinatorId) {
          query.andWhere("activity.status != :status", { status: 'complete' });
          query.andWhere(
-    new Brackets((qb) => {
-      qb.where("projectCoordinator.id = :coordinatorId", {
-        coordinatorId: coordinatorId,
-      }).orWhere("teamCoordinator.id = :coordinatorId", {
-        coordinatorId: coordinatorId,
-      });
+            new Brackets((qb) => {
+            qb.where("projectCoordinator.id = :coordinatorId", {
+            coordinatorId: coordinatorId,
+             }).orWhere("teamCoordinator.id = :coordinatorId", {
+               coordinatorId: coordinatorId,
+            });
     })
   );
-      }      
+      } else if (userRole==='admin'){
+         query.andWhere("activity.status != :status", { status: 'complete' });
+      }     
   
       const activities = await query.getMany();
       console.log(activities);

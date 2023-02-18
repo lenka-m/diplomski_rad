@@ -1,5 +1,5 @@
 import React from 'react'
-import { deleteActivity, updateActivity,getAllActivities, postActivity, searchActivity } from '../Actions/ActivityActions';
+import { deleteActivity, EditorPatchActivity, searchActivity } from '../Actions/ActivityActions';
 import { useState, useEffect } from 'react';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import "../css/tableComponent.css"
@@ -19,7 +19,7 @@ function AllActivitiesEditor({loggedUser}) {
     
     function handleAccept(activity){
         console.log(activity);
-        updateActivity({activityId: activity.id ,userConfirmedId: loggedUser.id, numOfPoints: 2})
+        EditorPatchActivity({activityId: activity.id ,userConfirmedId: loggedUser.id, numOfPoints: 2})
     }
     
       
