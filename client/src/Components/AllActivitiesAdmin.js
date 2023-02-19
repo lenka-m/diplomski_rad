@@ -21,10 +21,17 @@ function AllActivitiesAdmin({loggedUser}) {
         });
     }, [])  
     
-    function handleAccept(activity){
+    function handleAccept(activity) {
         console.log(activity);
-        adminPatchActivity({activityId: activity.id ,userConfirmedId: loggedUser.id, numOfPoints: 2})
+        adminPatchActivity({activityId: activity.id, userConfirmedId: loggedUser.id, numOfPoints: 2})
+          .then(() => searchActivity({userRole: loggedUser.userRole}))
+          .then(data => {
+            console.log(data);
+            setActivities(data);
+            setFilteredActivities(data);
+          });
     }
+    
     function handleFilter(value) {
         setFilteredActivities(activities.filter(activity => activity.status === value));
       }

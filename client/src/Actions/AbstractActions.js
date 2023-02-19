@@ -47,5 +47,5 @@ export async function postObject(path, formData){
 
 export async function patchObject(path, formData){
   const instance = getInstance();
-  return instance.patch(path,{data: formData});
+  return await instance.patch(path,{data: formData});
 }

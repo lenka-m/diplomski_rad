@@ -18,8 +18,18 @@ function AllActivitiesEditor({loggedUser}) {
     }, [])  
     
     function handleAccept(activity){
-        console.log(activity);
+        try{
         EditorPatchActivity({activityId: activity.id ,userConfirmedId: loggedUser.id, numOfPoints: 2})
+        .then(() => searchActivity({userData}))
+        .then(data => {
+          console.log(data);
+          setActivities(data);
+          setActivities(data);
+        });
+            
+        } catch(ex){
+            console.log('neuspesna potvrda')
+        }
     }
     
       
@@ -49,7 +59,7 @@ function AllActivitiesEditor({loggedUser}) {
                 <td> Projekat</td>
                 <td> Tim</td>
                 <td> Pozicija</td>
-                <td> Opis*</td>
+                <td> Datum</td>
                 <td> Broj poena</td>
                 <td> Potvrdi </td>
                 <td> Ponisti </td>
@@ -62,11 +72,13 @@ function AllActivitiesEditor({loggedUser}) {
                 <td>{activity.project.name}</td>
                 <td>{activity.team.name}</td>
                 <td>{activity.task.name}</td>
-                <td>ss</td>
-                <td> <input id={`input-${activity.id}`} defaultValue={activity.task.points}/></td>
+                <td>{activity.date}</td>
+                {activity.status==='pending' && <td>{activity.numOfPoints}</td>}
+                {activity.status==='created' && <td> <input id={`input-${activity.id}`} defaultValue={activity.task.points}/></td>}
+                {activity.status==='created' && <td onClick={()=>{handleAccept(activity)}}> <AiFillCheckCircle className='buttonImage' color='white' /></td>}
+                {activity.status==='created' && <td onClick={()=>{handleDeleteActivity(activity)}}> <AiFillCloseCircle className='buttonImage' color='red'/> </td>}
                 
-                <td onClick={()=>{handleAccept(activity)}}> <AiFillCheckCircle className='buttonImage' color='white' /></td>
-                <td onClick={()=>{handleDeleteActivity(activity)}}> <AiFillCloseCircle className='buttonImage' color='red'/> </td>
+                                
                 
             </tr>  
           
