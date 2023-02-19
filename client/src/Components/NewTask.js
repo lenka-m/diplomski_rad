@@ -17,6 +17,12 @@ function NewTask({ setNewTaskComponent, teams, setTeams}) {
     async function handleSubmit (e){
         e.preventDefault();
         await postTask(formData)
+        getAllTeams()
+            .then((data) =>{
+                setTeams(data);
+            }).then(()=>{
+                setNewTaskComponent(false)
+            })
     }
     
     useEffect(() => {
@@ -27,8 +33,7 @@ function NewTask({ setNewTaskComponent, teams, setTeams}) {
 
   return (
     <div className='registerComponent'>      
-    <button onClick={()=> setNewTaskComponent(false)}>Odustani</button>  
-        <h1 className='registerTitle'>Nova Pozicija</h1>
+        <h1  onClick={()=> setNewTaskComponent(false)} className='registerTitle'>Nova Pozicija</h1>
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
             
             <select

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { getAllTeams } from '../Actions/TeamActions';
 import NewTeam from './NewTeam'
 import "../css/tableComponent.css";
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import {AiFillEyeInvisible } from 'react-icons/ai';
 import NewTask from './NewTask';
 
 function TaskHeader() {
@@ -35,6 +35,13 @@ function AllTeams() {
     <div className='tableContainer'>
       
     <h1> Timovi </h1>
+    <div className='btnContainer'>
+    {newTeamComponent ? (<NewTeam setNewTeamComponent={setNewTeamComponent} setTeams={setTeams} />
+    ) : (  !newTaskComponent && <button className ='btnAdd ' onClick={()=>setNewTeamComponent(true)}> Dodaj novi tim</button>)}
+
+    {newTaskComponent ? (<NewTask setNewTaskComponent = {setNewTaskComponent} setTeams = {setTeams} teams ={teams}/>
+    ): (!newTeamComponent && <button className='btnAdd ' onClick={()=> setNewTaskComponent(true)}> Dodaj novi task</button>) }
+</div>
     <table className='content-table'>
       <thead>
         <tr>
@@ -71,11 +78,6 @@ function AllTeams() {
       </tbody>
     </table>
 
-    {newTeamComponent ? (<NewTeam setNewTeamComponent={setNewTeamComponent} setTeams={setTeams} />
-    ) : (<button onClick={()=>setNewTeamComponent(true)}> Dodaj novi tim</button>)}
-
-    {newTaskComponent ? (<NewTask setNewTaskComponent = {setNewTaskComponent} setTeams = {setTeams} teams ={teams}/>
-    ): (<button onClick={()=> setNewTaskComponent(true)}> Dodaj novi task</button>) }
 
   </div>
   )

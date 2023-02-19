@@ -1,7 +1,8 @@
 .ProfilePage{
     background-color: #0C2D48;
     width: 100vw;
-    height: 150vh;
+    min-height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start; 

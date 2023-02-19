@@ -56,7 +56,7 @@ function NewActivity({loggedUser, setIsOpen, setCompletedActivities}) {
     };
     async function handleSubmit (e){
             e.preventDefault();
-            postActivity(formData).then(
+            await postActivity(formData).then(
                 searchActivity({userId: loggedUser.id}).then(data => {
                     console.log(data);
                     setCompletedActivities(data)

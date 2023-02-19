@@ -31,6 +31,9 @@ function AllProjekti(user) {
     <div className='tableContainer'>
       
     <h1> Projekti </h1>
+    {newProjectComponent ? (<NewProject setNewProjectComponent={setNewProjectComponent} setProjects={setProjects} />
+) : (<button className='btnAdd' onClick={()=>setNewProjectComponent(true)}> Dodaj novi projekat</button>)}
+
     <table className = 'content-table'>
     <thead>
         <tr>
@@ -54,8 +57,6 @@ function AllProjekti(user) {
     ))} 
   </tbody>
 </table>
-{newProjectComponent ? (<NewProject setNewProjectComponent={setNewProjectComponent} setProjects={setProjects} />
-) : (<button onClick={()=>setNewProjectComponent(true)}> Dodaj novi projekat</button>)}
 
 </div>
   )

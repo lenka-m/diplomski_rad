@@ -3,7 +3,7 @@ import "../css/register.css";
 import { searchUsers } from '../Actions/userActions';
 import { postTeam } from '../Actions/TeamActions';
 import { getAllTeams } from '../Actions/TeamActions';
-
+import { FcCancel } from 'react-icons/fc';
 
 function NewTeam({ setNewTeamComponent, setTeams}) { 
     
@@ -44,8 +44,8 @@ function NewTeam({ setNewTeamComponent, setTeams}) {
     }
   return (
     <div className='registerComponent'>      
-    <button onClick={()=> setNewTeamComponent(false)}>Odustani</button>  
-        <h1 className='registerTitle'>Novi Tim</h1>
+    <button className='btn-Exit' onClick={()=> setNewTeamComponent(false)}><FcCancel/></button>  
+        <h1  onClick={()=> setNewTeamComponent(false)} className='registerTitle'>Novi Tim</h1>
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
             <label className='registerLabel'>Naziv:</label>
             <input className='registerInput' name = "name" type = "text" required value ={formData.name} onChange={handleChange}/>

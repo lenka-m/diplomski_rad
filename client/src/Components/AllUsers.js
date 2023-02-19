@@ -8,7 +8,6 @@ function AllUsers({loggedUser}) {
   const [users, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [newUserComponent, setNewUserComponent]  = useState(false);
-  const [searchName, setSearchName] = useState('');
   const [searchData, setSearchData] = useState({searchName: '', searchMail:'', searchUserRole:''})
   
   useEffect(()=>{
@@ -69,6 +68,8 @@ function AllUsers({loggedUser}) {
               <td> Ime i prezime</td>
               <td> Email</td>
               <td> Uloga</td>
+              <td> Broj poena</td>
+              <td> Status Clana</td>
               <td> Azuriraj</td>
               <td> Obrisi</td>
               
@@ -97,6 +98,11 @@ function AllUsers({loggedUser}) {
               <td >{user.firstName} {user.lastName}</td>
               <td> {user.email}</td>
               <td> {user.userRole}</td>
+              
+
+              
+              { user.userRole === "none" ?(<td>{user.totalPoints}</td>) :(<td></td>)}
+              { user.userRole === "none" ?(<td>Beba</td>) :(<td></td>)}
               <td><AiFillEdit color='orange'/> </td>
               <td onClick={()=>{handleDeleteUser(user)}}><AiFillDelete color='red'/></td>
           </tr>  
