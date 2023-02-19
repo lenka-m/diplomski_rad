@@ -30,16 +30,17 @@ function AllActivitiesUser({loggedUser}) {
   
   return (
     <div className='tableContainer'>
-        {completedActivities.length===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Moje dosadašnje aktivnosti: </h1>
-       { !isOpen && <button onClick={()=>{setIsOpen(!isOpen)}} >Posalji zahtev</button>}
+        { !isOpen && <button onClick={()=>{setIsOpen(!isOpen)}} >Posalji zahtev</button>}
        {isOpen && <NewActivity loggedUser = {loggedUser} setIsOpen={setIsOpen} />}
      
+        {completedActivities.length===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Moje dosadašnje aktivnosti: </h1>
+       
     <table className = 'content-table'>
         <thead>
             <tr>
                 
-                <td> Projekat</td>
                 <td> Tim</td>
+                <td> Projekat</td>
                 <td> Pozicija</td>
                 <td> Datum</td>
                 <td> Broj poena</td>
@@ -55,7 +56,7 @@ function AllActivitiesUser({loggedUser}) {
                 <td>{activity.project.name}</td>
                 <td>{activity.task.name}</td>
                 <td>{activity.date}</td>
-                {activity.status ==='complete' ? 
+                {activity.status ==='completed' ? 
                  (<td>{activity.numOfPoints} </td>)
                 : (<td>pending</td>)}
             </tr>  

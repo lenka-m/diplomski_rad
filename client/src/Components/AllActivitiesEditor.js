@@ -20,7 +20,7 @@ function AllActivitiesEditor({loggedUser}) {
     function handleAccept(activity){
         try{
         EditorPatchActivity({activityId: activity.id ,userConfirmedId: loggedUser.id, numOfPoints: 2})
-        .then(() => searchActivity({userData}))
+        .then(() => searchActivity(userData))
         .then(data => {
           console.log(data);
           setActivities(data);

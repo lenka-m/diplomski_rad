@@ -27,12 +27,12 @@ function AdminPage({loggedUser}){
                         setProjektiVisible(false);}}>
                             Korisnici</button>
                     <button onClick= {()=> { 
-                        setProjektiVisible(true);
+                        setProjektiVisible(!projektiVisible);
                         setUsersVisible(false);
                         setTeamsVisible(false); }} >
                             Projekti</button>
                     <button onClick= {()=> { 
-                        setTeamsVisible(true);
+                        setTeamsVisible(!teamsVisible);
                         setUsersVisible(false);
                         setProjektiVisible(false);}}>
                             Timovi</button>        
