@@ -148,7 +148,7 @@ export async function searchActivities(req: Request, res:Response){
          query.andWhere("activity.status = 'complete'");
          query.andWhere("activity.id = : userId")
       } else if (userRole==='editor' && coordinatorId) {
-         query.andWhere("activity.status != :status", { status: 'complete' });
+         query.andWhere("activity.status != :status", { status: 'completed' });
          query.andWhere(
             new Brackets((qb) => {
             qb.where("projectCoordinator.id = :coordinatorId", {
@@ -159,7 +159,7 @@ export async function searchActivities(req: Request, res:Response){
     })
   );
       } else if (userRole==='admin'){
-         query.andWhere("activity.status != :status", { status: 'complete' });
+         query.andWhere("activity.status != :status", { status: 'completed' });
       }     
   
       const activities = await query.getMany();

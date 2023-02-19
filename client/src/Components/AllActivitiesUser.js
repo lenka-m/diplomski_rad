@@ -9,7 +9,6 @@ import NewActivity from './NewActivity';
 
 function AllActivitiesUser({loggedUser}) {
     const [completedActivities, setCompletedActivities] = useState([]);
-    const [pendingActivities, setPendingActivities] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     
     
@@ -19,19 +18,14 @@ function AllActivitiesUser({loggedUser}) {
             setCompletedActivities(data)
             
         });
-    }, [isOpen])  
-    
-
-    
-
-      
+    }, [])      
 
 
   
   return (
     <div className='tableContainer'>
         { !isOpen && <button onClick={()=>{setIsOpen(!isOpen)}} >Posalji zahtev</button>}
-       {isOpen && <NewActivity loggedUser = {loggedUser} setIsOpen={setIsOpen} />}
+       {isOpen && <NewActivity setCompletedActivities={setCompletedActivities} loggedUser = {loggedUser} setIsOpen={setIsOpen} />}
      
         {completedActivities.length===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Moje dosadašnje aktivnosti: </h1>
        

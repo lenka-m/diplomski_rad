@@ -1,10 +1,10 @@
 import React, {useEffect, useState } from 'react'
-import { postActivity } from '../Actions/ActivityActions';
+import { postActivity,searchActivity } from '../Actions/ActivityActions';
 import { getAllTeams } from '../Actions/TeamActions';
 import { getAllProjects } from '../Actions/ProjectActions';
 import { FcCancel } from 'react-icons/fc';
 import "../css/register.css"
-function NewActivity({loggedUser, setIsOpen}) {    
+function NewActivity({loggedUser, setIsOpen, setCompletedActivities}) {    
     const user = loggedUser;
     const [teams, setTeams] = useState([]);
     const [selectedTeam, setSelectedTeam] = useState([]);
@@ -14,7 +14,7 @@ function NewActivity({loggedUser, setIsOpen}) {
    
     
     useEffect(() => {
-        getAllProjects().then(data => { setProjects(data); })
+        getAllProjects().then(data => { setProjects(data.filter((project)=>{return project.visible === true})); })
         getAllTeams().then(data => {
             setTeams(data); 
             console.log(data);
@@ -54,9 +54,15 @@ function NewActivity({loggedUser, setIsOpen}) {
         } 
         setFormData({...formData, [e.target.name]: value});
     };
-        async function handleSubmit (e){
+    async function handleSubmit (e){
             e.preventDefault();
-            postActivity(formData);
+            postActivity(formData).then(
+                searchActivity({userId: loggedUser.id}).then(data => {
+                    console.log(data);
+                    setCompletedActivities(data)
+                    
+                })
+            );
             setIsOpen(false);
             console.log("proslo");
 

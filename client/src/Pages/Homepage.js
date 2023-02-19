@@ -10,9 +10,9 @@ function Homepage() {
     return (
     
     <div className='homepage'>
-      <h1> hey, click the button to open the modal.</h1>
+      {/* <h1> hey, click the button to open the modal.</h1>
       <button className='openModalBtn' onClick={()=> setIsOpen(true)}> Open</button>
-      {isOpen && <Modal setIsOpen = { setIsOpen} />}
+      {isOpen && <Modal setIsOpen = { setIsOpen} />} */}
     </div>
   )
 }
