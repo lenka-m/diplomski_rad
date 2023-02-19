@@ -7,7 +7,7 @@ function EditorPage({loggedUser}){
     
     return(
        <div className="ProfilePage">
-            <h1>{user.firstName} {user.lastName}</h1>
+            
             <ProfileComponent    loggedUser={loggedUser} />
             <AllActivitiesEditor loggedUser={loggedUser} />
        </div>

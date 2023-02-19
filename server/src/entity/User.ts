@@ -36,4 +36,6 @@ export class User {
     @OneToMany(()=> Activity, activity=> activity.user, { onDelete: "CASCADE" })
     activities: Activity[]
     
+    @Column({default: 0})
+    totalPoints: number;
 }

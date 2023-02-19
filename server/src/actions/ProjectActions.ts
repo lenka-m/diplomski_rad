@@ -9,6 +9,7 @@ export async function getAllProjects(req: Request, res:Response){
     const projects= await projectRepository
         .createQueryBuilder('project')
         .leftJoinAndSelect('project.coordinator', 'user')
+        .orderBy('CASE WHEN project.visible = true THEN 0 ELSE 1 END')
         .getMany();
         
     console.log(projects);
@@ -26,4 +27,16 @@ export async function insertNewProject(req:Request, res:Response){
             coordinator:user
         })
         res.json(project)
+}
+
+export async function updateProjectVisibility(req: Request, res:Response){
+    console.log(req.body.data)
+   const projectId = req.body.data.projectId;
+   await AppDataSource.getRepository(Project).update(
+      { id: projectId },
+      {
+        visible: req.body.data.visible,
+      }
+    );
+   res.send('ok');
 }

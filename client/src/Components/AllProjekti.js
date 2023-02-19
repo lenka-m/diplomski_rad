@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { getAllProjects } from '../Actions/ProjectActions'
+import { getAllProjects, updateProjectVisibility } from '../Actions/ProjectActions'
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import NewProject from './NewProject'
 
@@ -13,6 +13,19 @@ function AllProjekti(user) {
       setProjects(data);
     })
   }, [])
+  function handleUpdateVisibility(project){
+    try{
+      console.log(project)
+      updateProjectVisibility({ visible: !project.visible, projectId: project.id})
+      .then(() => getAllProjects())
+      .then(data => {
+        setProjects(data)
+      });
+          
+      } catch(ex){
+          console.log('neuspesna potvrda')
+      }
+  }
   return (
     
     <div className='tableContainer'>
@@ -25,7 +38,7 @@ function AllProjekti(user) {
             <td> Skracenica</td>
             <td> Sajt</td>
             <td> Vidljivo</td>
-            <td> Edit</td>
+            
             
         </tr>
     </thead>
@@ -35,7 +48,7 @@ function AllProjekti(user) {
             <td >{project.name}</td>
             <td> {project.short}</td>
             <td>{project.website}</td>
-            <td className='editCell'>  {project.visible ? (<AiFillEye className='buttonImage' color='white'/>) : (<AiFillEyeInvisible className='buttonImage' color='red'/>)}</td>
+            <td className='editCell' onClick={()=> handleUpdateVisibility(project)}>  {project.visible ? (<AiFillEye className='buttonImage' color='white'/>) : (<AiFillEyeInvisible className='buttonImage' color='red'/>)}</td>
         </tr>  
       
     ))} 

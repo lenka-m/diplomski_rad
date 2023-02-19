@@ -17,7 +17,8 @@ function ProfileComponent({loggedUser}) {
               <h1>{user.firstName} {user.lastName}</h1>
               <h2>Koordinator za informacione sisteme</h2>            
             </div>
-            <p><FaUserAlt/> <i>{user.userRole}</i></p>
+            <p>{user.totalPoints}</p>
+            <p><FaUserAlt/> <i>{user.userRole} {user.totalPoints}</i></p>
             <p><GrMail/> <i>{user.email}</i></p>            
             <p><i><BsFillTelephoneFill/> +381637771409</i></p>            
         </div>

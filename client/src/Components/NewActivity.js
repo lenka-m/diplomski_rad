@@ -2,9 +2,9 @@ import React, {useEffect, useState } from 'react'
 import { postActivity } from '../Actions/ActivityActions';
 import { getAllTeams } from '../Actions/TeamActions';
 import { getAllProjects } from '../Actions/ProjectActions';
-
-
-function NewActivity({loggedUser}) {    
+import { FcCancel } from 'react-icons/fc';
+import "../css/register.css"
+function NewActivity({loggedUser, setIsOpen}) {    
     const user = loggedUser;
     const [teams, setTeams] = useState([]);
     const [selectedTeam, setSelectedTeam] = useState([]);
@@ -48,25 +48,28 @@ function NewActivity({loggedUser}) {
     
 
     const handleChange = e => {
-        let value;
+        let value = e.target.value;
         if (e.target.name === "date") {
-            value = e.target.value;
+            value = new Date(value).toISOString().slice(0, 10);
         } 
         setFormData({...formData, [e.target.name]: value});
     };
         async function handleSubmit (e){
             e.preventDefault();
             postActivity(formData);
+            setIsOpen(false);
             console.log("proslo");
 
     }
 
   return (
-    <div className='registerComponent'>        
-        <h1 className='registerTitle'>Nova Aktivnost</h1>
+    <div className='RegisterComponent'>
+    <h1 className='registerTitle'>Nova aktivnost</h1>
+    <button className='btn-Exit' onClick={()=> setIsOpen(false)}><FcCancel className='btn-Exit-Icon'/></button>  
+    
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
             <label className='registerLabel'>Datum:</label>
-            <input className='registerInput' name = "date" type = "text" required value ={formData.date} onChange={handleChange}/>
+            <input className='registerInput' name = "date" type = "date" required value ={formData.date} onChange={handleChange}/>
 
             <label className='registerLabel'>Projekat:</label>
             <select className='registerInput' name = "projectId" value ={formData.projectId} onChange={handleChange}>

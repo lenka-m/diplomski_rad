@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import { AppDataSource } from "../data-source";
 import {User} from "../entity/User";
+import { getRepository } from "typeorm";
 
 export async function isAdmin(req:Request, res: Response, next: () => void){
     const user = (req as any).user as User;
@@ -54,6 +55,7 @@ export async function deleteUser(req:Request, res:Response){
     }
 }
 
+
 export async function searchUsers(req: Request, res:Response){
     const email = req.query.email;
     const firstName = req.query.firstName;
@@ -81,3 +83,4 @@ export async function searchUsers(req: Request, res:Response){
     const users = await query.getMany();
     res.json(users);
 }
+

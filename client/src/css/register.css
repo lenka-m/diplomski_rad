@@ -22,10 +22,11 @@
     background-position: center;
     background-size: cover;
     border-radius: 15px;
-    width: 60%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    
     padding: 10px;
   }
   

@@ -41,17 +41,43 @@ export async function updateActivity(req:Request, res:Response){
    res.send('ok');
 }
 
-export async function finalUpdateActivity(req:Request, res:Response){
-   
+export async function finalUpdateActivity(req: Request, res: Response) {
    const activityId = req.body.data.activityId;
-   console.log('pokusao da ranuje');
-   await AppDataSource.getRepository(Activity).update({ id: activityId }, {
-      numOfPoints: req.body.data.numOfPoints,
-      status: "complete",
-      confirmation:true
-   })
-   res.send('ok');
-}
+   const numOfPoints = req.body.data.numOfPoints;
+ 
+   try {
+     // Find the activity by ID and update its properties
+     const activity = await AppDataSource.getRepository(Activity).findOne({
+      where: { id: activityId },
+      relations: ['user'],
+    });
+    
+     activity.numOfPoints = numOfPoints;
+     activity.status = 'completed';
+     activity.confirmation = true;
+ 
+     await AppDataSource.getRepository(Activity).save(activity);
+ 
+     // Calculate the total points for the user's completed activities
+     const user = activity.user;
+     const completedActivities = await AppDataSource.getRepository(Activity).find({
+       where: {
+         user,
+         status: 'completed',
+       },
+     });
+     const totalPoints = completedActivities.reduce((acc, cur) => acc + cur.numOfPoints, 0);
+ 
+     // Update the user's totalPoints field
+     user.totalPoints = totalPoints;
+     await AppDataSource.getRepository(User).save(user);
+ 
+     res.send('ok');
+   } catch (error) {
+     console.error(error);
+     res.status(500).send('Error updating activity');
+   }
+ }
 
 export async function getAllActivities(req: Request, res:Response){
    const activities = await AppDataSource.getRepository(Activity).find({

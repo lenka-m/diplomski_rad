@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 
 import path = require("path")
 import { createActivity, finalUpdateActivity, getAllActivities, updateActivity, deleteActivity, searchActivities } from "./actions/ActivityActions";
-import { getAllProjects , insertNewProject} from "./actions/ProjectActions";
+import { getAllProjects , insertNewProject, updateProjectVisibility} from "./actions/ProjectActions";
 import {deleteUser, getAllUsers, isAdmin, isEditor, registerNewUser, searchUsers} from "./actions/UserActions";
 import { getAllTeams, postNewTeam } from "./actions/TeamActions";
 import { getAllTasks, postNewTask } from "./actions/TaskActions";
@@ -51,6 +51,10 @@ export const Routes: Route[] = [
     method: 'post',
     route: '/projects',
     actions: [isAdmin, insertNewProject]
+},{
+    method: 'patch',
+    route: '/projects-visibility',
+    actions: [isAdmin || isEditor, updateProjectVisibility]
 },{
     method: 'post',
     route: '/register',
