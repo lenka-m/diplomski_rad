@@ -3,16 +3,35 @@ import {Request, Response} from "express";
 import path = require("path")
 import { createActivity, finalUpdateActivity, getAllActivities, updateActivity, deleteActivity, searchActivities } from "./actions/ActivityActions";
 import { getAllProjects , insertNewProject, updateProjectVisibility} from "./actions/ProjectActions";
-import {deleteUser, getAllUsers, isAdmin, isEditor, registerNewUser, searchUsers} from "./actions/UserActions";
+import {deleteUser, getAllUsers, isAdmin, isEditor, registerNewUser, searchUsers, updatePic} from "./actions/UserActions";
 import { getAllTeams, postNewTeam } from "./actions/TeamActions";
 import { getAllTasks, postNewTask } from "./actions/TaskActions";
-
+import * as multer from "multer"
+import { renameFile } from "./actions/uploadActions";
 
 export interface Route {
     method: 'get' | 'post' |  'patch' | 'delete',
     route: string,
     actions: ((req: Request, res: Response, next?: any) => void | Promise<void>)[]
 }
+
+const upload = multer({
+    dest: path.resolve('uploads/'), fileFilter: function(req, file, cb){
+        if(!file){
+            cb(null, false);
+        } else{
+            cb(null, true);
+        }
+    }
+}).fields([
+    {
+        name:'image',
+        maxCount:1
+    },{
+        name:'file',
+        maxCount:1
+    }
+])
 
 export const Routes: Route[] = [
     {
@@ -39,6 +58,10 @@ export const Routes: Route[] = [
     method: 'delete',
     route:'/users',
     actions: [isAdmin, deleteUser]
+},{
+    method: 'patch',
+    route:'/users-profilePic',
+    actions: [upload, renameFile('image'), renameFile('file'), updatePic ]
 },{
     method: 'get',
     route: '/users',

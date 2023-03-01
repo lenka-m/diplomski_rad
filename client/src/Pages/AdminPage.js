@@ -4,7 +4,7 @@ import AllUsers from "../Components/AllUsers";
 import "../css/profile.css";
 import AllProjekti from "../Components/AllProjekti";
 import AllTeams from "../Components/AllTeams";
-import AllActivitiesAdmin from "../Components/AllActivitiesAdmin";
+import AllActivitiesAdmin1 from "../Components/AllActivitiesAdmin1";
 
 
 
@@ -18,7 +18,7 @@ function AdminPage({loggedUser}){
        <div className="ProfilePage">
 
             <ProfileComponent loggedUser={ loggedUser}/>
-            <AllActivitiesAdmin loggedUser = {loggedUser}/>
+            <AllActivitiesAdmin1 loggedUser = {loggedUser}/>
             <div className="tableContainer">
                 <div className="buttonContainer buttons">
                     <button onClick= {()=> { 

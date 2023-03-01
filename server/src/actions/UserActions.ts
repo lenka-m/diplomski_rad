@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import { AppDataSource } from "../data-source";
 import {User} from "../entity/User";
-import { getRepository } from "typeorm";
+
 
 export async function isAdmin(req:Request, res: Response, next: () => void){
     const user = (req as any).user as User;
@@ -84,3 +84,14 @@ export async function searchUsers(req: Request, res:Response){
     res.json(users);
 }
 
+export async function updatePic(req:Request, res:Response){
+    const userId = req.data.userId;
+    const user = await AppDataSource.getRepository(User).update(
+        {id: userId},
+        {
+            userRole: 'http://localhost:3001/uploads/' + req.body.image,
+            url: req.body.file ? ('http://localhost:3001/uploads' + req.body.file) : undefined
+        }
+    );
+
+}

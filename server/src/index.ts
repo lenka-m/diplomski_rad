@@ -31,7 +31,8 @@ AppDataSource.initialize().then(async () => {
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
         next();
       });
-     
+    
+    app.use('/uploads', express.static('uploads'));      
     app.post('/login',async (req, res) =>{
         const {email, password} = req.body;
         console.log('ee')

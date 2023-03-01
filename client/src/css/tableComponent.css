@@ -1,14 +1,47 @@
-.tableContainer{
-    margin-top:30px;
-    background-image: url('../img/boje.png');
+.container{
+    background-image: url('../img/boje1.png');
     background-position: center;
     background-size: cover;
-    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
     width: 95%;
+    margin: 30px;
+    padding: 30px;
+
+}
+.tableContainer{
+    background-color: #162c46ee;
+    box-shadow: #162c469e 5px 5px  0px 0px;
+    border-radius: 15px;
+
+    width: 100%;
+    height: 100%;
+    color:white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding:30px
+    justify-content: center;
+    padding:30px 
+}
+
+
+.titleContainer{
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    
+    padding: 20px;
+    width:100%;  
+    box-sizing: border-box;
+    
+    border: 0.01px solid white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 .buttonContainer{
     display: flex;
@@ -16,16 +49,34 @@
     align-items: flex-start !important;
     justify-content: center;
 }
-.tableContainer{
-    border-collapse: collapse;
+.clicked{
+    background-color: transparent !important;
+    color: whitesmoke;
 }
-.tableContainer h1{
-    background-color: rgba(0, 0, 0, 0.25);
+
+.filterButtons{
+    display: flex;
+    
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.filterButtons button{
+    margin: 0px 10px;
+    padding: 7px 10px;
+    border: none;
     border-radius: 10px;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    color:white;
+    background-color: #F2AA40;
 }
+
+.filterButtons button:hover{
+    zoom: 1;
+    background-color: antiquewhite;
+}
+
+/* TABELA */
 .content-table{    
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 10px;
@@ -36,7 +87,6 @@
     text-align: center;    
 }
 .content-table tr {
-    
     border-bottom: 1px solid white;
 }
 
@@ -52,22 +102,7 @@
     font-size: 20px;
 }
 
-.filterButtons{
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 40%;
-}
 
-.filterButtons button{
-    margin: 5px 25px;
-    padding: 7px 10px;
-    border: none;
-    border-radius: 10px;
-    background-color: #F2AA40;
-}
 
 
 .buttonCell{
