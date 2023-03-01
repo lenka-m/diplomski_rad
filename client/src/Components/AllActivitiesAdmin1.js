@@ -88,7 +88,7 @@ function AllActivitiesAdmin1({loggedUser}) {
             {filteredActivities.length == 0 ? (<h1> Nema aktivnosti</h1>) : (
 
      
-            <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px', backgroundColor:'transparent' }}>
+            <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>
             <TableContainer className='TableContainer' sx={{ maxHeight: 440}}>
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>

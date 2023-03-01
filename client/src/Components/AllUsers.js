@@ -2,14 +2,16 @@ import React, {useState, useEffect } from 'react';
 import { deleteUser, getAllUsers } from '../Actions/userActions';
 import NewUser from './NewUser';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
-
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 
 function AllUsers({loggedUser}) {
   const [users, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [newUserComponent, setNewUserComponent]  = useState(false);
   const [searchData, setSearchData] = useState({searchName: '', searchMail:'', searchUserRole:''})
-  
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
   useEffect(()=>{
     getAllUsers().then(data => {
         setAllUsers(data);
@@ -53,7 +55,15 @@ function AllUsers({loggedUser}) {
   }, [searchData, users]);
 
   
-
+    // Za tabelu funkcija:
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+  // Za Tabelu funkcija:
+  const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(+event.target.value);
+      setPage(0);
+  };
   return (
     <div className='tableContainer'>
       
@@ -61,55 +71,68 @@ function AllUsers({loggedUser}) {
       {newUserComponent ? (<NewUser setNewUserComponent={setNewUserComponent} setAllUsers={setAllUsers} />
 ) : (<button className='btnAdd' onClick={()=>setNewUserComponent(true)}> Dodaj novog korisnika</button>)}
 
-      <table className = 'content-table'>
-      <thead>
-          <tr>
-              <td> Redni broj</td>
-              <td> Ime i prezime</td>
-              <td> Email</td>
-              <td> Uloga</td>
-              <td> Broj poena</td>
-              <td> Status Clana</td>
-              <td> Azuriraj</td>
-              <td> Obrisi</td>
-              
-              
-          </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td></td>
-          <td>
-            <input type="text" name = "searchName" value={searchData.searchName} onChange={handleChange} />
-          </td>
-          <td>
-          <input type="text" name = "searchMail" value={searchData.searchMail} onChange={handleChange} />
-          </td>
-          <td>
-          <input type="text" name = "searchUserRole" value={searchData.searchUserRole} onChange={ handleChange} />
-          </td>
+     
+  <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>
+            <TableContainer className='TableContainer' sx={{ maxHeight: 440}}>
+            <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow >
+                    
+                    <TableCell> Ime Prezime:</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Uloga</TableCell>
+                    <TableCell>Broj poena:</TableCell>
+                    <TableCell>Status:</TableCell>
+                    <TableCell>Azuriraj</TableCell>
+                    <TableCell> Obrisi</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell><input type="text" name = "searchName" value={searchData.searchName} onChange={handleChange} /></TableCell>
+                    <TableCell><input type="text" name = "searchMail" value={searchData.searchMail} onChange={handleChange} /></TableCell>
+                    <TableCell><select type="text" name = "searchUserRole" value={searchData.searchUserRole} onChange={ handleChange}>
+                        <option></option>
+                        <option>editor</option>
+                        <option> none</option>
+                        <option>admin</option>
+                      </select></TableCell>
+                    <TableCell/>
+                    <TableCell/>
+                    <TableCell/>
+                    <TableCell/>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  
+               
+                {filteredUsers
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((user) => {
+                    return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={user.id}>
+                            <TableCell>{user.firstName} {user.lastName}</TableCell>
+                            <TableCell>{user.email}</TableCell>
+                            <TableCell>{user.userRole}</TableCell>
+                            { user.userRole === "none" ?(<TableCell>{user.totalPoints}</TableCell>) :(<TableCell></TableCell>)}
+                            { user.userRole === "none" ?(<TableCell>Beba</TableCell>) :(<TableCell></TableCell>)}
+              <TableCell><AiFillEdit color='orange'/> </TableCell>
+              <TableCell onClick={()=>{handleDeleteUser(user)}}><AiFillDelete color='red'/></TableCell>
           
-          
-        </tr>
-      {filteredUsers.map(user => (
-          
-          <tr key={user.id}>
-            <td>{user.id}</td>
-              <td >{user.firstName} {user.lastName}</td>
-              <td> {user.email}</td>
-              <td> {user.userRole}</td>
-              
-
-              
-              { user.userRole === "none" ?(<td>{user.totalPoints}</td>) :(<td></td>)}
-              { user.userRole === "none" ?(<td>Beba</td>) :(<td></td>)}
-              <td><AiFillEdit color='orange'/> </td>
-              <td onClick={()=>{handleDeleteUser(user)}}><AiFillDelete color='red'/></td>
-          </tr>  
-        
-      ))} 
-    </tbody>
-  </table>
+                             </TableRow>
+                    );
+                    })}
+                </TableBody>
+            </Table>
+            </TableContainer>
+            <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={filteredUsers.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+            </Paper>
 </div>
     
   )

@@ -5,6 +5,19 @@ import NewTeam from './NewTeam'
 import "../css/tableComponent.css";
 import {AiFillEyeInvisible } from 'react-icons/ai';
 import NewTask from './NewTask';
+import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 
 function TaskHeader() {
   return (
@@ -27,9 +40,59 @@ function AllTeams() {
     getAllTeams().then((data)=>{
       
       setTeams(data);
-      
+      console.log(data);
     })
   }, [])
+  function Row(team) {
+    const { row } = team;
+    const [open, setOpen] = React.useState(false);
+  
+    return (
+      <React.Fragment>
+        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+          <TableCell>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <AiOutlineArrowUp /> : <AiOutlineArrowDown />}
+            </IconButton>
+          </TableCell>
+          <TableCell component="th" scope="row">{row.name}</TableCell>
+          <TableCell>{row.coordinator.email}</TableCell>
+          <TableCell>{row.tasks.length}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Naziv:</TableCell>
+                      <TableCell>Broj poena:</TableCell>
+                      <TableCell>Vidljivo:</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {row.tasks.map((task) => (
+                      <TableRow key={task.id}>
+                        <TableCell component="th" scope="row">{task.name}</TableCell>
+                        <TableCell> {task.points}</TableCell>
+                        <TableCell>{task.visible}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </React.Fragment>
+    );
+  }
   return (
     
     <div className='tableContainer'>
@@ -42,42 +105,24 @@ function AllTeams() {
     {newTaskComponent ? (<NewTask setNewTaskComponent = {setNewTaskComponent} setTeams = {setTeams} teams ={teams}/>
     ): (!newTeamComponent && <button className='btnAdd ' onClick={()=> setNewTaskComponent(true)}> Dodaj novi task</button>) }
 </div>
-    <table className='content-table'>
-      <thead>
-        <tr>
-          
-          <td>Name</td>
-          <td>Coordinator</td>
-          <td>Tasks</td>
-        </tr>
-      </thead>
-      <tbody>
-        {teams.map(team => (
-          <tr key={team.id}>
-            <td>{team.name}</td>
-            {team.coordinator ? (<td>{team.coordinator.firstName} {team.coordinator.lastName}</td>) :(<td><i>Nema koord</i></td>)}
-            
-            <td>
-              {team.tasks.length==0 ? (<td> /</td>):(
-                <table className='task-table'>
-                  <TaskHeader />
-                  <tbody>
-                    {team.tasks.map(task => (
-                      <tr key={task.id}>
-                        <td>{task.name}</td>
-                        <td>{task.points}</td>
-                        <td className='buttonCell'>  {task.visible ? (<p/>) : (<AiFillEyeInvisible className='buttonImage' color='red'/>)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-
+    
+    <TableContainer component={Paper} sx = {{marginTop:'20px'}}>
+      <Table aria-label="collapsible table">
+        <TableHead>
+          <TableRow>
+            <TableCell />
+            <TableCell>Tim:</TableCell>
+            <TableCell>Koordinator</TableCell>
+            <TableCell> Broj Taskova:</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {teams.map((team) => (
+            <Row key={team.name} row={team} />
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
 
   </div>
   )
