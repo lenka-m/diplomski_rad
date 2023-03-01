@@ -20,7 +20,7 @@ function AdminPage({loggedUser}){
             <ProfileComponent loggedUser={ loggedUser}/>
             <AllActivitiesAdmin1 loggedUser = {loggedUser}/>
             <div className="container">
-                <div className="buttonContainer buttons">
+                <div className="buttonContainer">
                     <button onClick= {()=> { 
                         setUsersVisible(!usersVisible);
                         setTeamsVisible(false);

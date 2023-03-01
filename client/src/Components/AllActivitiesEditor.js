@@ -77,9 +77,6 @@ function AllActivitiesEditor({loggedUser}) {
                 {activity.status==='created' && <td> <input id={`input-${activity.id}`} defaultValue={activity.task.points}/></td>}
                 {activity.status==='created' && <td onClick={()=>{handleAccept(activity)}}> <AiFillCheckCircle className='buttonImage' color='white' /></td>}
                 {activity.status==='created' && <td onClick={()=>{handleDeleteActivity(activity)}}> <AiFillCloseCircle className='buttonImage' color='red'/> </td>}
-                
-                                
-                
             </tr>  
           
         ))}
