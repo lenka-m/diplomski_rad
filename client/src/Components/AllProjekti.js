@@ -54,8 +54,9 @@ function AllProjekti(user) {
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                 <TableRow >
-                    <TableCell> Ime</TableCell>
-                    <TableCell>Skracenica</TableCell>
+                    <TableCell> Naziv</TableCell>
+                    <TableCell>Skraćenica</TableCell>
+                    <TableCell>Koordinator</TableCell>
                     <TableCell>Sajt</TableCell>
                     <TableCell>Vidljivo</TableCell>
                  
@@ -70,6 +71,7 @@ function AllProjekti(user) {
                         <TableRow hover role="checkbox" tabIndex={-1} key={project.id}>
                             <TableCell>{project.name}</TableCell>
                             <TableCell>{project.short}</TableCell>
+                            <TableCell>{project.coordinator.email}</TableCell>
                             <TableCell>{project.website}</TableCell>
                             <TableCell className='editCell' onClick={()=> handleUpdateVisibility(project)}>  {project.visible ? (<AiFillEye className='buttonImage' color='green'/>) : (<AiFillEyeInvisible className='buttonImage' color='red'/>)}</TableCell>
                         </TableRow>

@@ -1,23 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "../css/register.css";
 import { createProject } from '../Actions/ProjectActions';
 import { getAllProjects } from '../Actions/ProjectActions';
+import { searchUsers } from '../Actions/userActions';
+
 function NewProject({setNewProjectComponent, setProjects}) { 
 
-    const [formData, setFormData] = useState({name:'',short: '',website:'', visible:true});
-    const handleChange = (e) =>{
+    const [users, setUsers] = useState([]); //korisnici za editora
+    const [formData, setFormData] = useState({name:'',short: '',website:'', visible:true});// podaci u formi
+    
+    //Prilikom inicijalnog učitavanja kupi sve editor profile kako bi popunio combo box
+    useEffect(() => {
+        searchUsers({userRole:'editor'}).then(data=> {
+            setUsers(data)
+        });
+    }, []) 
+
+    // Promena podataka u formi se prati:
+    const handleChange = (e) =>{ 
         setFormData({...formData, [e.target.name]: e.target.value });
     }
-    async function handleSubmit (e){
-        e.preventDefault();
-        await createProject(formData);
-        getAllProjects()
-            .then((data) => {
-                setProjects(data);
+
+    // Promena combo box-a
+    const handleCoordinatorChange = (e) => {
+        setFormData({...formData, coordinatorId: e.target.value });
+    }
+    
+     // Cuvanje novog projekta:
+     async function handleSubmit (e){
+        e.preventDefault(); // da ne refreshuje ceo element
+        await createProject(formData); // prvo napravi projekat
+        getAllProjects() // onda uzmi sve projekte
+            .then((data) => { 
+                setProjects(data); // kad pokupis setuj podatke na nove projekte
             }).then(()=>{
-            setNewProjectComponent(false)
+            setNewProjectComponent(false) // zatvori prozorce
             });
     }
+
   return (
     <div className='registerComponent'>      
     <button onClick={()=> setNewProjectComponent(false)}> Odustani</button>  
@@ -32,7 +52,12 @@ function NewProject({setNewProjectComponent, setProjects}) {
             <label className='registerLabel'>Sajt:</label>
             <input className='registerInput' name = "website" type = "text" required value ={formData.website} onChange={handleChange}/>
 
-
+            <label className='registerLabel'>Koordinator:</label>
+            <select className='registerInput' onChange={(e)=>handleCoordinatorChange(e)} value = {formData.coordinatorId}>
+                {users && users.map(user => (
+                    <option key ={user.id} name = "coordinatorId" onChange={handleChange} value = {user.id}> {user.email}</option>
+                ))}
+            </select>
             
             
             <button className='registerSubmit' type = "submit"> Prijavi novi projekat</button>
