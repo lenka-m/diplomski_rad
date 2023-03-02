@@ -26,7 +26,20 @@ export async function postNewTask(req:Request, res:Response){
      })
     res.json(task);
 }
+export async function searchTasks(req: Request, res:Response){
+    const teamId = req.query.teamId;
+    const query = AppDataSource.getRepository(Task)
+      .createQueryBuilder("task")
+  
+    if (teamId) {
+        query.andWhere("task.teamId = :teamId", { teamId: teamId });
+    }
+  
+    const tasks = await query.getMany();
+    res.json(tasks);
+  }
 
+  
 export async function updateTaskVisibility(req: Request, res:Response){
     
    const taskId = req.body.data.taskId;

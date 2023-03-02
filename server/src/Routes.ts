@@ -4,8 +4,8 @@ import path = require("path")
 import { createActivity, finalUpdateActivity, getAllActivities, updateActivity, deleteActivity, searchActivities } from "./actions/ActivityActions";
 import { getAllProjects , insertNewProject, updateProjectVisibility} from "./actions/ProjectActions";
 import {deleteUser, getAllUsers, isAdmin, isEditor, isAdminOrEditor,registerNewUser, searchUsers, updatePic} from "./actions/UserActions";
-import { getAllTeams, postNewTeam } from "./actions/TeamActions";
-import { getAllTasks, postNewTask, updateTaskVisibility } from "./actions/TaskActions";
+import { getAllTeams, postNewTeam, searchTeams } from "./actions/TeamActions";
+import { getAllTasks, postNewTask, searchTasks, updateTaskVisibility } from "./actions/TaskActions";
 
 export interface Route {
     method: 'get' | 'post' |  'patch' | 'delete',
@@ -24,6 +24,10 @@ export const Routes: Route[] = [
     route: '/teams',
     actions: [getAllTeams]
 },{
+    method:'get',
+    route:'/teams/search',
+    actions: [isAdminOrEditor, searchTeams]
+},{
     method: 'post',
     route: '/teams',
     actions: [isAdmin, postNewTeam]
@@ -34,11 +38,15 @@ export const Routes: Route[] = [
 },{
     method:'post',
     route:'/tasks',
-    actions:[isAdmin, postNewTask]
+    actions:[isAdminOrEditor, postNewTask]
 },{
     method:'patch',
     route:'/tasks-visibility',
     actions: [isAdminOrEditor, updateTaskVisibility]
+},{
+    method:'get',
+    route:'/tasks/search',
+    actions: [isAdminOrEditor, searchTasks]
 },{
     method: 'delete',
     route:'/users',

@@ -14,7 +14,23 @@ export async function getAllTeams(req: Request, res:Response) {
   console.log(teams);
   res.json(teams);
 }
- 
+
+
+
+export async function searchTeams(req: Request, res:Response){
+  const coordinatorId = req.query.coordinatorId;
+  const query = AppDataSource.getRepository(Team)
+    .createQueryBuilder("team")
+      .leftJoinAndSelect("team.tasks", "task");
+
+  if (coordinatorId) {
+      query.andWhere("team.coordinatorId = :coordinatorId", { coordinatorId: coordinatorId });
+  }
+
+  const teams = await query.getMany();
+  res.json(teams);
+}
+
 
 export async function postNewTeam(req:Request, res:Response){
     console.log(req.body);
