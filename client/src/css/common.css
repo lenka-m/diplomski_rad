@@ -1,0 +1,20 @@
+.numberStats{
+    margin:10px;
+    padding: 20px 20px 0px 20px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+   
+    background-color: rgba(0, 0, 0, 0.25);
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+
+}
+.topNum{
+    grid-column: span 3;
+}
+.bottomNum{
+    grid-column: span 1;
+    margin: 10px 5px;
+}

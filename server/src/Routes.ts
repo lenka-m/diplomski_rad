@@ -3,11 +3,9 @@ import {Request, Response} from "express";
 import path = require("path")
 import { createActivity, finalUpdateActivity, getAllActivities, updateActivity, deleteActivity, searchActivities } from "./actions/ActivityActions";
 import { getAllProjects , insertNewProject, updateProjectVisibility} from "./actions/ProjectActions";
-import {deleteUser, getAllUsers, isAdmin, isEditor, registerNewUser, searchUsers, updatePic} from "./actions/UserActions";
+import {deleteUser, getAllUsers, isAdmin, isEditor, isAdminOrEditor,registerNewUser, searchUsers, updatePic} from "./actions/UserActions";
 import { getAllTeams, postNewTeam } from "./actions/TeamActions";
-import { getAllTasks, postNewTask } from "./actions/TaskActions";
-import * as multer from "multer"
-import { renameFile } from "./actions/uploadActions";
+import { getAllTasks, postNewTask, updateTaskVisibility } from "./actions/TaskActions";
 
 export interface Route {
     method: 'get' | 'post' |  'patch' | 'delete',
@@ -15,23 +13,6 @@ export interface Route {
     actions: ((req: Request, res: Response, next?: any) => void | Promise<void>)[]
 }
 
-const upload = multer({
-    dest: path.resolve('uploads/'), fileFilter: function(req, file, cb){
-        if(!file){
-            cb(null, false);
-        } else{
-            cb(null, true);
-        }
-    }
-}).fields([
-    {
-        name:'image',
-        maxCount:1
-    },{
-        name:'file',
-        maxCount:1
-    }
-])
 
 export const Routes: Route[] = [
     {
@@ -55,14 +36,18 @@ export const Routes: Route[] = [
     route:'/tasks',
     actions:[isAdmin, postNewTask]
 },{
+    method:'patch',
+    route:'/tasks-visibility',
+    actions: [isAdminOrEditor, updateTaskVisibility]
+},{
     method: 'delete',
     route:'/users',
     actions: [isAdmin, deleteUser]
 },{
     method: 'patch',
-    route:'/users-profilePic',
-    actions: [upload, renameFile('image'), renameFile('file'), updatePic ]
-},{
+    route: '/users-profilePic',
+    actions: [updatePic],
+  },{
     method: 'get',
     route: '/users',
     actions:[isAdmin, getAllUsers]
@@ -77,7 +62,7 @@ export const Routes: Route[] = [
 },{
     method: 'patch',
     route: '/projects-visibility',
-    actions: [isAdmin || isEditor, updateProjectVisibility]
+    actions: [isAdminOrEditor, updateProjectVisibility]
 },{
     method: 'post',
     route: '/register',
@@ -105,5 +90,5 @@ export const Routes: Route[] = [
 },{
     method:'get',
     route:'/activity',
-    actions: [isAdmin || isEditor, getAllActivities]
+    actions: [isAdminOrEditor, getAllActivities]
 }]

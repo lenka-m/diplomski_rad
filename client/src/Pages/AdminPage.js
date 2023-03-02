@@ -5,6 +5,7 @@ import "../css/profile.css";
 import AllProjekti from "../Components/AllProjekti";
 import AllTeams from "../Components/AllTeams";
 import AllActivitiesAdmin1 from "../Components/AllActivitiesAdmin1";
+import Stats from "../Components/Stats";
 
 
 
@@ -19,6 +20,7 @@ function AdminPage({loggedUser}){
 
             <ProfileComponent loggedUser={ loggedUser}/>
             <AllActivitiesAdmin1 loggedUser = {loggedUser}/>
+            <Stats/>
             <div className="container">
                 <div className="buttonContainer">
                     <button onClick= {()=> { 

@@ -26,3 +26,15 @@ export async function postNewTask(req:Request, res:Response){
      })
     res.json(task);
 }
+
+export async function updateTaskVisibility(req: Request, res:Response){
+    
+   const taskId = req.body.data.taskId;
+   await AppDataSource.getRepository(Task).update(
+      { id: taskId },
+      {
+        visible: req.body.data.visible,
+      }
+    );
+   res.send('ok');
+}

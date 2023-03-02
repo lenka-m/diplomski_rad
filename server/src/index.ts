@@ -33,6 +33,7 @@ AppDataSource.initialize().then(async () => {
       });
     
     app.use('/uploads', express.static('uploads'));      
+    
     app.post('/login',async (req, res) =>{
         const {email, password} = req.body;
         console.log('ee')

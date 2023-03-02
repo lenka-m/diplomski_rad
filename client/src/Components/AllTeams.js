@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react'
 import { getAllTeams } from '../Actions/TeamActions';
 import NewTeam from './NewTeam'
 import "../css/tableComponent.css";
-import {AiFillEyeInvisible } from 'react-icons/ai';
+import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai';
 import NewTask from './NewTask';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -18,6 +17,7 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
+import { updateTaskVisibility } from '../Actions/TaskActivities';
 
 function TaskHeader() {
   return (
@@ -35,7 +35,22 @@ function AllTeams() {
 
   const [teams, setTeams] = useState([]);
   const [newTeamComponent, setNewTeamComponent] = useState(false);
-  const [newTaskComponent, setNewTaskComponent] = useState(false)
+  const [newTaskComponent, setNewTaskComponent] = useState(false);
+
+  function handleUpdateVisibility(task){
+    try{
+      //console.log(task)
+      updateTaskVisibility({ visible: !task.visible, taskId: task.id})
+      .then(() => getAllTeams())
+      .then(data => {
+        setTeams(data)
+      });
+          
+      } catch(ex){
+          console.log('neuspesna potvrda')
+      }
+  }
+  
   useEffect(()=>{
     getAllTeams().then((data)=>{
       
@@ -81,7 +96,7 @@ function AllTeams() {
                       <TableRow key={task.id}>
                         <TableCell component="th" scope="row">{task.name}</TableCell>
                         <TableCell> {task.points}</TableCell>
-                        <TableCell>{task.visible}</TableCell>
+                        <TableCell className='editCell' onClick={()=> handleUpdateVisibility(task)}>  {task.visible ? (<AiFillEye className='buttonImage' color='green'/>) : (<AiFillEyeInvisible className='buttonImage' color='red'/>)}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
