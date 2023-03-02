@@ -8,7 +8,7 @@ const instance = axios.create({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Methods': 'PATCH',//Access-Control-Allow-Methods
       'Access-Control-Allow-Origin': 'http://localhost:3000',
-      'Access-Control-Allow-Headers': 'Authorization, Content-Type'
+      'Access-Control-Allow-Headers': 'Authorization, Content-Type',
     },
 });
 
@@ -47,5 +47,18 @@ export async function postObject(path, formData){
 
 export async function patchObject(path, formData){
   const instance = getInstance();
+  return await instance.patch(path,{data: formData});
+}
+
+export async function uploadPic(path, formData){
+  const instance  = axios.create({
+    baseURL: `${url}`,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Access-Control-Allow-Methods': 'PATCH',//Access-Control-Allow-Methods
+      'Access-Control-Allow-Origin': 'http://localhost:3000',
+      'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+    },
+  });
   return await instance.patch(path,{data: formData});
 }

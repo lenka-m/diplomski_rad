@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { deleteObject, getAll, postObject, searchObject } from './AbstractActions';
+import { deleteObject, getAll, patchObject, postObject, searchObject , uploadPic} from './AbstractActions';
 
 export async function getUser(){
     const res = await axios.get("http://localhost:3001/check");
@@ -33,3 +33,6 @@ export async function logoutUser(){
     localStorage.clear();
  }
 
+ export async function updateProfilePic(formData){
+    return await uploadPic('/users-profilePic', formData);
+}

@@ -34,10 +34,8 @@ export class User {
     userRole: string
 
     @Column({ nullable: true })
-    url?: string;
+    profilePictureURL?: string;
 
-    @Column()
-    image:string;
 
     @OneToMany(()=> Activity, activity=> activity.user, { onDelete: "CASCADE" })
     activities: Activity[]
