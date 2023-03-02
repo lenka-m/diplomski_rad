@@ -1,49 +1,75 @@
-import { useContext, useState,   } from "react";
+import * as React from 'react';
 import ProfileComponent from "../Components/ProfileComponent";
 import AllUsers from "../Components/AllUsers";
 import "../css/profile.css";
 import AllProjekti from "../Components/AllProjekti";
 import AllTeams from "../Components/AllTeams";
-import AllActivitiesAdmin1 from "../Components/AllActivitiesAdmin1";
-import Stats from "../Components/Stats";
-
+import AllActivitiesAdmin from "../Components/AllActivitiesAdmin";
+import { Box, Tabs, Tab, Typography } from "@mui/material";
 
 
 function AdminPage({loggedUser}){
     
-    const [projektiVisible, setProjektiVisible] = useState(false);
-    const [teamsVisible, setTeamsVisible] = useState(false);
-    const [usersVisible, setUsersVisible] = useState(false);
-    
+
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+    function a11yProps(index) {
+        return {
+          id: `simple-tab-${index}`,
+          'aria-controls': `simple-tabpanel-${index}`,
+        };
+      }
+      function TabPanel(props) {
+        const { children, value, index, ...other } = props;
+      
+        return (
+          <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+          >
+            {value === index && (
+              <Box sx={{ p: 3 }}>
+                <Typography>{children}</Typography>
+              </Box>
+            )}
+          </div>
+        );
+      }
     return(
        <div className="ProfilePage">
 
             <ProfileComponent loggedUser={ loggedUser}/>
-            <AllActivitiesAdmin1 loggedUser = {loggedUser}/>
-            <Stats/>
-            <div className="container">
-                <div className="buttonContainer">
-                    <button onClick= {()=> { 
-                        setUsersVisible(!usersVisible);
-                        setTeamsVisible(false);
-                        setProjektiVisible(false);}}>
-                            Korisnici</button>
-                    <button onClick= {()=> { 
-                        setProjektiVisible(!projektiVisible);
-                        setUsersVisible(false);
-                        setTeamsVisible(false); }} >
-                            Projekti</button>
-                    <button onClick= {()=> { 
-                        setTeamsVisible(!teamsVisible);
-                        setUsersVisible(false);
-                        setProjektiVisible(false);}}>
-                            Timovi</button>        
-                </div>
-                {usersVisible && <AllUsers loggedUser = {loggedUser}/>}
-                {projektiVisible && <AllProjekti/>}
-                {teamsVisible && <AllTeams/>}
-            </div>
+            <AllActivitiesAdmin loggedUser = {loggedUser}/>
             
+            <div className='container'>
+
+            <Box sx={{ width: '100%' }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'rgba(0,0,0,0.15)'}}>
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                        <Tab label="Korisnici" {...a11yProps(0)} />
+                        <Tab label="Projekti" {...a11yProps(1)} />
+                        <Tab label="Timovi" {...a11yProps(2)} />
+                    </Tabs>
+                </Box>
+                <TabPanel value={value} index={0}>
+                    <AllUsers loggedUser={loggedUser} />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <AllProjekti />
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <AllTeams />
+                </TabPanel>
+            </Box>
+
+            </div>
+        
        </div>
     )
 }

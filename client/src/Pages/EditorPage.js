@@ -13,7 +13,7 @@ function EditorPage({loggedUser}){
         searchTeams({coordinatorId: loggedUser.id}).then((data)=>{
           setTeams(data)          
         })
-    }, [])
+    }, )
 
     return(
         <div className="ProfilePage">

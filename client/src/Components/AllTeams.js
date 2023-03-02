@@ -14,22 +14,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import { updateTaskVisibility } from '../Actions/TaskActivities';
-
-function TaskHeader() {
-  return (
-    <thead>
-      <tr>
-        <td>Task Name</td>
-        <td>Points</td>
-        <td>Visibility</td>
-      </tr>
-    </thead>
-  );
-}
 
 function AllTeams() {
 

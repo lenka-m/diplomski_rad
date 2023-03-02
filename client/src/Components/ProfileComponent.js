@@ -21,8 +21,8 @@ function ProfileComponent({loggedUser}) {
   };
 
   return (
-    <div className='component'>
-      <div className='boxContainter'>
+    <div className='container'>
+      <div className='tableContainer'>
         <div className='profile'>
           <img className="profilePic" src={require("../img/profilepic.png")} alt="Profile"></img>
           <form onSubmit={handleSubmit}>

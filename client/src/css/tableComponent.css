@@ -1,5 +1,7 @@
 .container{
     background-image: url('../img/boje1.png');
+    box-shadow: #162c469e 5px 5px  0px 0px;
+    border-radius: 15px;
     background-position: center;
     background-size: cover;
 
@@ -14,7 +16,7 @@
 
 }
 .tableContainer{
-    background-color: #162c46ee;
+    background-color: #0f2540;
     box-shadow: #162c469e 5px 5px  0px 0px;
     border-radius: 15px;
 

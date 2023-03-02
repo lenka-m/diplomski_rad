@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { deleteActivity, adminPatchActivity, searchActivity } from '../Actions/ActivityActions';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import "../css/tableComponent.css"
-
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 
 function AllActivitiesAdmin({loggedUser}) {
     const [activities, setActivities] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);
     const [filterValue, setFilterValue] = useState({isSet: false, activityStatus:'none'});
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  
     // Opsta funkcija za kupljenje svih aktivnosti:
     function fetchAllActivities(){
         searchActivity({userRole: loggedUser.userRole}).then(data => {
@@ -18,7 +21,7 @@ function AllActivitiesAdmin({loggedUser}) {
     }
     // Filtriranje aktivnosti: 
     function handleFilter(value) {
-        if(filterValue.isSet ===  false || (filterValue.isSet === true && filterValue.activityStatus!=value)){
+        if(filterValue.isSet ===  false || (filterValue.isSet === true && filterValue.activityStatus!==value)){
             setFilteredActivities(activities.filter(activity => activity.status === value));
             setFilterValue({isSet: true, activityStatus: value});
         } else{
@@ -30,7 +33,7 @@ function AllActivitiesAdmin({loggedUser}) {
     // Pri ucitavanju stranice uzimamo sve aktivnosti:
     useEffect(()=>{   
         fetchAllActivities();
-    }, [])  
+    },)  
     
     //Klik na potvrdu aktivnosti:
     function handleAccept(activity) {
@@ -53,8 +56,15 @@ function AllActivitiesAdmin({loggedUser}) {
               console.log(ex);
           }
     }
-
-  
+    // Za tabelu funkcija:
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+      };
+    // Za Tabelu funkcija:
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
   return (
     <div className='container'>
     <div className='tableContainer'>
@@ -75,47 +85,66 @@ function AllActivitiesAdmin({loggedUser}) {
                         Nisu potvrdjeni</button>
                 </div>
             </div>
-            {filteredActivities.length == 0 ? (<h1> Nema aktivnosti</h1>) : (
+            {filteredActivities.length === 0 ? (<h1> Nema aktivnosti</h1>) : (
 
      
-            <table className = 'content-table'>
-                <thead>
-                    <tr>
-                        <td> Ime i prezime</td>
-                        <td> Projekat</td>
-                        <td> Tim</td>
-                        <td> Pozicija</td>
-                        <td> Opis*</td>
-                        <td> Broj poena</td>
-                        <td> Potvrdjeno</td>
-                        
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                {filteredActivities.map(activity => (
-                    <tr key={activity.id}>
-                        <td >{activity.user.firstName} {activity.user.lastName}</td>
-                        <td>{activity.project.name}</td>
-                        <td>{activity.team.name}</td>
-                        <td>{activity.task.name}</td>
-                        <td>ss</td>
-                        <td> <input id={`input-${activity.id}`} defaultValue = {activity.task.points} /></td>
-                        <td>
-                        {activity.userConfirmed ?  (<p>{activity.userConfirmed.email}</p>) :(<p>/</p>)} 
-                        </td>
-                        <td onClick={()=>{handleAccept(activity)}}> <AiFillCheckCircle className='buttonImage' color='white' /></td>
-                        <td onClick={()=>{handleDeleteActivity(activity)}}> <AiFillCloseCircle className='buttonImage' color='red'/> </td>
-                        
-                    </tr>  
-                
-                ))}
-                </tbody>
-            </table>
+            <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>
+            <TableContainer className='TableContainer' sx={{ maxHeight: 440}}>
+            <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                <TableRow >
+                    <TableCell> Ime Prezime:</TableCell>
+                    <TableCell>Projekat</TableCell>
+                    <TableCell>Tim</TableCell>
+                    <TableCell>Pozicija</TableCell>
+                    <TableCell>Opis:</TableCell>
+                    <TableCell>Broj poena:</TableCell>
+                    <TableCell> Potvrdjeno</TableCell>
+                    <TableCell/>
+                    <TableCell/>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                {filteredActivities
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((activity) => {
+                    return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={activity.id}>
+                            <TableCell>{activity.user.firstName} {activity.user.lastName}</TableCell>
+                            <TableCell>{activity.project.short}</TableCell>
+                            <TableCell>{activity.team.name}</TableCell>
+                            <TableCell>{activity.task.name}</TableCell>
+                            <TableCell>s</TableCell>
+                            <TableCell> <input id={`input-${activity.id}`} defaultValue = {activity.task.points} /></TableCell>
+                            <TableCell>
+                                {activity.userConfirmed ?  
+                                    (<p>{activity.userConfirmed.email}</p>) :
+                                    (<p>/</p>)} 
+                            </TableCell>
+                            <TableCell onClick={()=>{handleAccept(activity)}}> <AiFillCheckCircle className='buttonImage' color='green' /></TableCell>
+                            <TableCell onClick={()=>{handleDeleteActivity(activity)}}> <AiFillCloseCircle className='buttonImage' color='red'/> </TableCell>
+                        </TableRow>
+                    );
+                    })}
+                </TableBody>
+            </Table>
+            </TableContainer>
+            <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={filteredActivities.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+            </Paper>
         )}   
         </div>)}
         
     </div>
+    
+    
     </div>
   )
 }

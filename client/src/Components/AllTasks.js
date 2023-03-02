@@ -3,7 +3,6 @@ import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 import {searchTasks, updateTaskVisibility } from '../Actions/TaskActivities'
-import NewTask from './NewTask'
 import NewTaskEditor from './NewTaskEditor';
 
 function AllTasks({team}) { 
