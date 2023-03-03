@@ -2,8 +2,7 @@ import axios from 'axios';
 import { deleteObject, getAll, patchObject, postObject, searchObject , uploadPic} from './AbstractActions';
 
 export async function getUser(){
-    const res = await axios.get("http://localhost:3001/check");
-    return await res.data.user;
+    return await getAll('/check');
 }
 
 export async function loginUser(email, password){

@@ -24,7 +24,7 @@ function AllActivitiesEditor({loggedUser}) {
             console.log(data);
             setActivities(data);
         });
-    }, )  
+    }, [])  
     
     function handleAccept(activity){
         try{

@@ -45,7 +45,7 @@ AppDataSource.initialize().then(async () => {
         });
 
         if(!user){
-            res.status(400).json({message: 'Neispravna lozinka i/ili šifra. Pokušaj ponovo :)'});
+            res.status(401).json({message: 'Neispravna lozinka i/ili šifra. Pokušaj ponovo :)'});
             return;
         } 
         const token = jwt.sign({id: user.id}, 'jwttoken1252t', {expiresIn: '3h'});

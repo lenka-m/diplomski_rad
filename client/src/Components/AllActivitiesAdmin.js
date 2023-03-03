@@ -10,7 +10,7 @@ function AllActivitiesAdmin({loggedUser}) {
     const [filterValue, setFilterValue] = useState({isSet: false, activityStatus:'none'});
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+    const [numOfPoints, setNumOfPoints] = useState(0);
   
     // Opsta funkcija za kupljenje svih aktivnosti:
     function fetchAllActivities(){
@@ -33,17 +33,44 @@ function AllActivitiesAdmin({loggedUser}) {
     // Pri ucitavanju stranice uzimamo sve aktivnosti:
     useEffect(()=>{   
         fetchAllActivities();
-    },)  
+    },[])  
     
     //Klik na potvrdu aktivnosti:
     function handleAccept(activity) {
         try{
-            adminPatchActivity({activityId: activity.id, userConfirmedId: loggedUser.id, numOfPoints: 2})
+            adminPatchActivity({activityId: activity.id, userConfirmedId: loggedUser.id, numOfPoints: numOfPoints})
                 .then(fetchAllActivities());
             // console.log("Uspesno potvrdjena aktivnosti");
         } catch(ex){
             console.log(ex);
         }
+    }
+
+    function handlePointsChange(activityId, event) {
+        setActivities(prevActivities => {
+            // Find the activity with the given activityId
+            const activityIndex = prevActivities.findIndex(activity => activity.id === activityId);
+            if (activityIndex === -1) {
+              // Activity not found, return the previous state
+              return prevActivities;
+            }
+        
+            // Update the numOfPoints property of the activity
+            const updatedActivity = {
+              ...prevActivities[activityIndex],
+              numOfPoints: event.target.value
+            };
+        
+            // Create a new array with the updated activity
+            const updatedActivities = [...prevActivities];
+            updatedActivities[activityIndex] = updatedActivity;
+        
+            // Update the filtered activities state with the new array
+            setFilteredActivities(updatedActivities);
+        
+            // Return the new array to update the activities state
+            return updatedActivities;
+          });
     }
     
     // Klik na odbijanje aktivnosti: 
@@ -115,7 +142,13 @@ function AllActivitiesAdmin({loggedUser}) {
                             <TableCell>{activity.team.name}</TableCell>
                             <TableCell>{activity.task.name}</TableCell>
                             <TableCell>s</TableCell>
-                            <TableCell> <input id={`input-${activity.id}`} defaultValue = {activity.task.points} /></TableCell>
+                            <TableCell>
+                <input
+                  id={`input-${activity.id}`}
+                  defaultValue={activity.task.points}
+                  onChange={(e)=>{handlePointsChange(activity.id, e)}}
+                />
+              </TableCell>
                             <TableCell>
                                 {activity.userConfirmed ?  
                                     (<p>{activity.userConfirmed.email}</p>) :

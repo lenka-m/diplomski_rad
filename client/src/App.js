@@ -9,21 +9,19 @@ import {  useEffect, useState } from 'react';
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      getUser().then((user) => {
-        setLoggedUser(user);
-        localStorage.setItem("loggedUser", JSON.stringify(user));
-      });
-    }
-  }, []);
+  const token = localStorage.getItem("token");
   
   useEffect(() => {
-    localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
-  }, [loggedUser]);
-
+    
+    if (token) {
+      console.log('ima korisnik');
+        getUser().then((data) => {
+        
+        setLoggedUser(data)
+      });
+    } 
+  }, []);
+  
   return (
     <Router>
       <div className='App'>
@@ -34,7 +32,7 @@ function App() {
           </Route>
           {loggedUser ? (
             <Route exact path="/profile">
-              <ProfilePage loggedUser={loggedUser} />
+              <ProfilePage loggedUser={loggedUser}/>
             </Route>
           ) : (
             <Route exact path="/login">

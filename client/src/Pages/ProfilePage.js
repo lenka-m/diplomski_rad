@@ -1,11 +1,15 @@
+import { useEffect } from "react";
 import AdminPage from "./AdminPage";
 import EditorPage from "./EditorPage";
 import UserPage from "./UserPage";
 import { Redirect } from "react-router-dom";
 function ProfilePage({loggedUser}){
-  
-  if (!loggedUser) {
+  useEffect(()=>{
+      console.log('Haj');
+  })
 
+
+  if (!loggedUser) {
     console.log('nema korisnika');
     return <Redirect to='/' />;
   }

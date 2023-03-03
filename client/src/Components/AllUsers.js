@@ -67,7 +67,7 @@ function AllUsers({loggedUser}) {
   return (
     <div className='tableContainer'>
       
-      <h1> Korisnici </h1>
+      
       {newUserComponent ? (<NewUser setNewUserComponent={setNewUserComponent} setAllUsers={setAllUsers} />
 ) : (<button className='btnAdd' onClick={()=>setNewUserComponent(true)}> Dodaj novog korisnika</button>)}
 

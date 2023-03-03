@@ -6,7 +6,6 @@ import '../css/navbar.css';
 import logoPhoto from "../img/transparent_logo.png";
 
 function Navbar({loggedUser, setLoggedUser}) {
-  const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   const handleLogout = () => {
