@@ -1,7 +1,6 @@
 import {Request, Response} from "express";
 import { AppDataSource } from "../data-source";
 import {User} from "../entity/User";
-import { renameFile } from "./uploadActions";
 import path = require("path");
 
 const multer = require('multer');
@@ -109,7 +108,7 @@ export async function searchUsers(req: Request, res:Response){
 export async function updatePic(req: Request, res: Response) {
     
     const userId = req.body.userId;
-    
+    console.log('pozvano');
     upload.single('profilePic')(req, res, async function (err) {
       if (err instanceof multer.MulterError) {
         return res.status(400).json({ message: err.message });

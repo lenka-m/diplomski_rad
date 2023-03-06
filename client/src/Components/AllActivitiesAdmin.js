@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { deleteActivity, adminPatchActivity, searchActivity } from '../Actions/ActivityActions';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import "../css/tableComponent.css"
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
+import {Alert, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 
 function AllActivitiesAdmin({loggedUser}) {
     const [activities, setActivities] = useState([]);
@@ -11,6 +11,7 @@ function AllActivitiesAdmin({loggedUser}) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [numOfPoints, setNumOfPoints] = useState(0);
+    const [success, setSuccess] = useState({isSuccess: null, whoSuccess: ''});
   
     // Opsta funkcija za kupljenje svih aktivnosti:
     function fetchAllActivities(){
@@ -37,11 +38,13 @@ function AllActivitiesAdmin({loggedUser}) {
     
     //Klik na potvrdu aktivnosti:
     function handleAccept(activity) {
+        const korisnik = activity.user.email;
         try{
             adminPatchActivity({activityId: activity.id, userConfirmedId: loggedUser.id, numOfPoints: numOfPoints})
-                .then(fetchAllActivities());
-            // console.log("Uspesno potvrdjena aktivnosti");
+                .then(fetchAllActivities())
+                
         } catch(ex){
+            setSuccess(false, korisnik);
             console.log(ex);
         }
     }
@@ -174,6 +177,8 @@ function AllActivitiesAdmin({loggedUser}) {
             </Paper>
         )}   
         </div>)}
+       {success.isSuccess && <Alert severity='success' sx={{marginTop:'10px'}}>Uspešno ste dodali poene korisniku: {success.whoSuccess}</Alert>}
+       {success.isSuccess===false && <Alert severity='warning' sx={{marginTop:'10px'}}>Greska prilikom dodavanja poena korisniku: {success.whoSuccess}</Alert>}
         
     </div>
     

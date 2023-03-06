@@ -12,11 +12,8 @@ function App() {
   const token = localStorage.getItem("token");
   
   useEffect(() => {
-    
     if (token) {
-      console.log('ima korisnik');
         getUser().then((data) => {
-        
         setLoggedUser(data)
       });
     } 

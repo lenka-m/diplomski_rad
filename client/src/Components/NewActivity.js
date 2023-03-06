@@ -1,26 +1,27 @@
 import React, {useEffect, useState } from 'react'
-import { postActivity,searchActivity } from '../Actions/ActivityActions';
+import { postActivity} from '../Actions/ActivityActions';
 import { getAllTeams } from '../Actions/TeamActions';
 import { getAllProjects } from '../Actions/ProjectActions';
-import { FcCancel } from 'react-icons/fc';
+import { Alert } from '@mui/material';
 import "../css/register.css"
-function NewActivity({loggedUser, setIsOpen, setCompletedActivities}) {    
+function NewActivity({loggedUser}) {    
     const user = loggedUser;
     const [teams, setTeams] = useState([]);
     const [selectedTeam, setSelectedTeam] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [projects, setProjects] = useState([]);
     const [formData, setFormData] = useState({userId: user.id, date:"", opis: ""});
-   
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
     
     useEffect(() => {
         getAllProjects().then(data => { setProjects(data.filter((project)=>{return project.visible === true})); })
         getAllTeams().then(data => {
             setTeams(data); 
-            console.log(data);
             setTasks(data[0].tasks)
         })
     }, [])
+
     const handleTaskChange = (e) => {
         setFormData({...formData, taskId: e.target.value });
     }
@@ -38,8 +39,8 @@ function NewActivity({loggedUser, setIsOpen, setCompletedActivities}) {
             setFormData({...formData, teamId:teams[0].id, taskId: teams[0].tasks[0].id}) 
         }
     }, [ teams])
+
     useEffect(() => {
-        console.log(' pt ');
         if(teams.length>0){
             setTasks(selectedTeam.tasks);
         }
@@ -55,23 +56,19 @@ function NewActivity({loggedUser, setIsOpen, setCompletedActivities}) {
         setFormData({...formData, [e.target.name]: value});
     };
     async function handleSubmit (e){
-            e.preventDefault();
-            await postActivity(formData).then(
-                searchActivity({userId: loggedUser.id}).then(data => {
-                    console.log(data);
-                    setCompletedActivities(data)
-                    
-                })
-            );
-            setIsOpen(false);
-            console.log("proslo");
 
+        e.preventDefault();
+        try{
+        await postActivity(formData);
+        setSuccess(true);
+        } catch(err){
+            setError(err);
+        }
     }
 
   return (
     <div className='RegisterComponent'>
     <h1 className='registerTitle'>Nova aktivnost</h1>
-    <button className='btn-Exit' onClick={()=> setIsOpen(false)}><FcCancel className='btn-Exit-Icon'/></button>  
     
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
             <label className='registerLabel'>Datum:</label>
@@ -101,10 +98,13 @@ function NewActivity({loggedUser, setIsOpen, setCompletedActivities}) {
                 ))}
             </select> 
             <label className='registerLabel'>Opis:</label>
-            <input className='registerInput' name = "opis" type = "text" placeholder='nije obavezno' value ={formData.opis} onChange={handleChange}/>
+            <input className='registerInput' name = "opis" type = "textarea" placeholder='nije obavezno' value ={formData.opis} onChange={handleChange}/>
 
             <button className='registerSubmit' type = "submit"> Posalji zahtev</button>
         </form>
+                    {error && <Alert severity='warning'>Greška prilikom slanja zahteva</Alert>}
+                    {success && <Alert severity='success'> Uspesno ste poslali zahtev!</Alert>}
+
     </div>
   )
 }

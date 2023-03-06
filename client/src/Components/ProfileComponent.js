@@ -10,8 +10,16 @@ function ProfileComponent({loggedUser}) {
   const [formData, setFormData] = useState({userId: loggedUser.id});
   
   
+  
+   // 
   const handleFileChange = (event) => {
-    setFormData({...formData, profilePic: event.target.files[0]})
+    const reader = new FileReader();
+    reader.readAsBinaryString(event.target.files[0]);
+    reader.onload = (evt) => {
+      const slikaFajl = evt.target.result;
+      console.log('cc', slikaFajl);
+      setFormData({...formData, profilePic: slikaFajl})
+    };
   };
   
   const handleSubmit = (event) => {

@@ -65,17 +65,21 @@ function AllUsers({loggedUser}) {
       setPage(0);
   };
   return (
-    <div className='tableContainer'>
-      
-      
-      {newUserComponent ? (<NewUser setNewUserComponent={setNewUserComponent} setAllUsers={setAllUsers} />
-) : (<button className='btnAdd' onClick={()=>setNewUserComponent(true)}> Dodaj novog korisnika</button>)}
 
-     
-  <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>
-            <TableContainer className='TableContainer' sx={{ maxHeight: 440}}>
-            <Table stickyHeader aria-label="sticky table">
-                <TableHead>
+<div className="tableContainer">
+      {newUserComponent ? (
+        <NewUser setNewUserComponent={setNewUserComponent} setAllUsers={setAllUsers} />
+      ) : (
+        <button className="btnAdd" onClick={() => setNewUserComponent(true)}>
+          {' '}
+          Dodaj novog korisnika
+        </button>
+      )}
+
+      <Paper className="Paper" sx={{ width: '100%', overflow: 'hidden', marginTop: '10px' }}>
+        <TableContainer className="TableContainer" sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky ">
+            <TableHead>
                   <TableRow >
                     
                     <TableCell> Ime Prezime:</TableCell>
