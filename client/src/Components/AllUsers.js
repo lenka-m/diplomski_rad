@@ -16,7 +16,6 @@ function AllUsers({loggedUser}) {
     getAllUsers().then(data => {
         setAllUsers(data);
         setFilteredUsers(data);
-        console.log('pozvaoOVO');
     });
   }, [])  
 

@@ -1,35 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "../css/register.css";
-import { postTask, searchTasks } from '../Actions/TaskActivities';
+import { postTask} from '../Actions/TaskActivities';
+import { Alert } from '@mui/material';
 
-
-
-function NewTaskEditor({ setNewTaskEditorComponent, team, setTasks}) { 
-    
+function NewTaskEditor({team}) { 
     
     const [formData, setFormData] = useState({name:'', teamId: team.id, points:0});
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
 
     const handleChange = (e) =>{
         setFormData({...formData, [e.target.name]: e.target.value });
     }
+    
+    useEffect(() => {
+        if (success) {
+          const timer = setTimeout(() => {
+            setSuccess(false);
+          }, 2000);
+          return () => clearTimeout(timer);
+        }
+      }, [success]);      
 
     async function handleSubmit (e){
         e.preventDefault();
-        console.log(formData)
-        await postTask(formData)
-        searchTasks({teamId:team.id})
-            .then((data) =>{
-                setTasks(data)
-            }).then(()=>{
-                setNewTaskEditorComponent(false)
-            })
-    }
-    
-
+        try{
+            await postTask(formData);
+            setSuccess(true)
+        } catch(err){
+            setError(err);
+        }
+    }    
 
   return (
     <div className='registerComponent'>      
-        <h1  onClick={()=> setNewTaskEditorComponent(false)} className='registerTitle'>Nova Pozicija</h1>
+        <h1 className='registerTitle'>Nova Pozicija</h1>
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
 
             <label className='registerLabel'>Naziv:</label>
@@ -42,8 +47,11 @@ function NewTaskEditor({ setNewTaskEditorComponent, team, setTasks}) {
             <button className='registerSubmit' type = "submit"> Prijavi novi tim</button>
             
         </form>
+        {success &&<Alert severity='success' >Uspesno ste dodali aktivnost</Alert>}
+        { error && <Alert severity='warning'> Greska prilikom dodavanja aktivnosti</Alert>}
+
     </div>
   )
 }
 
-export default NewTaskEditor
+export default React.memo(NewTaskEditor);

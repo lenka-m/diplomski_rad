@@ -2,20 +2,8 @@ import {Request, Response} from "express";
 import { AppDataSource } from "../data-source";
 import {User} from "../entity/User";
 import path = require("path");
+import * as fs from 'fs';
 
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, path.join(__dirname, '../../uploads'));
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + '-' + file.originalname);
-    },
-  });
-  
-const upload = multer({ storage: storage });
-  
 
 export async function isAdmin(req:Request, res: Response, next: () => void){
     const user = (req as any).user as User;
@@ -106,32 +94,35 @@ export async function searchUsers(req: Request, res:Response){
 }
 
 export async function updatePic(req: Request, res: Response) {
-    
     const userId = req.body.userId;
-    console.log('pozvano');
-    upload.single('profilePic')(req, res, async function (err) {
-      if (err instanceof multer.MulterError) {
-        return res.status(400).json({ message: err.message });
-      } else if (err) {
-        return res.status(500).json({ message: err.message });
+    const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId } });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+  
+    // Extract file extension from content-type header
+    const contentType = req.header('content-type');
+    const extension = req.body.data.extension;
+  
+    const fileName = user.firstName + user.lastName + '-' + user.id;
+    const fileUrl = `uploads/${fileName}.${extension}`;
+  
+    fs.writeFile(fileUrl, req.body.data.profilePic, { encoding: 'binary' }, (err) => {
+      if (err) {
+        console.log('Error uploading file', err);
+        return res.status(500).json({ message: 'Error uploading profile picture' });
       }
   
-      // Find the user with the given ID
-      const user = await  AppDataSource.getRepository(User).findOne({where:{id:userId}});
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      // Update the user's profilePictureURL field in the database
-      user.profilePictureURL = req.body.file.path;
-  
-      try {
-        await AppDataSource.getRepository(User).save(user);
-        return res.status(200).json({ message: 'Profile picture updated successfully', user });
-      } catch (error) {
-        return res.status(500).json({ message: error.message });
-      }
+      user.profilePictureURL = fileUrl;
+      AppDataSource.getRepository(User).save(user)
+        .then(() => {
+          return res.status(200).json({ message: 'Profile picture updated successfully', user });
+        })
+        .catch((error) => {
+          console.log('Error saving user', error);
+          return res.status(500).json({ message: 'Error saving user' });
+        });
     });
   }
+  
   

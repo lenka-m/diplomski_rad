@@ -51,5 +51,6 @@ export async function patchObject(path, formData){
 }
 
 export async function uploadPic(path, formData){
+  const instance = getInstance();
   return await instance.patch(path,{data: formData});
 }

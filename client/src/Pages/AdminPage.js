@@ -5,7 +5,7 @@ import "../css/profile.css";
 import AllProjekti from "../Components/AllProjekti";
 import AllTeams from "../Components/AllTeams";
 import AllActivitiesAdmin from "../Components/AllActivitiesAdmin";
-import { Box, Tabs, Tab, Typography } from "@mui/material";
+import { Box, Tabs, Tab } from "@mui/material";
 
 
 function AdminPage({loggedUser}){

@@ -40,9 +40,8 @@ function AllTeams() {
   
   useEffect(()=>{
     getAllTeams().then((data)=>{
-      
       setTeams(data);
-      console.log(data);
+      //console.log(data);
     })
   }, [])
   function Row(team) {

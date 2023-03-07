@@ -21,7 +21,7 @@ function AllActivitiesEditor({loggedUser}) {
     
     useEffect(()=>{   
         searchActivity(userData).then(data => {
-            console.log(data);
+            //console.log(data);
             setActivities(data);
         });
     }, [])  
