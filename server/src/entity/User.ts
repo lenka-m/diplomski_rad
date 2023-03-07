@@ -32,15 +32,37 @@ export class User {
     lastName: string
 
     @Column()
-    userRole: string
+    telephoneNumber: string
 
     @Column({ nullable: true })
     profilePictureURL?: string;
 
+    // Moguce vrednosti: admin, editor, none
+    @Column()
+    userRole: string
 
-    @OneToMany(()=> Activity, activity=> activity.user, { onDelete: "CASCADE" })
-    activities: Activity[]
+    // Ako je editor:
+    @Column({ nullable: true })
+    userRoleName: string
+
     
+    // Ako je none: 
+    @Column({ nullable: true })
+    birthday: Date
+
+    // Ako je none: 
+    @Column({ nullable: true })
+    lastLogin: Date
+
+    // Ako je none:
+    @Column({ nullable: true })
+    userStatus: string
+
+    // Ako je none:
     @Column({default: 0})
     totalPoints: number;
+    
+    // Ako je none:
+    @OneToMany(()=> Activity, activity=> activity.user, { onDelete: "CASCADE" })
+    activities: Activity[]
 }

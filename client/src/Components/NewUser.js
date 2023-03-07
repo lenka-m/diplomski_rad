@@ -6,9 +6,13 @@ import {FcCancel} from 'react-icons/fc';
 
 function NewUser({ setNewUserComponent, setAllUsers}) {
 
-    const [formData, setFormData] = useState({firstName:'', lastName:'', password:'', email:'',userRole:''});
+    const [formData, setFormData] = useState({firstName:'', lastName:'', password:'', email:'',userRole:'', telephoneNumber:381, userRoleName:null, userStatus: null, totalPoints:null, birthday: null});
     const handleChange = (e) =>{
-        setFormData({...formData, [e.target.name]: e.target.value });
+        let value = e.target.value;
+        if (e.target.name === "birthday") {
+            value = new Date(value).toISOString().slice(0, 10);
+        } 
+        setFormData({...formData, [e.target.name]: value});
     }
     async function handleSubmit (e){
         e.preventDefault();   
@@ -37,12 +41,36 @@ function NewUser({ setNewUserComponent, setAllUsers}) {
             <label className='registerLabel'>Lozinka:</label>
             <input className='registerInput' name = "password" type = "password" required value = {formData.password} onChange={handleChange}/>
 
+            <label className='registerLabel'>Broj telefona:</label>
+            <input className='registerInput' name = "telephoneNumber" type = "number" required value = {formData.telephoneNumber} onChange={handleChange}/>
+
             <label className='registerLabel'>Uloga:</label>
             <select className='registerInput' name = "userRole" onChange={ handleChange}>
                 <option value = "admin"> Admin</option>
                 <option value = "editor">Editor</option>
                 <option value = "none">Nema</option>
             </select>
+            {formData.userRole === 'editor' ? (
+                    <div><label className='registerLabel'>Naziv uloge:</label>
+                    <input  className='registerInput' name = "userRoleName" type = "text"  value = {formData.userRoleName} onChange={handleChange}/>
+                    </div>): (<div></div>)}
+
+            {formData.userRole === 'none' ? (
+                <div>
+                    <label className='registerLabel'>Uloga:</label>
+                    <select className='registerInput' name = "userStatus" onChange={ handleChange}>
+                        <option value = "obzerver"> Obzerver</option>
+                        <option value = "beba">Beba</option>
+                        <option value = "full">Full</option>
+                    </select><br></br>
+                    <label className='registerLabel'>Broj poena:</label>
+                    <input className='registerInput' name = "totalPoints" type = "number"  value ={formData.totalPoints} onChange={handleChange}/>
+                    <br></br><label className='registerLabel'>Datum:</label>
+                    <input className='registerInput' name = "birthday" type = "date"  value ={formData.date} onChange={handleChange}/>
+                </div>
+            ):(<div></div>)}       
+
+            
             <button className='registerSubmit' type = "submit"> Registruj novog korisnika</button>
         </form>
         

@@ -1,7 +1,6 @@
 import {Request, Response} from "express";
 import { AppDataSource } from "../data-source";
 import {User} from "../entity/User";
-import path = require("path");
 import * as fs from 'fs';
 
 
@@ -44,7 +43,12 @@ export async function registerNewUser(req:Request, res:Response){
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             password: req.body.password,
-            userRole: req.body.userRole
+            telephoneNumber: req.body.telephoneNumber,
+            userRole: req.body.userRole,
+            userRoleName: req.body.userRoleName,
+            userStatus: req.body.userStatus,
+            totalPoints: req.body.totalPoints,
+            birthday: req.body.birthday
         })
         res.json(user)
 }
@@ -70,6 +74,9 @@ export async function searchUsers(req: Request, res:Response){
     const firstName = req.query.firstName;
     const lastName = req.query.lastName;
     const userRole = req.query.userRole;
+    const userStatus = req.query.userStatus;
+    const birthday = req.query.birthday;
+    const telephoneNumber = req.body.telephoneNumber;
 
     const query = AppDataSource.getRepository(User).createQueryBuilder("user");
 
@@ -88,6 +95,17 @@ export async function searchUsers(req: Request, res:Response){
     if (userRole) {
         query.andWhere("user.userRole = :userRole", { userRole: userRole });
     }
+    if (userStatus) {
+      query.andWhere("user.userStatus = :userStatus", { userStatus: userStatus });
+    }
+
+    if (birthday) {
+      query.andWhere("user.birthday = :birthday", { birthday: birthday });
+    }
+
+    if (telephoneNumber) {
+      query.andWhere("user.telephoneNumber = :telephoneNumber", { telephoneNumber: telephoneNumber });
+    }
 
     const users = await query.getMany();
     res.json(users);
@@ -99,12 +117,9 @@ export async function updatePic(req: Request, res: Response) {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-  
-    // Extract file extension from content-type header
-    const contentType = req.header('content-type');
-    const extension = req.body.data.extension;
-  
+      
     const fileName = user.firstName + user.lastName + '-' + user.id;
+    const extension = req.body.data.extension;
     const fileUrl = `uploads/${fileName}.${extension}`;
   
     fs.writeFile(fileUrl, req.body.data.profilePic, { encoding: 'binary' }, (err) => {
