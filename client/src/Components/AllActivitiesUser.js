@@ -33,9 +33,9 @@ function AllActivitiesUser({loggedUser}) {
        
        
      
-        {completedActivities.length===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Moje dosadašnje aktivnosti: </h1>
+        {completedActivities.length===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div style={{width: '100%'}}><h1> Moje dosadašnje aktivnosti: </h1>
        
-    <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>
+    <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'20px' }}>
             <TableContainer className='TableContainer' sx={{ maxHeight: 440}}>
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>

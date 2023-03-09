@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import "../css/profile.css";
 import {BsFillTelephoneFill} from 'react-icons/bs';
 import {GrMail} from 'react-icons/gr';
+import {FaBirthdayCake} from 'react-icons/fa'
 import {FaUserAlt} from 'react-icons/fa';
 import { updateProfilePic } from '../Actions/userActions';
 import Accordion from '@mui/material/Accordion';
@@ -9,14 +10,12 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import {MdExpandMore} from 'react-icons/md'
+import { TextField } from '@mui/material';
 
 function ProfileComponent({loggedUser}) {
   const user = loggedUser;
   const [formData, setFormData] = useState({userId: loggedUser.id});
-  console.log(loggedUser.profilePictureURL
-    )
-  
-  
+
    const handleFileChange = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -34,10 +33,12 @@ function ProfileComponent({loggedUser}) {
   };
 
   return (
-    <div className='container'>
+
       <div className='tableContainer profileContainer'>
         <div className='profilePicContainer'>
-          <img className="profilePic" src={`http://localhost:3001/${user.profilePictureURL}`} alt="Profile" />
+          {user.profilePic !== null ? 
+            (<img className="profilePic" src={`http://localhost:3001/${user.profilePictureURL}`} alt="profilna" />): 
+            (<img className="profilePic" src='../img/boje.png' alt="2nd" />)}
           <Accordion>
                   <AccordionSummary
                     expandIcon={<MdExpandMore />}
@@ -57,20 +58,35 @@ function ProfileComponent({loggedUser}) {
                   </AccordionDetails>
           </Accordion>
         </div>
-          
+        
+        
+        
+        
+        <div className='rightContainer'>
         <div className='profileInfoContainer'>
-            <div className='profileInfoHeader'>
+          <div className='profileInfoHeader'>
               <h1>{user.firstName} {user.lastName}</h1>
-              <h2>Koordinator za informacione sisteme</h2>            
+              {user.userRoleName !== null ? (<h2>Koordinator za informacione sisteme</h2>):(<div></div>)}
             </div>
-            <p>Ukupan broj poena {user.totalPoints}</p>   
-            <p><FaUserAlt/> <i>{user.userRole}</i></p>
-            <p><GrMail/> <i>{user.email}</i></p>            
-            <p><i><BsFillTelephoneFill/> +381637771409</i></p>            
-        </div>        
-     
+            <div className = 'profileInfoBody'>
+            {user.userRole !== 'none' ? (<p><FaUserAlt/> <i>{user.userRole}</i></p>):(<div></div>)}
+            {user.birthday !== null ? (<p><FaBirthdayCake/> <i>{user.birthday}</i></p>):(<div></div>)}
+            {user.userRole !== 'none' ? (<p><FaUserAlt/> <i>{user.userRole}</i></p>):(<div></div>)}
+              
+              <p><GrMail/> <i>{user.email}</i></p>            
+              <p><i><BsFillTelephoneFill/> +381637771409</i></p> 
+                     
+            </div>
+         </div>    
+        
+          {user.totalPoints !== null ? 
+              (<div className='profileTotalPointsContainer'> 
+                <h1>{user.totalPoints}</h1>
+                <h5> <i>{user.userStatus}</i>  </h5>
+              </div>):(<div></div>)}    
+        </div>  
       </div>
-    </div>
+    
   )
 }
 

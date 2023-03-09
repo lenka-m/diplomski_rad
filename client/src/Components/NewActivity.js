@@ -4,6 +4,8 @@ import { getAllTeams } from '../Actions/TeamActions';
 import { getAllProjects } from '../Actions/ProjectActions';
 import { Alert } from '@mui/material';
 import "../css/register.css"
+import {TextField} from '@mui/material';
+
 function NewActivity({loggedUser}) {    
     const user = loggedUser;
     const [teams, setTeams] = useState([]);
@@ -67,20 +69,21 @@ function NewActivity({loggedUser}) {
     }
 
   return (
-    <div className='RegisterComponent'>
+    <div className='registerForm'>
     <h1 className='registerTitle'>Nova aktivnost</h1>
     
-        <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
-            <label className='registerLabel'>Datum:</label>
+        <form className='' onSubmit = {(e)=>handleSubmit(e)}>
+            <label className='registerLabel'>Datum:</label><br/>
             <input className='registerInput' name = "date" type = "date" required value ={formData.date} onChange={handleChange}/>
-
-            <label className='registerLabel'>Projekat:</label>
+            <br/>
+            <label className='registerLabel'>Projekat:</label><br/>
             <select className='registerInput' name = "projectId" value ={formData.projectId} onChange={handleChange}>
                 {projects && projects.map(project => (                    
                     <option key ={project.id} name = "projectId" onChange={handleChange} value = {project.id}> {project.name}</option>
                 ))}
-            </select>
-            <label className='registerLabel'>Tim:</label>
+            </select><br/>
+
+            <label className='registerLabel'>Tim:</label><br/>
             <select className='registerInput' onChange={(e) => {
                 handleChange(e);
                 handleTeamChange(e);
@@ -89,18 +92,18 @@ function NewActivity({loggedUser}) {
                 {teams && teams.map(team => (
                     <option key ={team.id} name = "teamId" value = {team.id}> {team.name}</option>
                 ))}
-            </select>
-
-            <label className='registerLabel'>Pozicija:</label>
+            </select><br/>
+            
+            <label className='registerLabel'>Pozicija:</label><br/>
              <select className='registerInput' onChange={(e)=> handleTaskChange(e)} value = {formData.taskId}>
                 {tasks && tasks.map(task => (
                     <option key ={task.id} name = "taskId" onChange={(e)=> handleTaskChange(e)} value = {task.id}> {task.name}</option>
                 ))}
-            </select> 
-            <label className='registerLabel'>Opis:</label>
-            <input className='registerInput' name = "opis" type = "textarea" placeholder='nije obavezno' value ={formData.opis} onChange={handleChange}/>
+            </select> <br/>
+            <label className='registerLabel'>Opis:</label><br/>
+            <input className='registerInput' name = "opis" type = "textarea" placeholder='nije obavezno' value ={formData.opis} onChange={handleChange}/><br/>
 
-            <button className='registerSubmit' type = "submit"> Posalji zahtev</button>
+            <button className='registerSubmit' type = "submit"> Posalji zahtev</button><br/>
         </form>
                     {error && <Alert severity='warning'>Greška prilikom slanja zahteva</Alert>}
                     {success && <Alert severity='success'> Uspesno ste poslali zahtev!</Alert>}

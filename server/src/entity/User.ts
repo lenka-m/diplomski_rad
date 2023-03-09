@@ -59,7 +59,7 @@ export class User {
     userStatus: string
 
     // Ako je none:
-    @Column({default: 0})
+    @Column({ nullable: true })
     totalPoints: number;
     
     // Ako je none:

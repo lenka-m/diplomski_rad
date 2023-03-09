@@ -41,8 +41,9 @@ function UserPage({loggedUser}) {
       
         <ProfileComponent loggedUser = {loggedUser}/>
         <div className='container'>
+        <div className='tableContainer'>
         <Box sx={{ width: '100%' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'rgba(0,0,0,0.15)'}}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'whitesmoke',padding: '5px', borderRadius:'10px'}}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Sve aktivnosti" {...a11yProps(0)} />
                         <Tab label="Nova Aktivnost" {...a11yProps(1)} />
@@ -55,6 +56,7 @@ function UserPage({loggedUser}) {
                     <NewActivity loggedUser={loggedUser}/>
                 </TabPanel>
             </Box>
+          </div>
           </div>
     </div>
   )

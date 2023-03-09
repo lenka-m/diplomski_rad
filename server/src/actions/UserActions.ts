@@ -31,26 +31,25 @@ export async function isAdminOrEditor(req: Request, res: Response, next: () => v
   }
 
 export async function getAllUsers(req: Request, res:Response){
-    const user= await AppDataSource.getRepository(User).find();
-    console.log(user);
-    res.json(user);
+    const users= await AppDataSource.getRepository(User).find();
+    res.json(users);
 }
 
 export async function registerNewUser(req:Request, res:Response){
-    console.log(req.body);
-        const user = await AppDataSource.getRepository(User).save({
-            email: req.body.email,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            password: req.body.password,
-            telephoneNumber: req.body.telephoneNumber,
-            userRole: req.body.userRole,
-            userRoleName: req.body.userRoleName,
-            userStatus: req.body.userStatus,
-            totalPoints: req.body.totalPoints,
-            birthday: req.body.birthday
-        })
-        res.json(user)
+  const user = await AppDataSource.getRepository(User).save({
+    email: req.body.email,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    password: req.body.password,
+    telephoneNumber: req.body.telephoneNumber,
+    userRole: req.body.userRole,
+    userRoleName: req.body.userRoleName,
+    userStatus: req.body.userStatus,
+    totalPoints: req.body.totalPoints,
+    birthday: req.body.birthday
+  })
+  
+  res.json(user)
 }
 
 export async function deleteUser(req:Request, res:Response){
@@ -112,7 +111,8 @@ export async function searchUsers(req: Request, res:Response){
 }
 
 export async function updatePic(req: Request, res: Response) {
-    const userId = req.body.userId;
+    const userId = req.body.data.userId;
+    console.log(userId)
     const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId } });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -121,7 +121,7 @@ export async function updatePic(req: Request, res: Response) {
     const fileName = user.firstName + user.lastName + '-' + user.id;
     const extension = req.body.data.extension;
     const fileUrl = `uploads/${fileName}.${extension}`;
-  
+    
     fs.writeFile(fileUrl, req.body.data.profilePic, { encoding: 'binary' }, (err) => {
       if (err) {
         console.log('Error uploading file', err);

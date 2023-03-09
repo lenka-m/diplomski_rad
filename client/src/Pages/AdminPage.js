@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import ProfileComponent from "../Components/ProfileComponent";
 import AllUsers from "../Components/AllUsers";
 import "../css/profile.css";
@@ -9,8 +10,7 @@ import { Box, Tabs, Tab } from "@mui/material";
 
 
 function AdminPage({loggedUser}){
-    
-
+  
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {

@@ -99,7 +99,7 @@ function AllActivitiesAdmin({loggedUser}) {
     <div className='container'>
     <div className='tableContainer'>
         {activities.length===0 ? (<h1 className='tableTitle'>Nema Aktivnosti :D</h1>) : (
-        <div>
+        <div style={{width: '100%'}}>
             <div className='titleContainer'>
                 <h1> Aktivnosti </h1>
                 <div className='filterButtons'>
