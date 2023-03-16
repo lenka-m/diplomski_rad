@@ -1,6 +1,6 @@
 .ProfilePage{
-    background-color: #0C2D48;
-    background-image: url('../img/proba.png');
+    background-image: url('../img/pppp.png');
+    background-size: cover;
     width: 100vw;
     min-height: 100vh;
     height: 100%;
@@ -16,12 +16,80 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("../img/boje.png");
+    
     background-position: center;
     background-size: cover;
     border-radius: 10px;
     padding: 50px;
 }
+
+
+.profileContainer{
+    width: 70vw !important;
+    display: flex;
+    flex-direction: row !important;
+}
+
+.leftContainer{
+    width: 50%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.leftContainer img{
+
+    width: 70%;
+    height: auto;
+}
+
+.rightContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.profileInfoContainer{
+    width: 100%;
+    margin: 10px;
+    height: 100%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+
+}
+.profileTotalPointsContainer{
+    margin: 10px;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.25);
+    font-size: 30px;
+    text-align: center;
+}
+
+.profileInfoHeader{
+    font-size: 20px;
+    text-align: center;
+}
+.profileInfoBody{
+    font-size: 22px;
+    margin: 20px;
+}
+.profileInfoBody p{
+    margin-bottom: 10px;
+}
+
+/*
+fa6969
+F2AA40
+*/
+
+ 
+/* Ovo da skontam odakle je:*/
 .boxContainter{
     background-color: #0C2D48;
     border-radius: 10px;

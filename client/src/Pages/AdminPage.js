@@ -42,15 +42,15 @@ function AdminPage({loggedUser}){
         );
       }
     return(
-       <div className="ProfilePage">
+       <div className="homepage">
 
             <ProfileComponent loggedUser={ loggedUser}/>
             <AllActivitiesAdmin loggedUser = {loggedUser}/>
             
-            <div className='container'>
-
+            <div className='HomepageContainer'>
+            
             <Box sx={{ width: '100%' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'rgba(0,0,0,0.15)'}}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'white', padding:'7px', borderRadius:'10px'}}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Korisnici" {...a11yProps(0)} />
                         <Tab label="Projekti" {...a11yProps(1)} />
@@ -67,9 +67,8 @@ function AdminPage({loggedUser}){
                     <AllTeams />
                 </TabPanel>
             </Box>
-
             </div>
-        
+
        </div>
     )
 }

@@ -3,9 +3,10 @@ import {Request, Response} from "express";
 import path = require("path")
 import { createActivity, finalUpdateActivity, getAllActivities, updateActivity, deleteActivity, searchActivities } from "./actions/ActivityActions";
 import { getAllProjects , insertNewProject, updateProjectVisibility} from "./actions/ProjectActions";
-import {deleteUser, getAllUsers, isAdmin, isEditor, isAdminOrEditor,registerNewUser, searchUsers, updatePic} from "./actions/UserActions";
+import {deleteUser, getAllUsers, isAdmin, isEditor, isAdminOrEditor,registerNewUser, searchUsers, updatePic, changePassword} from "./actions/UserActions";
 import { getAllTeams, postNewTeam, searchTeams } from "./actions/TeamActions";
 import { getAllTasks, postNewTask, searchTasks, updateTaskVisibility } from "./actions/TaskActions";
+import { createCall, searchCalls } from "./actions/CallActions";
 
 export interface Route {
     method: 'get' | 'post' |  'patch' | 'delete',
@@ -64,6 +65,10 @@ export const Routes: Route[] = [
     route: '/users/search',
     actions: [isAdmin, searchUsers]
 },{
+    method:'patch',
+    route: '/users-passwordChange',
+    actions: [changePassword]
+},{
     method: 'post',
     route: '/projects',
     actions: [isAdmin, insertNewProject]
@@ -99,4 +104,12 @@ export const Routes: Route[] = [
     method:'get',
     route:'/activity',
     actions: [isAdminOrEditor, getAllActivities]
+},{
+    method:'get',
+    route:'/call/search',
+    actions:[searchCalls]
+},{
+    method:'post',
+    route:'/call',
+    actions:[createCall]
 }]

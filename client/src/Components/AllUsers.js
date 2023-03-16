@@ -2,16 +2,48 @@ import React, {useState, useEffect } from 'react';
 import { deleteUser, getAllUsers } from '../Actions/userActions';
 import NewUser from './NewUser';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
+import {Alert, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
+import {Box, Modal} from '@mui/material';
+import ProfileComponent from './ProfileComponent';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  minwidth: 600,
+  bgcolor: '#0C2D48',
+  borderRadius: '10px',
+  boxShadow: 24,
+  p: 4,
+};
 
 function AllUsers({loggedUser}) {
+
+  // Svi korisnici, filtrirani i kriterijum pretrage:
   const [users, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [newUserComponent, setNewUserComponent]  = useState(false);
-  const [searchData, setSearchData] = useState({searchName: '', searchMail:'', searchUserRole:''})
+  const [searchData, setSearchData] = useState({searchName: '', searchMail:'', searchUserRole:''});
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [successDeleteUser, setSuccessDeleteUser] = useState({isSuccess: null, message:''});
+  // Za tabelu:
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  // Za modal dodaj korisnika: 
+  const [openNewUser, setOpenNewUser] = React.useState(false);
+  const handleOpenNewUser = () => setOpenNewUser(true);
+  const handleClosNewUser = () => setOpenNewUser(false);
+
+  // Za modal pogledajProfil: 
+  const [openProfile, setOpenProfile] = React.useState(false);
+  const handleOpenProfile = (selectedUser) => {
+    setOpenProfile(true);
+    setSelectedUser(selectedUser)
+  }
+  const handleCloseProfile = () => setOpenProfile(false);
+  
+  // Pri ucitavanju komponente, prvo uzimamo sve korisnike:
   useEffect(()=>{
     getAllUsers().then(data => {
         setAllUsers(data);
@@ -20,28 +52,44 @@ function AllUsers({loggedUser}) {
     });
   }, [])  
 
+  // Brisanje korisnika: 
   function handleDeleteUser(user){
     if(user === loggedUser){
-      alert('Ne mozete obrisati svoj profil');
+      setSuccessDeleteUser({isSuccess:false, message:'Ne mozete brisati svoj profil'});
+      setTimeout(()=>{
+        setSuccessDeleteUser({isSuccess:null, message:''})
+      }, 3000);
       return;
-    }
-    try{
-      deleteUser(user.id).then(
+    } 
+     try{
+      deleteUser(user.id).then(()=>{
           getAllUsers().then(data=>{
             setAllUsers(data);
-          })
-      )
-      console.log("obrisan");
+            
+          });
+          setSuccessDeleteUser({isSuccess: true, message: `Uspesno ste obrisali korisnika ${user.email}`});    
+        setTimeout(()=>{
+          setSuccessDeleteUser({isSuccess:null, message:''})
+        }, 3000);
+    })
+     
     } catch(ex){
-        console.log(ex);
+        console.log('uhvatio gresku');
+        setSuccessDeleteUser({isSuccess: false, message: `Greska prilikom brisanja korisnika ${user.email}`});
+        setTimeout(()=>{
+          setSuccessDeleteUser({isSuccess:null, message:''})
+        }, 3000);
     }
   }
+
+  // Odnosi se na pretragu korisnika u tabeli:
   const handleChange = (event) => {
     const { name, value } = event.target;
     setSearchData({ ...searchData, [name]: value });
     console.log(searchData.searchName)
   };
-  
+
+  // takodje za pretragu korisnika:
   useEffect(() => {
     setFilteredUsers(
       users.filter(
@@ -54,28 +102,28 @@ function AllUsers({loggedUser}) {
     );
   }, [searchData, users]);
 
-  
-    // Za tabelu funkcija:
-    const handleChangePage = (event, newPage) => {
+  // Za tabelu funkcija:
+  const handleChangePage = (event, newPage) => {
       setPage(newPage);
-    };
+  };
   // Za Tabelu funkcija:
   const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(+event.target.value);
-      setPage(0);
-  };
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+  
+  
   return (
-    <div className='tableContainer'>
-      
-      
-      {newUserComponent ? (<NewUser setNewUserComponent={setNewUserComponent} setAllUsers={setAllUsers} />
-) : (<button className='btnAdd' onClick={()=>setNewUserComponent(true)}> Dodaj novog korisnika</button>)}
 
-     
-  <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>
-            <TableContainer className='TableContainer' sx={{ maxHeight: 440}}>
-            <Table stickyHeader aria-label="sticky table">
-                <TableHead>
+    <div className="tableContainer">
+      <h1 className='tableHeader' > Korisnici </h1>
+      <div className='rightContainer'>
+      <button className="btnAdd" onClick={handleOpenNewUser}>Dodaj novog korisnika </button>
+      </div>
+      <Paper className="Paper" sx={{ width: '100%', overflow: 'hidden', marginTop: '10px' }}>
+        <TableContainer className="TableContainer" sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky ">
+            <TableHead>
                   <TableRow >
                     
                     <TableCell> Ime Prezime:</TableCell>
@@ -85,6 +133,7 @@ function AllUsers({loggedUser}) {
                     <TableCell>Status:</TableCell>
                     <TableCell>Azuriraj</TableCell>
                     <TableCell> Obrisi</TableCell>
+                    <TableCell> Vidi profil</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell><input type="text" name = "searchName" value={searchData.searchName} onChange={handleChange} /></TableCell>
@@ -116,7 +165,7 @@ function AllUsers({loggedUser}) {
                             { user.userRole === "none" ?(<TableCell>Beba</TableCell>) :(<TableCell></TableCell>)}
               <TableCell><AiFillEdit color='orange'/> </TableCell>
               <TableCell onClick={()=>{handleDeleteUser(user)}}><AiFillDelete color='red'/></TableCell>
-          
+                          <TableCell onClick={()=>{handleOpenProfile(user)}}><u>Wee</u></TableCell>
                              </TableRow>
                     );
                     })}
@@ -133,6 +182,20 @@ function AllUsers({loggedUser}) {
             onRowsPerPageChange={handleChangeRowsPerPage}
             />
             </Paper>
+            
+      <Modal open={openNewUser} onClose={handleClosNewUser} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box sx={style} >
+          <NewUser setAllUsers={setAllUsers} />
+        </Box>
+      </Modal>
+
+      <Modal open={openProfile} onClose={handleCloseProfile} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box sx={style} >
+          <ProfileComponent loggedUser={selectedUser}/>
+        </Box>
+      </Modal>
+      {successDeleteUser.isSuccess===true && <Alert>{successDeleteUser.message}</Alert>}
+      {successDeleteUser.isSuccess===false && <Alert severity='error'>{successDeleteUser.message}</Alert>}
 </div>
     
   )

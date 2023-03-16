@@ -1,10 +1,9 @@
 .container{
-    background-image: url('../img/boje1.png');
+    background-image: url('../img/pp.png'); 
     box-shadow: #162c469e 5px 5px  0px 0px;
     border-radius: 15px;
     background-position: center;
     background-size: cover;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,7 +18,7 @@
     background-color: #0f2540;
     box-shadow: #162c469e 5px 5px  0px 0px;
     border-radius: 15px;
-
+    margin-bottom: 50px;
     width: 100%;
     height: 100%;
     color:white;
@@ -28,6 +27,11 @@
     align-items: center;
     justify-content: center;
     padding:30px 
+}
+
+.tableHeader{
+    font-size: 50px;
+    margin-bottom: 20px;
 }
 
 
@@ -70,7 +74,7 @@
     padding: 7px 10px;
     border: none;
     border-radius: 10px;
-    background-color: #F2AA40;
+    background-color: green;
 }
 
 .filterButtons button:hover{
@@ -78,32 +82,11 @@
     background-color: antiquewhite;
 }
 
-/* TABELA */
-.content-table{    
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
-    margin: 25px 0;
-    font-size: 0.9em;
-    min-width: 400;
-    color:white;
-    text-align: center;    
+.rightContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
-.content-table tr {
-    border-bottom: 1px solid white;
-}
-
-.content-table thead tr{
-    border-radius: 10px;
-    background-color: #162C46;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.content-table th, .content-table td{
-    padding: 12px 15px;
-    font-size: 20px;
-}
-
 
 
 
@@ -132,7 +115,8 @@
     padding:15px;
     margin:15px;
     border-radius: 10px;
-    background-color: #162C46;
+    background-color: #1fa32a;
+    font-size: 15px;
     color: whitesmoke;
 }
 .btnContainer{

@@ -37,11 +37,12 @@ function NewTaskEditor({ setNewTaskEditorComponent, team, setTasks}) {
 
             <label className='registerLabel'>Broj poena:</label>
             <input className='registerInput' name = "points" type = "text" required value ={formData.points} onChange={handleChange}/>
-
             
-            <button className='registerSubmit' type = "submit"> Prijavi novi tim</button>
-            
+            <button className='registerSubmit' type = "submit"> Prijavi novi task</button>
         </form>
+        {success &&<Alert severity='success'>Uspesno ste dodali aktivnost</Alert>}
+        { error && <Alert severity='warning'> Greska prilikom dodavanja aktivnosti</Alert>}
+
     </div>
   )
 }

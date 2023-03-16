@@ -2,27 +2,39 @@ import React, { useState, useEffect } from 'react';
 import "../css/register.css";
 import { postTask } from '../Actions/TaskActivities';
 import { getAllTeams } from '../Actions/TeamActions';
+import { Alert } from '@mui/material';
 
 
 
-function NewTask({ setNewTaskComponent, teams, setTeams}) { 
+function NewTask({teams, setTeams, handleCloseNewTask}) { 
     
     
     const [formData, setFormData] = useState({name:'', teamId: teams[0].id, points:0});
-
+    const [success, setSuccess] = useState(null);
     const handleChange = (e) =>{
         setFormData({...formData, [e.target.name]: e.target.value });
     }
 
     async function handleSubmit (e){
         e.preventDefault();
-        await postTask(formData)
-        getAllTeams()
-            .then((data) =>{
-                setTeams(data);
-            }).then(()=>{
-                setNewTaskComponent(false)
-            })
+        try{
+          await postTask(formData)
+          await getAllTeams()
+              .then((data) =>{
+                  setTeams(data);
+              })
+          setSuccess(true);
+          setTimeout(()=>{
+            setSuccess(null);
+            handleCloseNewTask()
+
+          }, 2000)
+        } catch(ex){
+          setSuccess(false)
+          setTimeout(()=>{
+            setSuccess(null);
+          }, 2000)
+        }   
     }
     
     useEffect(() => {
@@ -33,7 +45,7 @@ function NewTask({ setNewTaskComponent, teams, setTeams}) {
 
   return (
     <div className='registerComponent'>      
-        <h1  onClick={()=> setNewTaskComponent(false)} className='registerTitle'>Nova Pozicija</h1>
+        <h1  className='registerTitle'>Nova Pozicija</h1>
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
             
             <select
@@ -57,6 +69,8 @@ function NewTask({ setNewTaskComponent, teams, setTeams}) {
             <button className='registerSubmit' type = "submit"> Prijavi novi tim</button>
             
         </form>
+        {success && (<Alert> Uspesno ste dodali novi tim {formData.name} </Alert>)}
+        {success===false && (<Alert severity='error'>Greska prilikom cuvanja tima.</Alert>)}
     </div>
   )
 }

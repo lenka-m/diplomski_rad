@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { deleteActivity, adminPatchActivity, searchActivity } from '../Actions/ActivityActions';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import "../css/tableComponent.css"
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
-
+import {Alert, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 function AllActivitiesAdmin({loggedUser}) {
     const [activities, setActivities] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);
@@ -38,40 +37,14 @@ function AllActivitiesAdmin({loggedUser}) {
     //Klik na potvrdu aktivnosti:
     function handleAccept(activity) {
         try{
-            adminPatchActivity({activityId: activity.id, userConfirmedId: loggedUser.id, numOfPoints: numOfPoints})
-                .then(fetchAllActivities());
-            // console.log("Uspesno potvrdjena aktivnosti");
+            adminPatchActivity({activityId: activity.id, userConfirmedId: loggedUser.id, numOfPoints: activity.task.points})
+                .then(fetchAllActivities())
+                
         } catch(ex){
             console.log(ex);
         }
     }
 
-    function handlePointsChange(activityId, event) {
-        setActivities(prevActivities => {
-            // Find the activity with the given activityId
-            const activityIndex = prevActivities.findIndex(activity => activity.id === activityId);
-            if (activityIndex === -1) {
-              // Activity not found, return the previous state
-              return prevActivities;
-            }
-        
-            // Update the numOfPoints property of the activity
-            const updatedActivity = {
-              ...prevActivities[activityIndex],
-              numOfPoints: event.target.value
-            };
-        
-            // Create a new array with the updated activity
-            const updatedActivities = [...prevActivities];
-            updatedActivities[activityIndex] = updatedActivity;
-        
-            // Update the filtered activities state with the new array
-            setFilteredActivities(updatedActivities);
-        
-            // Return the new array to update the activities state
-            return updatedActivities;
-          });
-    }
     
     // Klik na odbijanje aktivnosti: 
     function handleDeleteActivity(activity){
@@ -93,8 +66,8 @@ function AllActivitiesAdmin({loggedUser}) {
         setPage(0);
     };
   return (
-    <div className='container'>
-    <div className='tableContainer'>
+    <div className='HomepageContainer'>
+    
         {activities.length===0 ? (<h1 className='tableTitle'>Nema Aktivnosti :D</h1>) : (
         <div>
             <div className='titleContainer'>
@@ -142,13 +115,7 @@ function AllActivitiesAdmin({loggedUser}) {
                             <TableCell>{activity.team.name}</TableCell>
                             <TableCell>{activity.task.name}</TableCell>
                             <TableCell>s</TableCell>
-                            <TableCell>
-                <input
-                  id={`input-${activity.id}`}
-                  defaultValue={activity.task.points}
-                  onChange={(e)=>{handlePointsChange(activity.id, e)}}
-                />
-              </TableCell>
+                            <TableCell>{activity.task.points}</TableCell>
                             <TableCell>
                                 {activity.userConfirmed ?  
                                     (<p>{activity.userConfirmed.email}</p>) :
@@ -175,7 +142,6 @@ function AllActivitiesAdmin({loggedUser}) {
         )}   
         </div>)}
         
-    </div>
     
     
     </div>

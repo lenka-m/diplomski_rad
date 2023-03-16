@@ -1,11 +1,30 @@
 .homepage{
-    background-color: green;
+    background-image: url('../img/boje2.png');
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    
-    background-image: url('../img/boje.png');
+    justify-content: flex-start;
+    align-items: center;
     background-position: center;
     background-size: cover;
+    padding-top: 50px;
+}
+
+.HomepageContainer{
+    width: 90%;
+    background-color: #0c2d48f7;
+    padding: 50px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.HomepageContainer h1, .HomepageContainer h3{
+    color: whitesmoke;
+    margin-bottom: 20px;
 }

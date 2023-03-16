@@ -51,15 +51,21 @@ export async function getAllUsers(req: Request, res:Response){
 }
 
 export async function registerNewUser(req:Request, res:Response){
-    console.log(req.body);
-        const user = await AppDataSource.getRepository(User).save({
-            email: req.body.email,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            password: req.body.password,
-            userRole: req.body.userRole
-        })
-        res.json(user)
+  console.log(req.body);
+  const user = await AppDataSource.getRepository(User).save({
+    email: req.body.email,
+    profilePictureURL:'uploads/pands.jpeg',
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    password: req.body.password,
+    telephoneNumber: req.body.telephoneNumber,
+    userRole: req.body.userRole,
+    userRoleName: req.body.userRoleName!= '' ? (req.body.userRoleName): undefined,
+    userStatus: req.body.userStatus!= '' ? (req.body.userStatus): undefined,
+    totalPoints: req.body.totalPoints!= '' ? (req.body.totalPoints): undefined,
+    birthday: req.body.birthday!= '' ? (req.body.birthday): undefined
+  })
+  res.json(user)
 }
 
 export async function deleteUser(req:Request, res:Response){
@@ -106,33 +112,59 @@ export async function searchUsers(req: Request, res:Response){
     res.json(users);
 }
 
+export async function changePassword(req:Request, res:Response){
+  console.log('doso zahtev');
+  const userId = req.body.data.userId;
+  const oldPassword = req.body.data.oldPassword;
+  const newPassword = req.body.data.newPassword;
+  const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId } });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if(user.password !== oldPassword){
+      return res.status(404).json({message:'Wrong password!'});
+    } else{
+      user.password = newPassword;
+
+      AppDataSource.getRepository(User).save(user)
+        .then(() => {
+          return res.status(200).json({ message: 'Password updated successfully', user });
+        })
+        .catch((error) => {
+          console.log('Error saving user', error);
+          return res.status(500).json({ message: 'Error changing password' });
+        });
+    }
+}
+
 export async function updatePic(req: Request, res: Response) {
+    const userId = req.body.data.userId;
+    console.log(userId)
+    const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId } });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+      
+    const fileName = user.firstName + user.lastName + '-' + user.id;
+    const extension = req.body.data.extension;
+    const fileUrl = `uploads/${fileName}.${extension}`;
     
-    const userId = req.body.userId;
-    
-    upload.single('profilePic')(req, res, async function (err) {
-      if (err instanceof multer.MulterError) {
-        return res.status(400).json({ message: err.message });
-      } else if (err) {
-        return res.status(500).json({ message: err.message });
+    fs.writeFile(fileUrl, req.body.data.profilePic, { encoding: 'binary' }, (err) => {
+      if (err) {
+        console.log('Error uploading file', err);
+        return res.status(500).json({ message: 'Error uploading profile picture' });
       }
   
-      // Find the user with the given ID
-      const user = await  AppDataSource.getRepository(User).findOne({where:{id:userId}});
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      // Update the user's profilePictureURL field in the database
-      user.profilePictureURL = req.body.file.path;
-  
-      try {
-        await AppDataSource.getRepository(User).save(user);
-        return res.status(200).json({ message: 'Profile picture updated successfully', user });
-      } catch (error) {
-        return res.status(500).json({ message: error.message });
-      }
+      user.profilePictureURL = fileUrl;
+      AppDataSource.getRepository(User).save(user)
+        .then(() => {
+          return res.status(200).json({ message: 'Profile picture updated successfully', user });
+        })
+        .catch((error) => {
+          console.log('Error saving user', error);
+          return res.status(500).json({ message: 'Error saving user' });
+        });
     });
   }
   

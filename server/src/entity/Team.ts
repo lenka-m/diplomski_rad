@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, Index } from "typeorm"
 import { User } from "./User";
 import { Task } from "./Task";
 
@@ -8,6 +8,7 @@ export class Team {
     @PrimaryGeneratedColumn()
     id: number
 
+    @Index({ unique: true })
     @Column()
     name: string;
 

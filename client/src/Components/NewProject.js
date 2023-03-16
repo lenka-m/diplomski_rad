@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import "../css/register.css";
 import { createProject } from '../Actions/ProjectActions';
 import { getAllProjects } from '../Actions/ProjectActions';
 import { searchUsers } from '../Actions/userActions';
+import "../css/register.css";
+import { Alert } from '@mui/material';
 
-function NewProject({setNewProjectComponent, setProjects}) { 
+function NewProject({setProjects, handleCloseNewProject}) { 
 
     const [users, setUsers] = useState([]); //korisnici za editora
     const [formData, setFormData] = useState({name:'',short: '',website:'', visible:true});// podaci u formi
-    
+    const [success, setSuccess] = useState(null);
+
     //Prilikom inicijalnog učitavanja kupi sve editor profile kako bi popunio combo box
     useEffect(() => {
         searchUsers({userRole:'editor'}).then(data=> {
@@ -29,18 +31,24 @@ function NewProject({setNewProjectComponent, setProjects}) {
      // Cuvanje novog projekta:
      async function handleSubmit (e){
         e.preventDefault(); // da ne refreshuje ceo element
-        await createProject(formData); // prvo napravi projekat
-        getAllProjects() // onda uzmi sve projekte
-            .then((data) => { 
-                setProjects(data); // kad pokupis setuj podatke na nove projekte
-            }).then(()=>{
-            setNewProjectComponent(false) // zatvori prozorce
-            });
+        try{
+            await createProject(formData); // prvo napravi projekat
+            await getAllProjects() // onda uzmi sve projekte
+                .then((data) => { 
+                    setProjects(data); // kad pokupis setuj podatke na nove projekte
+                    setSuccess(true);
+                })
+            setTimeout(()=>{
+                setSuccess(null);
+                handleCloseNewProject();
+            }, 2000)
+        } catch(ex){
+            setSuccess(false);
+        } 
     }
 
   return (
     <div className='registerComponent'>      
-    <button onClick={()=> setNewProjectComponent(false)}> Odustani</button>  
         <h1 className='registerTitle'>Novi Projekat</h1>
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
             <label className='registerLabel'>Naziv:</label>
@@ -63,6 +71,8 @@ function NewProject({setNewProjectComponent, setProjects}) {
             <button className='registerSubmit' type = "submit"> Prijavi novi projekat</button>
             
         </form>
+        {success && (<Alert> Uspesno ste dodali novi projekat {formData.name} </Alert>)}
+        {success===false && (<Alert severity='error'>Greska prilikom cuvanja projekta.</Alert>)}
     </div>
   )
 }

@@ -5,6 +5,7 @@ import { Project } from "./entity/Project"
 import { Team } from "./entity/Team"
 import { Task } from "./entity/Task"
 import { User } from "./entity/User"
+import { Call } from "./entity/Call"
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -14,7 +15,7 @@ export const AppDataSource = new DataSource({
     password: "root",
     database: "spc",
     logging: false,
-    entities: [User, Project, Team, Task, Activity],
+    entities: [User, Project, Team, Task, Activity, Call],
     migrations: ["src/migration/*"],
     synchronize:true
 })

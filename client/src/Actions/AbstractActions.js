@@ -36,13 +36,15 @@ export async function searchObject(path, formData) {
 
 export async function deleteObject(path, formData) {
   const instance = getInstance();
-  console.log('pozvan deleteObject');
   await instance.delete(path, { data: formData });
 }
 
-export async function postObject(path, formData){
-    const instance = getInstance();
-    await instance.post(path, formData);
+export async function postObject(path, formData) {
+  const instance = getInstance();
+  const response = await instance.post(path, formData);
+  if (response.status < 200 || response.status >= 300) {
+    throw new Error(`Request failed with status code ${response.status}`);
+  } else return response
 }
 
 export async function patchObject(path, formData){

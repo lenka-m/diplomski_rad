@@ -7,6 +7,7 @@ import * as jwt from 'jsonwebtoken'
 const express = require('express');
 
 import { Routes } from "./Routes";
+import { searchCalls } from "./actions/CallActions";
 
 AppDataSource.initialize().then(async () => {
     const app = express();
@@ -55,6 +56,10 @@ AppDataSource.initialize().then(async () => {
             token
         })
 
+    })
+
+    app.get('/call/search', (req, res) =>{
+        searchCalls(req, res);
     })
 
     app.use(async(req, res, next) =>{

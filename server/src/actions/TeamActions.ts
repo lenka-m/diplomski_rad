@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import {AppDataSource } from "../data-source";
 import { Team } from "../entity/Team";
 import { User } from "../entity/User";
+import { QueryFailedError } from "typeorm";
 
 export async function getAllTeams(req: Request, res:Response) {
   const teamRepository = AppDataSource.getRepository(Team);
@@ -32,12 +33,21 @@ export async function searchTeams(req: Request, res:Response){
 }
 
 
-export async function postNewTeam(req:Request, res:Response){
-    console.log(req.body);
-    const user = await AppDataSource.getRepository(User).findOne({where: {id: req.body.coordinatorId}});
-        const team = await AppDataSource.getRepository(Team).save({
-            name: req.body.name,
-            coordinator:user
-        })
-        res.json(team)
+export async function postNewTeam(req: Request, res: Response) {
+  try {
+    const user = await AppDataSource.getRepository(User).findOne({
+      where: { id: req.body.coordinatorId },
+    });
+    const team = await AppDataSource.getRepository(Team).save({
+      name: req.body.name,
+      coordinator: user,
+    });
+    res.json(team);
+  } catch (error) {
+    if (error instanceof QueryFailedError && error.message.includes("duplicate key value violates unique constraint")) {
+      res.status(400).json({ message: "Vec postoji tim sa takvim imenom" });
+    } else {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }

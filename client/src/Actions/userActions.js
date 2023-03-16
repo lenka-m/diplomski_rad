@@ -35,3 +35,7 @@ export async function logoutUser(){
  export async function updateProfilePic(formData){
     return await uploadPic('/users-profilePic', formData);
 }
+
+export async function changePassword(passwordData){
+    return await patchObject('users-passwordChange', passwordData);
+}
