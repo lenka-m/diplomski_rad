@@ -50,7 +50,7 @@ function AdminPage({loggedUser}){
             <div className='HomepageContainer'>
             
             <Box sx={{ width: '100%' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'white', padding:'7px', borderRadius:'10px'}}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'white', padding:'3px', marginBottom:'25px',borderRadius:'10px'}}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Korisnici" {...a11yProps(0)} />
                         <Tab label="Projekti" {...a11yProps(1)} />

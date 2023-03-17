@@ -8,6 +8,7 @@ const express = require('express');
 
 import { Routes } from "./Routes";
 import { searchCalls } from "./actions/CallActions";
+import { time } from "console";
 
 AppDataSource.initialize().then(async () => {
     const app = express();
@@ -29,6 +30,7 @@ AppDataSource.initialize().then(async () => {
     
     app.post('/login',async (req, res) =>{
         const {email, password} = req.body;
+        const timestamp = new Date();
         console.log('ee')
         const user =  await AppDataSource.getRepository(User).findOne({
             where: {
@@ -40,7 +42,13 @@ AppDataSource.initialize().then(async () => {
         if(!user){
             res.status(401).json({message: 'Neispravna lozinka i/ili šifra. Pokušaj ponovo :)'});
             return;
-        } 
+        }
+        await AppDataSource.getRepository(User).update(
+            { id: user.id },
+            {
+              lastLogin: timestamp
+            }
+        ); 
         const token = jwt.sign({id: user.id}, 'jwttoken1252t', {expiresIn: '3h'});
         console.log('setuje token');
         res.json({
@@ -53,6 +61,7 @@ AppDataSource.initialize().then(async () => {
     app.get('/call/search', (req, res) =>{
         searchCalls(req, res);
     })
+  
 
     app.use(async(req, res, next) =>{
         const authorization = req.headers.authorization;
@@ -110,4 +119,9 @@ AppDataSource.initialize().then(async () => {
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
         next();
       });
+*/
+
+/* pravis prvog korisnika:  
+firstUser(); - samo gore ubaci funkciju
+
 */

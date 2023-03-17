@@ -117,7 +117,7 @@ function AllTeams() {
   }
   return (
     
-    <div className='tableContainer'>
+    <div>
       
     <h1 className='tableHeader'> Timovi </h1>
     

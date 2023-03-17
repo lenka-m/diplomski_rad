@@ -72,7 +72,7 @@ function AllProjekti(user) {
   };
 
   return (
-    <div className='tableContainer'>  
+    <div>  
 
       <h1 className='tableHeader'> Projekti </h1>
 

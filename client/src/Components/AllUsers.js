@@ -115,7 +115,8 @@ function AllUsers({loggedUser}) {
   
   return (
 
-    <div className="tableContainer">
+    <div>
+
       <h1 className='tableHeader' > Korisnici </h1>
       <div className='rightContainer'>
       <button className="btnAdd" onClick={handleOpenNewUser}>Dodaj novog korisnika </button>
@@ -131,14 +132,14 @@ function AllUsers({loggedUser}) {
                     <TableCell>Uloga</TableCell>
                     <TableCell>Broj poena:</TableCell>
                     <TableCell>Status:</TableCell>
-                    <TableCell>Azuriraj</TableCell>
+                    
                     <TableCell> Obrisi</TableCell>
                     <TableCell> Vidi profil</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell><input type="text" name = "searchName" value={searchData.searchName} onChange={handleChange} /></TableCell>
-                    <TableCell><input type="text" name = "searchMail" value={searchData.searchMail} onChange={handleChange} /></TableCell>
-                    <TableCell><select type="text" name = "searchUserRole" value={searchData.searchUserRole} onChange={ handleChange}>
+                    <TableCell><input type="text"  placeholder='ime prezime' name = "searchName" value={searchData.searchName} onChange={handleChange} /></TableCell>
+                    <TableCell><input type="text" placeholder='email' name = "searchMail" value={searchData.searchMail} onChange={handleChange} /></TableCell>
+                    <TableCell><select type="text" placeholder='uloga' name = "searchUserRole" value={searchData.searchUserRole} onChange={ handleChange}>
                         <option></option>
                         <option>editor</option>
                         <option> none</option>
@@ -163,9 +164,8 @@ function AllUsers({loggedUser}) {
                             <TableCell>{user.userRole}</TableCell>
                             { user.userRole === "none" ?(<TableCell>{user.totalPoints}</TableCell>) :(<TableCell></TableCell>)}
                             { user.userRole === "none" ?(<TableCell>Beba</TableCell>) :(<TableCell></TableCell>)}
-              <TableCell><AiFillEdit color='orange'/> </TableCell>
-              <TableCell onClick={()=>{handleDeleteUser(user)}}><AiFillDelete color='red'/></TableCell>
-                          <TableCell onClick={()=>{handleOpenProfile(user)}}><u>Wee</u></TableCell>
+                  <TableCell onClick={()=>{handleDeleteUser(user)}}><AiFillDelete color='red'/></TableCell>
+                          <TableCell onClick={()=>{handleOpenProfile(user)}}><u>PogledajProfil</u></TableCell>
                              </TableRow>
                     );
                     })}

@@ -52,6 +52,8 @@ export async function getAllUsers(req: Request, res:Response){
 
 export async function registerNewUser(req:Request, res:Response){
   console.log(req.body);
+  let status = calculateStatus(req.body.totalPoints);
+  try{
   const user = await AppDataSource.getRepository(User).save({
     email: req.body.email,
     profilePictureURL:'uploads/pands.jpeg',
@@ -61,11 +63,14 @@ export async function registerNewUser(req:Request, res:Response){
     telephoneNumber: req.body.telephoneNumber,
     userRole: req.body.userRole,
     userRoleName: req.body.userRoleName!= '' ? (req.body.userRoleName): undefined,
-    userStatus: req.body.userStatus!= '' ? (req.body.userStatus): undefined,
+    userStatus: req.body.userRole ==='none' ? status: undefined,
     totalPoints: req.body.totalPoints!= '' ? (req.body.totalPoints): undefined,
     birthday: req.body.birthday!= '' ? (req.body.birthday): undefined
   })
   res.json(user)
+  } catch(ex){
+    return res.status(400).send('Podaci')
+  }
 }
 
 export async function deleteUser(req:Request, res:Response){
@@ -167,4 +172,31 @@ export async function updatePic(req: Request, res: Response) {
       });
   });
 }
-  
+
+function calculateStatus(totalPoints) :string{
+  console.log('pozvao funkciju');
+  if(totalPoints< 30){
+    return "beba";
+  } else if(totalPoints>= 30 && totalPoints<80){
+    return "obzerver";
+  } else if(totalPoints>=80){
+    console.log('evo usao u if')
+    return "full"
+  } 
+}
+
+export async function firstUser(){
+  const user = await AppDataSource.getRepository(User).save({
+    email: 'l@gmail.com',
+    profilePictureURL:'uploads/pands.jpeg',
+    firstName: 'Lenka',
+    lastName: 'Milosevic',
+    password: 'lenka',
+    telephoneNumber: '+381637771409',
+    userRole: 'admin',
+    userRoleName: 'Admin',
+    userStatus: undefined,
+    totalPoints:  undefined,
+    birthday: undefined
+  })
+}

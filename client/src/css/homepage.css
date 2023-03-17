@@ -22,6 +22,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.743) 0px 5px 15px;
 }
 
 .HomepageContainer h1, .HomepageContainer h3{
