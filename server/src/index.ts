@@ -13,7 +13,7 @@ AppDataSource.initialize().then(async () => {
     const app = express();
     const port = 3001;
     var cors = require('cors');
-    app.use(express.json());
+    app.use(express.json({limit: '10mb'})); 
     app.use(cors({
         origin: 'http://localhost:3000',
         methods: ['GET', 'POST', 'PATCH', 'DELETE'],
@@ -23,15 +23,7 @@ AppDataSource.initialize().then(async () => {
         res.setHeader('Cache-Control', 'no-cache');
         next();
       });
-    app.options('*', cors({
-        origin: 'http://localhost:3000',
-        methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-        allowedHeaders: ['Content-Type', 'Authorization']
-      }));
-      app.use((req, res, next) => {
-        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
-        next();
-      });
+
     
     app.use('/uploads', express.static('uploads'));      
     
@@ -106,3 +98,16 @@ AppDataSource.initialize().then(async () => {
     app.listen(port, () => console.log(`Listening on port ${port}`));
 
 }).catch(error => console.log(error))
+
+
+/* Ako krene patch da zeza, ovo ubaciti:
+    app.options('*', cors({
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization']
+      }));
+      app.use((req, res, next) => {
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
+        next();
+      });
+*/

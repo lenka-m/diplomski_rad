@@ -44,10 +44,9 @@ export class User {
     // Ako je editor:
     @Column({ nullable: true })
     userRoleName: string
-
     
     // Ako je none: 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'date' })
     birthday: Date
 
     // Ako je none: 

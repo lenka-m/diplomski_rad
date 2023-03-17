@@ -50,7 +50,7 @@ function ProfileComponent({loggedUser}) {
 
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    
     updateProfilePic(formData)
   };
 
@@ -104,7 +104,7 @@ function ProfileComponent({loggedUser}) {
         
         
         
-        <div className='rightContainer' style = {{width:'50%'}}>
+        <div className='rightProfileContainer' >
         <div className='profileInfoContainer'>
           <div className='profileInfoHeader'>
               <h1>{user.firstName} {user.lastName}</h1>
@@ -119,13 +119,14 @@ function ProfileComponent({loggedUser}) {
               <p><i><BsFillTelephoneFill/> {user.telephoneNumber}</i></p> 
                      
             </div>
+            
          </div>    
-        
-          {user.totalPoints !== null ? 
+         {user.totalPoints !== null ? 
               (<div className='profileTotalPointsContainer'> 
                 <h1>{user.totalPoints}</h1>
                 <h5> <i>{user.userStatus}</i>  </h5>
               </div>):(<div></div>)}    
+          
         </div>  
       </div>
   

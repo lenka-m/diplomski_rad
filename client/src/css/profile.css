@@ -53,7 +53,6 @@
 }
 .profileInfoContainer{
     width: 100%;
-    margin: 10px;
     height: 100%;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.25);
@@ -61,14 +60,18 @@
     color: white;
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
+    margin-top: 10px;
 
 }
 .profileTotalPointsContainer{
-    margin: 10px;
     padding: 30px;
     background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
     font-size: 30px;
     text-align: center;
+    margin-bottom: 10px;
+    width: fit-content;
 }
 
 .profileInfoHeader{
@@ -78,6 +81,7 @@
 .profileInfoBody{
     font-size: 22px;
     margin: 20px;
+    text-align: start;
 }
 .profileInfoBody p{
     margin-bottom: 10px;
@@ -168,4 +172,33 @@ F2AA40
     font-size: 20px;
     margin-top: 10px;
     margin-left: 30px;
+}
+.rightProfileContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+@media only screen and (max-width: 1200px) {
+    .profileContainer{
+        display: flex;
+        flex-direction: column !important;
+        padding: 0;
+        
+    }
+    .rightProfileContainer{
+        width: 100%;
+        
+    }
+    .profileInfoContainer{
+        width: 90%;
+    }
+    h1{
+        font-size: 25px;
+        margin-bottom: 5px;
+    }
+    p{
+        font-size: 20px;
+    }
 }
