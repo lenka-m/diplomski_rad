@@ -3,6 +3,7 @@ import { postActivity,searchActivity } from '../Actions/ActivityActions';
 import { getAllTeams } from '../Actions/TeamActions';
 import { getAllProjects } from '../Actions/ProjectActions';
 import "../css/register.css"
+import { Alert } from '@mui/material';
 
 function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity}) {    
     const user = loggedUser;
@@ -11,6 +12,7 @@ function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity
     const [tasks, setTasks] = useState([]);
     const [projects, setProjects] = useState([]);
     const [formData, setFormData] = useState({userId: user.id, date:"", opis: ""});
+    const [success, setSuccess] = useState({isSuccess:null, message:''});
    
     useEffect(() => {
         getAllProjects().then(data => { setProjects(data.filter((project)=>{return project.visible === true})); })
@@ -27,8 +29,9 @@ function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity
     }
 
     useEffect(() => {
-        if(projects.length>0)
+        if(projects.length>0){
             setFormData({...formData, projectId:projects[0].id})
+        }
     }, [projects])
 
     useEffect(() => {
@@ -37,11 +40,10 @@ function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity
         }
     }, [ teams])
     useEffect(() => {
-        console.log(' pt ');
         if(teams.length>0){
             setTasks(selectedTeam.tasks);
         }
-    }, [ selectedTeam])
+    }, [selectedTeam])
     
     
 
@@ -54,15 +56,21 @@ function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity
     };
     async function handleSubmit (e){
             e.preventDefault();
-            await postActivity(formData).then(
-                searchActivity({userId: loggedUser.id}).then(data => {
+            try{
+            await postActivity(formData)
+            await searchActivity({userId: loggedUser.id}).then(data => {
                     console.log(data);
-                    setCompletedActivities(data)
-                    
+                    setCompletedActivities(data);
                 })
-            );
-            
+            setSuccess({isSuccess: true, message:'Zahtev uspešno poslat :D'});
+            setTimeout(()=>{
+                setSuccess({isSuccess:null, message:''});
+                handleCloseNewActivity();
+            }, 2000)
             console.log("proslo");
+            } catch(ex){
+                setSuccess({isSuccess:false, message:'Greska prilikom slanja zahteva'});
+            }
 
     }
 
@@ -103,6 +111,10 @@ function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity
 
             <button className='registerSubmit' type = "submit"> Posalji zahtev</button>
         </form>
+
+        {success.isSuccess===true && <Alert>{success.message}</Alert>};
+        {success.isSuccess===false && <Alert severity='error'>{success.message}</Alert>}                    
+
     </div>
   )
 }
