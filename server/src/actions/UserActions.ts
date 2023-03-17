@@ -3,7 +3,7 @@ import { AppDataSource } from "../data-source";
 import {User} from "../entity/User";
 import { renameFile } from "./uploadActions";
 import path = require("path");
-
+import * as fs from 'fs';
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -139,32 +139,32 @@ export async function changePassword(req:Request, res:Response){
 }
 
 export async function updatePic(req: Request, res: Response) {
-    const userId = req.body.data.userId;
-    console.log(userId)
-    const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId } });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-      
-    const fileName = user.firstName + user.lastName + '-' + user.id;
-    const extension = req.body.data.extension;
-    const fileUrl = `uploads/${fileName}.${extension}`;
-    
-    fs.writeFile(fileUrl, req.body.data.profilePic, { encoding: 'binary' }, (err) => {
-      if (err) {
-        console.log('Error uploading file', err);
-        return res.status(500).json({ message: 'Error uploading profile picture' });
-      }
-  
-      user.profilePictureURL = fileUrl;
-      AppDataSource.getRepository(User).save(user)
-        .then(() => {
-          return res.status(200).json({ message: 'Profile picture updated successfully', user });
-        })
-        .catch((error) => {
-          console.log('Error saving user', error);
-          return res.status(500).json({ message: 'Error saving user' });
-        });
-    });
+  const userId = req.body.data.userId;
+  console.log(userId)
+  const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId } });
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
   }
+    
+  const fileName = user.firstName + user.lastName + '-' + user.id;
+  const extension = req.body.data.extension;
+  const fileUrl = `uploads/${fileName}.${extension}`;
+  
+  fs.writeFile(fileUrl, req.body.data.profilePic, { encoding: 'binary' }, (err) => {
+    if (err) {
+      console.log('Error uploading file', err);
+      return res.status(500).json({ message: 'Error uploading profile picture' });
+    }
+
+    user.profilePictureURL = fileUrl;
+    AppDataSource.getRepository(User).save(user)
+      .then(() => {
+        return res.status(200).json({ message: 'Profile picture updated successfully', user });
+      })
+      .catch((error) => {
+        console.log('Error saving user', error);
+        return res.status(500).json({ message: 'Error saving user' });
+      });
+  });
+}
   

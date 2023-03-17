@@ -1,6 +1,5 @@
 
 import React from 'react'
-import Modal from '../Components/Modals/Modal'
 import { useState } from 'react'
 import "../css/homepage.css";
 import AllCallsActive from "../Components/AllCallsActive"

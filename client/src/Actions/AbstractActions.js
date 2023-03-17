@@ -8,7 +8,7 @@ const instance = axios.create({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Methods': 'PATCH',//Access-Control-Allow-Methods
       'Access-Control-Allow-Origin': 'http://localhost:3000',
-      'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+      'Access-Control-Allow-Headers': 'Authorization, Content-Type, Access-Control-Allow-Headers',
     },
 });
 
@@ -36,15 +36,13 @@ export async function searchObject(path, formData) {
 
 export async function deleteObject(path, formData) {
   const instance = getInstance();
+  console.log('pozvan deleteObject');
   await instance.delete(path, { data: formData });
 }
 
-export async function postObject(path, formData) {
-  const instance = getInstance();
-  const response = await instance.post(path, formData);
-  if (response.status < 200 || response.status >= 300) {
-    throw new Error(`Request failed with status code ${response.status}`);
-  } else return response
+export async function postObject(path, formData){
+    const instance = getInstance();
+    await instance.post(path, formData);
 }
 
 export async function patchObject(path, formData){
@@ -53,14 +51,6 @@ export async function patchObject(path, formData){
 }
 
 export async function uploadPic(path, formData){
-  const instance  = axios.create({
-    baseURL: `${url}`,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      'Access-Control-Allow-Methods': 'PATCH',//Access-Control-Allow-Methods
-      'Access-Control-Allow-Origin': 'http://localhost:3000',
-      'Access-Control-Allow-Headers': 'Authorization, Content-Type',
-    },
-  });
+  const instance = getInstance();
   return await instance.patch(path,{data: formData});
 }

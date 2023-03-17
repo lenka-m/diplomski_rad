@@ -11,7 +11,7 @@ export class User {
 
     @Column({unique:true})
     email: string
-
+  /*
     @Column({
         type: "varchar",
         nullable: false,
@@ -21,7 +21,8 @@ export class User {
           ivLength: 16,
           iv: 'ff5ac19190424b1d88f9419ef949ae56'
         })
-      })
+      })*/
+      @Column()
     password: string; 
 
     @Column()
@@ -31,15 +32,37 @@ export class User {
     lastName: string
 
     @Column()
-    userRole: string
+    telephoneNumber: string
 
     @Column({ nullable: true })
     profilePictureURL?: string;
 
+    // Moguce vrednosti: admin, editor, none
+    @Column()
+    userRole: string
 
+    // Ako je editor:
+    @Column({ nullable: true })
+    userRoleName: string
+
+    
+    // Ako je none: 
+    @Column({ nullable: true })
+    birthday: Date
+
+    // Ako je none: 
+    @Column({ nullable: true })
+    lastLogin: Date
+
+    // Ako je none:
+    @Column({ nullable: true })
+    userStatus: string
+
+    // Ako je none:
+    @Column({ nullable: true })
+    totalPoints: number;
+    
+    // Ako je none:
     @OneToMany(()=> Activity, activity=> activity.user, { onDelete: "CASCADE" })
     activities: Activity[]
-    
-    @Column({default: 0})
-    totalPoints: number;
 }

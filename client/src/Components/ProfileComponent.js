@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import "../css/profile.css";
 import {BsFillTelephoneFill} from 'react-icons/bs';
 import {GrMail} from 'react-icons/gr';
-import {FaUserAlt} from 'react-icons/fa';
+import {FaUserAlt, FaBirthdayCake} from 'react-icons/fa';
 import { changePassword, updateProfilePic } from '../Actions/userActions';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -51,7 +51,6 @@ function ProfileComponent({loggedUser}) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData)
     updateProfilePic(formData)
   };
 
@@ -129,7 +128,7 @@ function ProfileComponent({loggedUser}) {
               </div>):(<div></div>)}    
         </div>  
       </div>
-    </div>
+  
   )
 }
 
