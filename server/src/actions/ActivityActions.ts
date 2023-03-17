@@ -6,6 +6,8 @@ import { Project } from "../entity/Project";
 import { User } from "../entity/User";
 import { Task } from "../entity/Task";
 import { Brackets } from "typeorm";
+
+
 export async function createActivity(req:Request, res:Response){
     console.log(req.body);
     const user = await AppDataSource.getRepository(User).findOne({where: {id: req.body.userId}});

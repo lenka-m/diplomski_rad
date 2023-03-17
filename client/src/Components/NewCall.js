@@ -28,7 +28,15 @@ export default function NewCall({setCalls, handleCloseNewCall, loggedUser}) {
 
   // Submit, pozivanje cuvanja:
   async function handleSubmit (e){
-    e.preventDefault(); // da ne refreshuje ceo elemente    
+    e.preventDefault(); // da ne refreshuje ceo elemente
+    if(formData.startDate > formData.endDate){
+      setSuccess({isSuccess:false, message:'Ne moze kraj pre pocetka.'});
+      setTimeout(()=>{
+        setSuccess({isSuccess:null, message:''});
+      }, 2000)
+      return;
+    }
+    
     try{
       await postCall(formData);
       await searchCall({postedBy:loggedUser.id}).then((data)=>{
