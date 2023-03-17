@@ -67,8 +67,7 @@ export async function finalUpdateActivity(req: Request, res: Response) {
        },
      });
      const totalPoints = completedActivities.reduce((acc, cur) => acc + cur.numOfPoints, 0);
- 
-     user.totalPoints = totalPoints;
+     user.totalPoints = totalPoints + user.startingPoints;
      await AppDataSource.getRepository(User).save(user);
  
      res.send('ok');

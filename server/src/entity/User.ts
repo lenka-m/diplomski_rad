@@ -59,6 +59,10 @@ export class User {
     // Ako je none:
     @Column({ nullable: true })
     totalPoints: number;
+
+    // Ako je none:
+    @Column({ nullable: true })
+    startingPoints: number;
     
     // Ako je none:
     @OneToMany(()=> Activity, activity=> activity.user, { onDelete: "CASCADE" })

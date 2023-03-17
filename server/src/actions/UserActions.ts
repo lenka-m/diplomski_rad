@@ -65,6 +65,7 @@ export async function registerNewUser(req:Request, res:Response){
     userRoleName: req.body.userRoleName!= '' ? (req.body.userRoleName): undefined,
     userStatus: req.body.userRole ==='none' ? status: undefined,
     totalPoints: req.body.totalPoints!= '' ? (req.body.totalPoints): undefined,
+    startingPoints: req.body.totalPoints!= '' ? (req.body.totalPoints): undefined,
     birthday: req.body.birthday!= '' ? (req.body.birthday): undefined
   })
   res.json(user)
