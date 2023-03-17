@@ -16,7 +16,7 @@ const style = {
     boxShadow: 24,
     p: 4,
   };
-function AllTasks({team}) { 
+function AllTasks({team, setTeams, loggedUser}) { 
 
     const [tasks, setTasks] = useState(team.tasks || []);
     const [newTaskEditorComponent , setNewTaskEditorComponent] = useState(false);
@@ -106,7 +106,7 @@ function AllTasks({team}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} >
-            <NewTaskEditor  team = {team} handleCloseNewTask = {handleCloseNewTask}  />
+            <NewTaskEditor loggedUser={loggedUser} setTeams={setTeams} team = {team} handleCloseNewTask = {handleCloseNewTask}  />
         </Box>
       </Modal> 
 

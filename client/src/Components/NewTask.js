@@ -10,7 +10,7 @@ function NewTask({teams, setTeams, handleCloseNewTask}) {
     
     
     const [formData, setFormData] = useState({name:'', teamId: teams[0].id, points:0});
-    const [success, setSuccess] = useState(null);
+    const [success, setSuccess] = useState({isSuccess: null, message:''});
     const handleChange = (e) =>{
         setFormData({...formData, [e.target.name]: e.target.value });
     }
@@ -23,16 +23,15 @@ function NewTask({teams, setTeams, handleCloseNewTask}) {
               .then((data) =>{
                   setTeams(data);
               })
-          setSuccess(true);
+          setSuccess({isSuccess:true, message:'Uspesno ste totali novi task'});
           setTimeout(()=>{
-            setSuccess(null);
+            setSuccess({isSuccess:null, message:''});
             handleCloseNewTask()
-
           }, 2000)
         } catch(ex){
-          setSuccess(false)
+          setSuccess({isSuccess:false,message:'Greska prilikom cuvanja taska'});
           setTimeout(()=>{
-            setSuccess(null);
+            setSuccess({isSuccess:null, message:''});
           }, 2000)
         }   
     }
@@ -66,11 +65,11 @@ function NewTask({teams, setTeams, handleCloseNewTask}) {
             <input className='registerInput' name = "points" type = "text" required value ={formData.points} onChange={handleChange}/>
 
             
-            <button className='registerSubmit' type = "submit"> Prijavi novi tim</button>
+            <button className='registerSubmit' type = "submit"> Prijavi novi task</button>
             
         </form>
-        {success && (<Alert> Uspesno ste dodali novi tim {formData.name} </Alert>)}
-        {success===false && (<Alert severity='error'>Greska prilikom cuvanja tima.</Alert>)}
+        {success.isSuccess===true && (<Alert>{success.message} </Alert>)}
+        {success.isSuccess===false && (<Alert severity='error'>{success.message}</Alert>)}
     </div>
   )
 }

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import "../css/register.css";
-import { postTask, searchTasks } from '../Actions/TaskActivities';
+import { postTask} from '../Actions/TaskActivities';
 import { Alert } from '@mui/material';
+import { searchTeams } from '../Actions/TeamActions';
 
 
-function NewTaskEditor({ setNewTaskEditorComponent, team, setTasks}) { 
+function NewTaskEditor({ handleCloseNewTask, team, setTeams, loggedUser}) { 
     
     
     const [formData, setFormData] = useState({name:'', teamId: team.id, points:0});
@@ -15,21 +16,33 @@ function NewTaskEditor({ setNewTaskEditorComponent, team, setTasks}) {
 
     async function handleSubmit (e){
         e.preventDefault();
-        console.log(formData)
-        await postTask(formData)
-        searchTasks({teamId:team.id})
-            .then((data) =>{
-                setTasks(data)
-            }).then(()=>{
-                setNewTaskEditorComponent(false)
+        try{
+            await postTask(formData).then(()=>{
+                setSuccess({isSuccess:true, message:'Uspesno ste dodali novi task'}); 
+            });
+            await setTimeout(()=>{
+                setSuccess({isSuccess:null, message:''});
+                handleCloseNewTask();
+                searchTeams({coordinatorId: loggedUser.id}).then((data)=>{
+                    setTeams(data) ;
+                            
             })
+            }, 2000)
+            
+        } catch(ex){
+            console.log(ex);
+            setSuccess({isSuccess:false,message:'Greska prilikom cuvanja taska'});
+            setTimeout(()=>{
+              setSuccess({isSuccess:null, message:''});
+            }, 2000)
+        }
     }
     
 
 
   return (
     <div className='registerComponent'>      
-        <h1  onClick={()=> setNewTaskEditorComponent(false)} className='registerTitle'>{team.name} tim</h1>
+        <h1   className='registerTitle'>{team.name} tim</h1>
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
 
             <label className='registerLabel'>Naziv:</label>
@@ -40,9 +53,8 @@ function NewTaskEditor({ setNewTaskEditorComponent, team, setTasks}) {
             
             <button className='registerSubmit' type = "submit"> Prijavi novi task</button>
         </form>
-        {success.isSuccess===true   &&  <Alert severity='success'>Uspesno ste dodali aktivnost</Alert>}
-        { success.isSuccess===false &&  <Alert severity='warning'> Greska prilikom dodavanja aktivnosti</Alert>}
-
+        {success.isSuccess===true && (<Alert>{success.message} </Alert>)}
+        {success.isSuccess===false && (<Alert severity='error'>{success.message}</Alert>)}
     </div>
   )
 }

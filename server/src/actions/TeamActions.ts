@@ -9,7 +9,7 @@ export async function getAllTeams(req: Request, res:Response) {
   const userRepository = AppDataSource.getRepository(User);
   const teams = await teamRepository
     .createQueryBuilder("team")
-    .leftJoinAndSelect("team.tasks", "task")
+    .leftJoinAndSelect("team.tasks", "task", "task.visible = :visible", { visible: true })
     .leftJoinAndSelect("team.coordinator", "user")
     .getMany();
   console.log(teams);

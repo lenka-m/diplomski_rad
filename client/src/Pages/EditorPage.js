@@ -69,7 +69,7 @@ function EditorPage({loggedUser}){
                     </Box>
                     <TabPanel value={value} index={0}>
                     {teams.map((team) => (
-                        <AllTasks team={team} key = {team.id}/>
+                        <AllTasks loggedUser={loggedUser} setTeams={setTeams} team={team} key = {team.id}/>
                     ))}
                     </TabPanel>
                     <TabPanel value={value} index={1}>
