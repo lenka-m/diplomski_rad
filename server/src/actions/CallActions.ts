@@ -21,7 +21,7 @@ export async function createCall(req: Request, res: Response){
         applyLink: req.body.applyLink,
         status: status,
         project: project,
-        team: req.body.team!==null ? (team) : null
+        team: req.body.team!=='' ? (team) : null
     })
     
     res.json(call)

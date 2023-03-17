@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import "../css/register.css";
 import { postTask, searchTasks } from '../Actions/TaskActivities';
-
+import { Alert } from '@mui/material';
 
 
 function NewTaskEditor({ setNewTaskEditorComponent, team, setTasks}) { 
     
     
     const [formData, setFormData] = useState({name:'', teamId: team.id, points:0});
-
+    const [success, setSuccess] = useState({isSuccess: null, message:''});
     const handleChange = (e) =>{
         setFormData({...formData, [e.target.name]: e.target.value });
     }
@@ -29,7 +29,7 @@ function NewTaskEditor({ setNewTaskEditorComponent, team, setTasks}) {
 
   return (
     <div className='registerComponent'>      
-        <h1  onClick={()=> setNewTaskEditorComponent(false)} className='registerTitle'>Nova Pozicija</h1>
+        <h1  onClick={()=> setNewTaskEditorComponent(false)} className='registerTitle'>{team.name} tim</h1>
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
 
             <label className='registerLabel'>Naziv:</label>
@@ -40,8 +40,8 @@ function NewTaskEditor({ setNewTaskEditorComponent, team, setTasks}) {
             
             <button className='registerSubmit' type = "submit"> Prijavi novi task</button>
         </form>
-        {success &&<Alert severity='success'>Uspesno ste dodali aktivnost</Alert>}
-        { error && <Alert severity='warning'> Greska prilikom dodavanja aktivnosti</Alert>}
+        {success.isSuccess===true   &&  <Alert severity='success'>Uspesno ste dodali aktivnost</Alert>}
+        { success.isSuccess===false &&  <Alert severity='warning'> Greska prilikom dodavanja aktivnosti</Alert>}
 
     </div>
   )

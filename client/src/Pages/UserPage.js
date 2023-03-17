@@ -5,7 +5,7 @@ import AllActivitiesUser from '../Components/AllActivitiesUser';
 
 function UserPage({loggedUser}) {
   return (
-    <div className='ProfilePage'>
+    <div className='homepage'>
         <ProfileComponent loggedUser = {loggedUser}/>
         
         <AllActivitiesUser loggedUser={loggedUser}/>

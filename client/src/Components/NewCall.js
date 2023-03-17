@@ -7,7 +7,7 @@ import { Alert } from '@mui/material';
 
 export default function NewCall({setCalls, handleCloseNewCall, loggedUser}) {
   
-  const [formData, setFormData] = useState({header:'', startDate:"", endDate:"",applyLink:'', postedBy:loggedUser.id})
+  const [formData, setFormData] = useState({header:'', startDate:"", endDate:"",applyLink:'', postedBy:loggedUser.id, team:''})
   //Ponudjeni timovi i projekti u formi:
   const [teams, setTeams] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -17,6 +17,7 @@ export default function NewCall({setCalls, handleCloseNewCall, loggedUser}) {
 
   // Promena podataka u formi se prati:
   const handleChange = (e) =>{ 
+    
     let value = e.target.value;
     if (e.target.name === "startDate" || e.target.name === "endDate") {
       value = new Date(value).toISOString().slice(0, 10);
@@ -50,7 +51,6 @@ export default function NewCall({setCalls, handleCloseNewCall, loggedUser}) {
       })
     getAllTeams().then(data => {
         setTeams(data); 
-        setFormData({...formData, team:null})
       })
   }, [])
 
@@ -77,7 +77,7 @@ export default function NewCall({setCalls, handleCloseNewCall, loggedUser}) {
         </select>
         <label className='registerLabel'>Tim:</label>
         <select className='registerInput' name = "team" value ={formData.team} onChange={handleChange}>
-                <option onChange={handleChange} value={null}>N/A</option>
+                <option onChange={handleChange} name="team" value={''}>N/A</option>
                 {teams && teams.map(team => (                    
                     <option key ={team.id} name = "team" onChange={handleChange} value = {team.id}> {team.name}</option>
                 ))}

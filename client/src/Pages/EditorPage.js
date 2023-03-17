@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { searchTeams } from "../Actions/TeamActions";
 import AllTasks from "../Components/AllTasks";
 import { Box, Tabs, Tab } from "@mui/material";
-import NewTaskEditor from "../Components/NewTaskEditor";
+import AllCallsEditor from "../Components/AllCallsEditor"
 
 function EditorPage({loggedUser}){
 
@@ -58,26 +58,26 @@ function EditorPage({loggedUser}){
         <div className="homepage">
             <ProfileComponent loggedUser={loggedUser} />
             <AllActivitiesEditor loggedUser={loggedUser} />
-
-
-            {teams.map((team) => (
-                <div className='container' key={team.id}>
+                <div className='HomepageContainer'>
                 <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'rgba(0,0,0,0.15)'}}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor:'white'}}>
                         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                            <Tab label="Tim" {...a11yProps(0)} />
-                            <Tab label="Novi task" {...a11yProps(1)} />
+                            <Tab label="Timovi" {...a11yProps(0)} />
+                            <Tab label="Pozivi" {...a11yProps(1)} />
+                            
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
-                        <AllTasks team={team} />
+                    {teams.map((team) => (
+                        <AllTasks team={team} key = {team.id}/>
+                    ))}
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        <NewTaskEditor team = {team}/>
+                        <AllCallsEditor loggedUser={loggedUser}></AllCallsEditor>
                     </TabPanel>
                 </Box>
                 </div> 
-            ))}
+            
             
         </div>
     )

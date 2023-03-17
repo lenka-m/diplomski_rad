@@ -108,7 +108,7 @@ function ProfileComponent({loggedUser}) {
         <div className='profileInfoContainer'>
           <div className='profileInfoHeader'>
               <h1>{user.firstName} {user.lastName}</h1>
-              <h2>Koordinator za informacione sisteme</h2>            
+              {user.userRoleName && <h2>{user.userRoleName}</h2>}        
             </div>
             <div className = 'profileInfoBody'>
             {user.userRole !== 'none' ? (<p><FaUserAlt/> <i>{user.userRole}</i></p>):(<div></div>)}
@@ -116,7 +116,7 @@ function ProfileComponent({loggedUser}) {
 
               
               <p><GrMail/> <i>{user.email}</i></p>            
-              <p><i><BsFillTelephoneFill/> +381637771409</i></p> 
+              <p><i><BsFillTelephoneFill/> {user.telephoneNumber}</i></p> 
                      
             </div>
          </div>    

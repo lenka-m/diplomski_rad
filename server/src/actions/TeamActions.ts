@@ -32,11 +32,10 @@ export async function searchTeams(req: Request, res:Response){
   res.json(teams);
 }
 
-
 export async function postNewTeam(req: Request, res: Response) {
   try {
     const user = await AppDataSource.getRepository(User).findOne({
-      where: { id: req.body.coordinatorId },
+      where: { id: req.body.coordinator },
     });
     const team = await AppDataSource.getRepository(Team).save({
       name: req.body.name,

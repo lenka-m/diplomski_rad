@@ -62,8 +62,8 @@ function AllActivitiesEditor({loggedUser}) {
     };
 
   return (
-    <div className='container'>
-    <div className='tableContainer'>
+    <div className='HomepageContainer'>
+        <div className='tableContainer'>
          {activities.length===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div><h1> Aktivnosti </h1>
          <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>
             <TableContainer className='TableContainer' sx={{ maxHeight: 440}}>

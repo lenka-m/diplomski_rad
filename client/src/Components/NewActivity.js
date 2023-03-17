@@ -2,9 +2,9 @@ import React, {useEffect, useState } from 'react'
 import { postActivity,searchActivity } from '../Actions/ActivityActions';
 import { getAllTeams } from '../Actions/TeamActions';
 import { getAllProjects } from '../Actions/ProjectActions';
-import { FcCancel } from 'react-icons/fc';
 import "../css/register.css"
-function NewActivity({loggedUser, setIsOpen, setCompletedActivities}) {    
+
+function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity}) {    
     const user = loggedUser;
     const [teams, setTeams] = useState([]);
     const [selectedTeam, setSelectedTeam] = useState([]);
@@ -12,12 +12,10 @@ function NewActivity({loggedUser, setIsOpen, setCompletedActivities}) {
     const [projects, setProjects] = useState([]);
     const [formData, setFormData] = useState({userId: user.id, date:"", opis: ""});
    
-    
     useEffect(() => {
         getAllProjects().then(data => { setProjects(data.filter((project)=>{return project.visible === true})); })
         getAllTeams().then(data => {
             setTeams(data); 
-            console.log(data);
             setTasks(data[0].tasks)
         })
     }, [])
@@ -63,7 +61,7 @@ function NewActivity({loggedUser, setIsOpen, setCompletedActivities}) {
                     
                 })
             );
-            setIsOpen(false);
+            
             console.log("proslo");
 
     }
@@ -71,7 +69,7 @@ function NewActivity({loggedUser, setIsOpen, setCompletedActivities}) {
   return (
     <div className='RegisterComponent'>
     <h1 className='registerTitle'>Nova aktivnost</h1>
-    <button className='btn-Exit' onClick={()=> setIsOpen(false)}><FcCancel className='btn-Exit-Icon'/></button>  
+    
     
         <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
             <label className='registerLabel'>Datum:</label>
