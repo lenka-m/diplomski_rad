@@ -30,6 +30,7 @@ export async function searchTasks(req: Request, res:Response){
     const teamId = req.query.teamId;
     const query = AppDataSource.getRepository(Task)
       .createQueryBuilder("task")
+      .orderBy("task.visible","DESC")
   
     if (teamId) {
         query.andWhere("task.teamId = :teamId", { teamId: teamId });

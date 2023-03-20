@@ -124,7 +124,7 @@ function ProfileComponent({loggedUser}) {
          {user.totalPoints !== null ? 
               (<div className='profileTotalPointsContainer'> 
                 <h1>{user.totalPoints}</h1>
-                <h5> <i>{user.userStatus}</i>  </h5>
+                <h5 style = {{color:'white'}}> <i>{user.userStatus}</i>  </h5>
               </div>):(<div></div>)}    
           
         </div>  

@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from 'react'
 import { postActivity,searchActivity } from '../Actions/ActivityActions';
-import { getAllTeams } from '../Actions/TeamActions';
+import { searchTeams } from '../Actions/TeamActions';
 import { getAllProjects } from '../Actions/ProjectActions';
 import "../css/register.css"
 import { Alert } from '@mui/material';
@@ -16,7 +16,7 @@ function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity
    
     useEffect(() => {
         getAllProjects().then(data => { setProjects(data.filter((project)=>{return project.visible === true})); })
-        getAllTeams().then(data => {
+        searchTeams().then(data => {
             setTeams(data); 
             setTasks(data[0].tasks)
         })

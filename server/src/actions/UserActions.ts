@@ -1,9 +1,10 @@
 import {Request, Response} from "express";
 import { AppDataSource } from "../data-source";
 import {User} from "../entity/User";
-import { renameFile } from "./uploadActions";
 import path = require("path");
 import * as fs from 'fs';
+import { Activity } from "../entity/Activity";
+import { MoreThan } from "typeorm";
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -184,6 +185,13 @@ function calculateStatus(totalPoints) :string{
     console.log('evo usao u if')
     return "full"
   } 
+}
+
+export async function top10Besties(req: Request, res:Response){
+  const currentDate = new Date();
+  const monthAgo = new Date(new Date().setDate(currentDate.getDate() - 30));
+  const activities = await AppDataSource.getRepository(Activity).createQueryBuilder("activity").select("SUM()")
+  res.send(activities);
 }
 
 export async function firstUser(){

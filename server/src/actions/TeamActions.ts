@@ -4,28 +4,21 @@ import { Team } from "../entity/Team";
 import { User } from "../entity/User";
 import { QueryFailedError } from "typeorm";
 
-export async function getAllTeams(req: Request, res:Response) {
-  const teamRepository = AppDataSource.getRepository(Team);
-  const userRepository = AppDataSource.getRepository(User);
-  const teams = await teamRepository
-    .createQueryBuilder("team")
-    .leftJoinAndSelect("team.tasks", "task", "task.visible = :visible", { visible: true })
-    .leftJoinAndSelect("team.coordinator", "user")
-    .getMany();
-  console.log(teams);
-  res.json(teams);
-}
-
-
-
 export async function searchTeams(req: Request, res:Response){
-  const coordinatorId = req.query.coordinatorId;
+  const coordinator = req.query.coordinatorId;
   const query = AppDataSource.getRepository(Team)
     .createQueryBuilder("team")
-      .leftJoinAndSelect("team.tasks", "task");
+      .leftJoinAndSelect("team.tasks", "task")
+      .leftJoinAndSelect("team.coordinator","coordinator")
+      .select([
+        "team.id",
+        "team.name",
+        "coordinator.email",
+        "task"
+      ]).orderBy("task.visible", "DESC");;
 
-  if (coordinatorId) {
-      query.andWhere("team.coordinatorId = :coordinatorId", { coordinatorId: coordinatorId });
+  if (coordinator) {
+      query.andWhere("team.coordinator= :coordinator", { coordinator: coordinator });
   }
 
   const teams = await query.getMany();

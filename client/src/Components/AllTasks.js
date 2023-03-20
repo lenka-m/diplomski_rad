@@ -4,7 +4,7 @@ import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Modal, Box} from '@mui/material';
 import {searchTasks, updateTaskVisibility } from '../Actions/TaskActivities'
 import NewTaskEditor from './NewTaskEditor';
-import NewTask from './NewTask';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -19,13 +19,16 @@ const style = {
 function AllTasks({team, setTeams, loggedUser}) { 
 
     const [tasks, setTasks] = useState(team.tasks || []);
-    const [newTaskEditorComponent , setNewTaskEditorComponent] = useState(false);
+    const [changeVisibilitySuccess, setChangeVisibilitySuccess] = useState({isSucccess:null, message:''});
+    
+    //Za tabelu:
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+    // Za modal:
     const [openNewTask, setOpenNewTask] = React.useState(false);
     const handleOpenNewTask = () => setOpenNewTask(true);
     const handleCloseNewTask = () => setOpenNewTask(false);
+    
     function handleUpdateVisibility(task){
         try{
             updateTaskVisibility({ visible: !task.visible, taskId: task.id})

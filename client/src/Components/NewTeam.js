@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../css/register.css";
 import { searchUsers } from '../Actions/userActions';
-import { postTeam } from '../Actions/TeamActions';
-import { getAllTeams } from '../Actions/TeamActions';
+import { postTeam, searchTeams } from '../Actions/TeamActions';
 import { Alert } from '@mui/material';
 
 function NewTeam({setTeams, handleCloseNewTeam}) { 
@@ -36,7 +35,7 @@ function NewTeam({setTeams, handleCloseNewTeam}) {
         try{
             await postTeam(formData)
                 .then(()=>{
-                    getAllTeams()
+                    searchTeams()
                     .then((data) =>{
                         setTeams(data);
                         setSuccess(true);

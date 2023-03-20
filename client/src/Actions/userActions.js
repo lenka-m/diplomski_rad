@@ -39,3 +39,26 @@ export async function logoutUser(){
 export async function changePassword(passwordData){
     return await patchObject('users-passwordChange', passwordData);
 }
+
+export async function getUserStatistics(){
+    return await getAll('/users/stats');
+}
+/*
+},{
+    method: 'get',
+    route:'/users/stats',
+    actions:[isAdmin, getUserStatistics]
+},{
+
+    res>
+    {
+    "totalUsers": 7,
+    "adminCount": 1,
+    "editorCount": 6,
+    "noneCount": 0,
+    "observerCount": 0,
+    "bebaCount": 0,
+    "fullCount": 0
+}
+
+*/

@@ -10,7 +10,7 @@ function AllActivitiesAdmin({loggedUser}) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [numOfPoints, setNumOfPoints] = useState(0);
-  
+    const [confirmActivitySuccess, setConfirmActivitySuccess] = useState({isSuccess:null, message:''});
     // Opsta funkcija za kupljenje svih aktivnosti:
     function fetchAllActivities(){
         searchActivity({userRole: loggedUser.userRole}).then(data => {
@@ -39,6 +39,11 @@ function AllActivitiesAdmin({loggedUser}) {
         try{
             adminPatchActivity({activityId: activity.id, userConfirmedId: loggedUser.id, numOfPoints: activity.task.points})
                 .then(fetchAllActivities())
+            
+            setConfirmActivitySuccess({isSuccess: true, message:'Uspesno prihvacena aktivnost'});
+            setTimeout(()=>{
+                setConfirmActivitySuccess({isSuccess:null, message:''});
+            }, 2000)
                 
         } catch(ex){
             console.log(ex);
@@ -51,6 +56,10 @@ function AllActivitiesAdmin({loggedUser}) {
         try{
             deleteActivity(activity.id)
                 .then(fetchAllActivities())
+            setConfirmActivitySuccess({isSuccess: true, message:'Uspesno odbijena aktivnost'});
+            setTimeout(()=>{
+                setConfirmActivitySuccess({isSuccess:null, message:''});
+            }, 2000)
             // console.log("obrisana aktivnost");
           } catch(ex){
               console.log(ex);
@@ -69,7 +78,7 @@ function AllActivitiesAdmin({loggedUser}) {
     <div className='HomepageContainer'>
     
         {activities.length===0 ? (<h1 className='tableTitle'>Nema Aktivnosti :D</h1>) : (
-        <div>
+        <div style={{width:'100%'}}>
             <div className='titleContainer'>
                 <h1> Aktivnosti </h1>
                 <div className='filterButtons'>
@@ -141,8 +150,9 @@ function AllActivitiesAdmin({loggedUser}) {
             </Paper>
         )}   
         </div>)}
-        
     
+    {confirmActivitySuccess.isSuccess === true && <Alert severity="success">{confirmActivitySuccess.message}</Alert>}
+    {confirmActivitySuccess.isSuccess === false && <Alert severity='error'>{confirmActivitySuccess.message}</Alert>}
     
     </div>
   )

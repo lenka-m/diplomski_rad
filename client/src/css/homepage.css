@@ -1,7 +1,7 @@
 .homepage{
     background-image: url('../img/boje2.png');
     width: 100vw;
-    min-height: 100vh;
+    min-height: 93vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

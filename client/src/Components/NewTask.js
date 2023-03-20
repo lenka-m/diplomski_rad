@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../css/register.css";
 import { postTask } from '../Actions/TaskActivities';
-import { getAllTeams } from '../Actions/TeamActions';
+import { getAllTeams, searchTeams } from '../Actions/TeamActions';
 import { Alert } from '@mui/material';
 
 
@@ -19,25 +19,28 @@ function NewTask({teams, setTeams, handleCloseNewTask}) {
         e.preventDefault();
         try{
           await postTask(formData)
-          await getAllTeams()
-              .then((data) =>{
+            .then(()=>{
+              searchTeams()
+                .then((data) =>{
                   setTeams(data);
-              })
-          setSuccess({isSuccess:true, message:'Uspesno ste totali novi task'});
-          setTimeout(()=>{
-            setSuccess({isSuccess:null, message:''});
-            handleCloseNewTask()
-          }, 2000)
+                  setSuccess({isSuccess:true, message: `Uspesno ste dodali task ${formData.name}`});
+                })
+            });
+
+            setTimeout(()=>{
+              setSuccess({isSuccess:null, message:''});
+              handleCloseNewTask();
+            }, 2000)
         } catch(ex){
-          setSuccess({isSuccess:false,message:'Greska prilikom cuvanja taska'});
-          setTimeout(()=>{
-            setSuccess({isSuccess:null, message:''});
-          }, 2000)
+            setSuccess(false);
+            setTimeout(()=>{
+                setSuccess(null);
+            }, 2000) 
         }   
     }
     
     useEffect(() => {
-      getAllTeams().then((data) => {
+      searchTeams().then((data) => {
         setTeams(data);
       });
     }, []);

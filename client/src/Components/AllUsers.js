@@ -42,13 +42,20 @@ function AllUsers({loggedUser}) {
     setSelectedUser(selectedUser)
   }
   const handleCloseProfile = () => setOpenProfile(false);
+
+  //Za modal brisanja korisnika:
+  const [openDeleteProfileDialog, setOpenDeleteProfileDialog] = React.useState(false);
+  const handleOpenDeleteProfileDialog = (selectedUser) => {
+    setOpenDeleteProfileDialog(true);
+    setSelectedUser(selectedUser)
+  }
+  const handleCloseDeleteProfileDialog = () => setOpenDeleteProfileDialog(false);
   
   // Pri ucitavanju komponente, prvo uzimamo sve korisnike:
   useEffect(()=>{
     getAllUsers().then(data => {
         setAllUsers(data);
         setFilteredUsers(data);
-        console.log('pozvaoOVO');
     });
   }, [])  
 
@@ -65,7 +72,7 @@ function AllUsers({loggedUser}) {
       deleteUser(user.id).then(()=>{
           getAllUsers().then(data=>{
             setAllUsers(data);
-            
+            handleCloseDeleteProfileDialog();
           });
           setSuccessDeleteUser({isSuccess: true, message: `Uspesno ste obrisali korisnika ${user.email}`});    
         setTimeout(()=>{
@@ -74,7 +81,7 @@ function AllUsers({loggedUser}) {
     })
      
     } catch(ex){
-        console.log('uhvatio gresku');
+        //console.log('uhvatio gresku');
         setSuccessDeleteUser({isSuccess: false, message: `Greska prilikom brisanja korisnika ${user.email}`});
         setTimeout(()=>{
           setSuccessDeleteUser({isSuccess:null, message:''})
@@ -85,8 +92,7 @@ function AllUsers({loggedUser}) {
   // Odnosi se na pretragu korisnika u tabeli:
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setSearchData({ ...searchData, [name]: value });
-    console.log(searchData.searchName)
+    setSearchData({ ...searchData, [name]: value }); 
   };
 
   // takodje za pretragu korisnika:
@@ -163,8 +169,8 @@ function AllUsers({loggedUser}) {
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{user.userRole}</TableCell>
                             { user.userRole === "none" ?(<TableCell>{user.totalPoints}</TableCell>) :(<TableCell></TableCell>)}
-                            { user.userRole === "none" ?(<TableCell>Beba</TableCell>) :(<TableCell></TableCell>)}
-                  <TableCell onClick={()=>{handleDeleteUser(user)}}><AiFillDelete color='red'/></TableCell>
+                            { user.userRole === "none" ?(<TableCell>{user.userStatus}</TableCell>) :(<TableCell></TableCell>)}
+                  <TableCell onClick={()=>{handleOpenDeleteProfileDialog(user)}}><AiFillDelete color='red'/></TableCell>
                           <TableCell onClick={()=>{handleOpenProfile(user)}}><u>PogledajProfil</u></TableCell>
                              </TableRow>
                     );
@@ -192,6 +198,16 @@ function AllUsers({loggedUser}) {
       <Modal open={openProfile} onClose={handleCloseProfile} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style} >
           <ProfileComponent loggedUser={selectedUser}/>
+        </Box>
+      </Modal>
+
+      <Modal open={openDeleteProfileDialog} onClose={handleCloseDeleteProfileDialog} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box sx={style} >
+          <h1 style={{color:'white', textAlign:'center'}}>Da li ste sigurni da želite da obrišete profil?</h1>
+          <div style={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+          <button onClick={()=>{handleDeleteUser(selectedUser)}} style={{padding:'5px 20px', margin:'20px', backgroundColor:'green', color:'white'}}>Da</button>
+          <button onClick = {()=>{handleCloseDeleteProfileDialog()}}style={{padding:'5px 20px', margin:'20px', backgroundColor:'red', color:'white'}}>Otkaži</button>
+          </div>
         </Box>
       </Modal>
       {successDeleteUser.isSuccess===true && <Alert>{successDeleteUser.message}</Alert>}

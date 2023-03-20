@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {Paper, Box, Modal, Table, IconButton, Collapse, TableRow,TableHead, TableContainer, TableCell, TableBody, Alert } from '@mui/material/';
 import { AiOutlineArrowDown, AiOutlineArrowUp, AiFillEye, AiFillEyeInvisible} from 'react-icons/ai';
-import { getAllTeams } from '../Actions/TeamActions';
+import {searchTeams } from '../Actions/TeamActions';
 import { updateTaskVisibility } from '../Actions/TaskActivities';
 import NewTeam from './NewTeam'
 import NewTask from './NewTask';
@@ -23,7 +23,6 @@ function AllTeams() {
 
   const [teams, setTeams] = useState([]);
   const [taskVisibility, setTaskVisibility] = useState({isSuccess: null, message:''});
-
   // Za modal: 
     const [openNewTeam, setOpenNewTeam] = React.useState(false);
     const handleOpenNewTeam = () => setOpenNewTeam(true);
@@ -37,7 +36,7 @@ function AllTeams() {
     try{
       //console.log(task)
       updateTaskVisibility({ visible: !task.visible, taskId: task.id})
-      .then(() => getAllTeams())
+      .then(() => searchTeams())
       .then(data => {
         setTeams(data)
         setTaskVisibility({isSuccess:true, message:`Uspesno azurirana vidljivost kod taska: ${task.name} `})
@@ -47,7 +46,7 @@ function AllTeams() {
       });
           
       } catch(ex){
-          console.log('neuspesna potvrda');
+         //console.log('neuspesna potvrda');
           setTaskVisibility({isSuccess:false, message:`Greska u ažuriranju vidljivosti kod taska: ${task.name} `})
           setTimeout(()=>{
             setTaskVisibility({isSuccess: null, message:''});
@@ -57,10 +56,9 @@ function AllTeams() {
   
   useEffect(()=>{
     
-    getAllTeams().then((data)=>{
-      
+    searchTeams().then((data)=>{      
       setTeams(data);
-      console.log(data);
+      //console.log(data);
     })
   }, [taskVisibility])
 
@@ -125,7 +123,8 @@ function AllTeams() {
         <button className="btnAdd" onClick={handleOpenNewTeam}>Dodaj nov tim </button>
         <button className="btnAdd" onClick={handleOpenNewTask}>Dodaj nov task </button>
     </div>
-    
+    { taskVisibility.isSuccess === true && <Alert sx={{marginTop:'20px'}}> {taskVisibility.message}</Alert>      }
+    { taskVisibility.isSuccess === false && <Alert sx={{marginTop:'20px'}} severity='error'> {taskVisibility.message}</Alert>      }
     <TableContainer component={Paper} sx = {{marginTop:'20px'}}>
       <Table aria-label="collapsible table">
         <TableHead>
@@ -161,12 +160,12 @@ function AllTeams() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} >
-            <NewTask teams={teams}  setTeams={setTeams} handleCloseNewTask = {handleCloseNewTask} />
+            <NewTask teams={teams}  setTeams={setTeams} handleCloseNewTask={handleCloseNewTask} />
         </Box>
       </Modal> 
 
-      { taskVisibility.isSuccess === true && <Alert sx={{marginTop:'20px'}}> {taskVisibility.message}</Alert>      }
-      { taskVisibility.isSuccess === false && <Alert sx={{marginTop:'20px'}} severity='error'> {taskVisibility.message}</Alert>      }
+      
+      
   </div>
   )
 }

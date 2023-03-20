@@ -14,9 +14,7 @@ function App() {
   useEffect(() => {
     
     if (token) {
-      console.log('ima korisnik');
         getUser().then((data) => {
-        
         setLoggedUser(data)
       });
     } 

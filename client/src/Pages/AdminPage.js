@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ProfileComponent from "../Components/ProfileComponent";
 import AllUsers from "../Components/AllUsers";
+import Stats from "../Components/Stats"
 import "../css/profile.css";
 import AllProjekti from "../Components/AllProjekti";
 import AllTeams from "../Components/AllTeams";
@@ -34,7 +35,7 @@ function AdminPage({loggedUser}){
             {...other}
           >
             {value === index && (
-              <Box sx={{ p: 3 }}>
+              <Box sx={{ p: 4 }}>
                 {children}
               </Box>
             )}
@@ -52,20 +53,25 @@ function AdminPage({loggedUser}){
             <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'white', padding:'3px', marginBottom:'25px',borderRadius:'10px'}}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Korisnici" {...a11yProps(0)} />
-                        <Tab label="Projekti" {...a11yProps(1)} />
-                        <Tab label="Timovi" {...a11yProps(2)} />
+                        <Tab label="Analitika" {...a11yProps(0)} />
+                        <Tab label="Korisnici" {...a11yProps(1)} />
+                        <Tab label="Projekti" {...a11yProps(2)} />
+                        <Tab label="Timovi" {...a11yProps(3)} />
                     </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
-                    <AllUsers loggedUser={loggedUser} />
+                    <Stats></Stats>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <AllProjekti />
+                    <AllUsers loggedUser={loggedUser} />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
+                    <AllProjekti />
+                </TabPanel>
+                <TabPanel value={value} index={3}>
                     <AllTeams />
                 </TabPanel>
+                
             </Box>
             </div>
 

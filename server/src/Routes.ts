@@ -3,10 +3,11 @@ import {Request, Response} from "express";
 import path = require("path")
 import { createActivity, finalUpdateActivity, getAllActivities, updateActivity, deleteActivity, searchActivities } from "./actions/ActivityActions";
 import { getAllProjects , insertNewProject, updateProjectVisibility} from "./actions/ProjectActions";
-import {deleteUser, getAllUsers, isAdmin, isEditor, isAdminOrEditor,registerNewUser, searchUsers, updatePic, changePassword} from "./actions/UserActions";
-import { getAllTeams, postNewTeam, searchTeams } from "./actions/TeamActions";
+import {deleteUser, getAllUsers, isAdmin, isEditor, isAdminOrEditor,registerNewUser, searchUsers, updatePic, changePassword, top10Besties} from "./actions/UserActions";
+import { postNewTeam, searchTeams } from "./actions/TeamActions";
 import { getAllTasks, postNewTask, searchTasks, updateTaskVisibility } from "./actions/TaskActions";
 import { createCall, searchCalls } from "./actions/CallActions";
+import { getUserStatistics } from "./actions/StatActions";
 
 export interface Route {
     method: 'get' | 'post' |  'patch' | 'delete',
@@ -21,13 +22,9 @@ export const Routes: Route[] = [
     route: '/projects',
     actions: [getAllProjects]
 },{
-    method: 'get', 
-    route: '/teams',
-    actions: [getAllTeams]
-},{
     method:'get',
     route:'/teams/search',
-    actions: [isAdminOrEditor, searchTeams]
+    actions: [searchTeams]
 },{
     method: 'post',
     route: '/teams',
@@ -53,6 +50,10 @@ export const Routes: Route[] = [
     route:'/users',
     actions: [isAdmin, deleteUser]
 },{
+    method:'get',
+    route:'/users/topTen',
+    actions:[top10Besties]
+},{
     method: 'patch',
     route: '/users-profilePic',
     actions: [updatePic],
@@ -64,6 +65,10 @@ export const Routes: Route[] = [
     method: 'get',
     route: '/users/search',
     actions: [isAdmin, searchUsers]
+},{
+    method: 'get',
+    route:'/users/stats',
+    actions:[isAdmin, getUserStatistics]
 },{
     method:'patch',
     route: '/users-passwordChange',
