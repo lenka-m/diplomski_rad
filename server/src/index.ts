@@ -9,6 +9,7 @@ const express = require('express');
 import { Routes } from "./Routes";
 import { searchCalls } from "./actions/CallActions";
 import { time } from "console";
+import { top10Besties } from "./actions/UserActions";
 
 AppDataSource.initialize().then(async () => {
     const app = express();
@@ -60,6 +61,10 @@ AppDataSource.initialize().then(async () => {
 
     app.get('/call/search', (req, res) =>{
         searchCalls(req, res);
+    })
+
+    app.get('/users/topTen', (req, res)=>{
+        top10Besties(req, res);
     })
   
 

@@ -1,23 +1,9 @@
 import {Request, Response} from "express";
 import { AppDataSource } from "../data-source";
 import {User} from "../entity/User";
-import path = require("path");
 import * as fs from 'fs';
-import { Activity } from "../entity/Activity";
-import { MoreThan } from "typeorm";
-const multer = require('multer');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, path.join(__dirname, '../../uploads'));
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + '-' + file.originalname);
-    },
-  });
-  
-const upload = multer({ storage: storage });
-  
+
 
 export async function isAdmin(req:Request, res: Response, next: () => void){
     const user = (req as any).user as User;
@@ -188,10 +174,27 @@ function calculateStatus(totalPoints) :string{
 }
 
 export async function top10Besties(req: Request, res:Response){
-  const currentDate = new Date();
-  const monthAgo = new Date(new Date().setDate(currentDate.getDate() - 30));
-  const activities = await AppDataSource.getRepository(Activity).createQueryBuilder("activity").select("SUM()")
-  res.send(activities);
+  const today = new Date();
+  const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+
+  const topUsers = await AppDataSource
+  .getRepository(User)
+  .createQueryBuilder("user")
+  .leftJoinAndSelect("user.activities", "activity")
+  .select([
+    "user.firstName AS firstName" , 
+    "user.lastName AS lastName",
+    "user.profilePictureURL AS pic",
+    "SUM(activity.numOfPoints) AS points",
+    "ROW_NUMBER() OVER (ORDER BY SUM(activity.numOfPoints) DESC) AS rank"])
+  .where("activity.date >= :lastMonth", { lastMonth })
+  .andWhere("activity.confirmation = true")
+  .groupBy("user.id")
+  .orderBy("SUM(activity.numOfPoints)", "DESC")
+  .limit(10)
+  .getRawMany();
+
+  res.json(topUsers)
 }
 
 export async function firstUser(){

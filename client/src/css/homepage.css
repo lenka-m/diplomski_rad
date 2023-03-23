@@ -29,3 +29,30 @@
     color: whitesmoke;
     margin-bottom: 20px;
 }
+
+/*TOP 10 CONTAINER*/
+.rowContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+.topUserContainer{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tableTopUsers{
+
+}
+.tableTopUsers{
+    color:whitesmoke;
+    text-align: center;
+    width: 50%;
+}
+.tableTopUsers table{
+    width: 100%;
+}

@@ -43,6 +43,10 @@ export async function changePassword(passwordData){
 export async function getUserStatistics(){
     return await getAll('/users/stats');
 }
+
+export async function getTopTen(){
+    return await getAll('/users/topTen')
+}
 /*
 },{
     method: 'get',
