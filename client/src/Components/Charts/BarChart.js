@@ -11,19 +11,18 @@ function BarChart({ chartData, title }) {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-        title: {
-            display: true,
-            color: '#000',
-            text: 'Custom Chart Title',
-            padding: {
-                top: 10,
-                bottom: 30
-            }
-        },
-        legend: {
-          display: true
+      title:{
+        display:true,
+        text:title,
+        centered:true,
+        font:{
+            size:20
         }
-  },
+      },
+      legend: {
+            display: true
+      }
+    },
     scales: {
       x: {
         categoryPercentage: 0.9,

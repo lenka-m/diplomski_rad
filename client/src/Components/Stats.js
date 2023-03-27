@@ -2,13 +2,19 @@ import React, { useEffect, useState } from 'react'
 import "../css/common.css"
 import { getUserStatistics } from '../Actions/userActions';
 import BarChart from './Charts/BarChart';
+import LineChart from './Charts/LineChart';
 
 
 function Stats() {
   const [firstNumbers, setFirstNumbers] = useState([]);
+  const [activityData, setActivityData] = useState({
+    labels: ["Jan","Feb","Mart","April","Maj","Jun","Jul","Avgust","Septembar","Oktobar","Novembar","Decembar"],
+    datasets: [{jan:20, feb:30, mart:40,april:10,maj:100,jun:140,jul:400,avg:200,sept:300,okt:100, nov:400,dec:140}]
+    
+  })
   const [userData, setUserData] = useState({
     labels: ['Full', 'Beba', 'Obzerver'],
-    datasets: []
+    datasets:[]
   });
   const [memberStatus, setMemberStatus] = useState({
     labels: ['Admin', 'Editor', 'None'],
@@ -18,6 +24,7 @@ function Stats() {
 
   useEffect(()=>{
     getUserStatistics().then((data)=>{
+     // console.log(data);
       setUserData(data);
       //console.log(data);
       setMemberStatus({...memberStatus, 
@@ -41,7 +48,7 @@ function Stats() {
         lastMonthCount: data.firstNumbers.lastMonthCount,
         lastYearCount: data.firstNumbers.lastYearCount
       })
-      console.log(data)
+      //console.log(data)
     })
   },[])
 
@@ -69,6 +76,9 @@ function Stats() {
     <div className='chartContainer'>
       <BarChart  chartData={memberStatus} title = {"Ukupan broj naloga"} />
       <BarChart  chartData={userData} title = {"Odnos članova"}/>
+    </div>
+    <div className='chartContainer' style = {{width:'100%', display:'flex', flexDirection:'column',alignItems:'center', justifyContent:'center'}}>
+    <LineChart style={{width:'100%'}} chartData={activityData} title = {"Aktivnosti"}/>
     </div>
   </div>
 
