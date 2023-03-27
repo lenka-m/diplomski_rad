@@ -8,14 +8,16 @@ const express = require('express');
 
 import { Routes } from "./Routes";
 import { searchCalls } from "./actions/CallActions";
-import { time } from "console";
-import { top10Besties } from "./actions/UserActions";
+import { forgotPassword, resetPassword, resetPasswordPart2, top10Besties } from "./actions/UserActions";
 
 AppDataSource.initialize().then(async () => {
     const app = express();
     const port = 3001;
+
     var cors = require('cors');
+    app.set("view engine","ejs");
     app.use(express.json({limit: '10mb'})); 
+    app.use(express.urlencoded({extended:false}));
     app.use(cors({
         origin: 'http://localhost:3000',
         methods: ['GET', 'POST', 'PATCH', 'DELETE'],
@@ -27,8 +29,17 @@ AppDataSource.initialize().then(async () => {
       });
 
     
-    app.use('/uploads', express.static('uploads'));      
-    
+    app.use('/uploads', express.static('uploads'));
+
+    app.post('/forgot-password',async (req, res) => {
+        forgotPassword(req, res);
+    })
+    app.get('/reset-password/:id/:token',async (req, res) => {
+        resetPassword(req, res);
+    })
+    app.post('/reset-password/:id/:token',async (req, res) => {
+        resetPasswordPart2(req, res);
+    })
     app.post('/login',async (req, res) =>{
         const {email, password} = req.body;
         const timestamp = new Date();
@@ -58,7 +69,6 @@ AppDataSource.initialize().then(async () => {
         })
 
     })
-
     app.get('/call/search', (req, res) =>{
         searchCalls(req, res);
     })

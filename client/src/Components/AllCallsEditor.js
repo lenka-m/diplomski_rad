@@ -118,7 +118,7 @@ function AllCallsEditor({loggedUser}) {
             onRowsPerPageChange={handleChangeRowsPerPage}
             />
             </Paper>
-            <Modal
+      <Modal
         open={openNewCall}
         onClose={handleCloseNewCall}
         aria-labelledby="modal-modal-title"

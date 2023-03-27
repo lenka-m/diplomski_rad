@@ -1,9 +1,11 @@
 import {Request, Response} from "express";
 import { AppDataSource } from "../data-source";
 import {User} from "../entity/User";
+import * as jwt from 'jsonwebtoken'
 import * as fs from 'fs';
 
-
+var nodemailer = require('nodemailer');
+const JWT_secret = "B6AB80B5A402FBF7F273339600E76E7A840DFF5351711EC82DA9677CE929CDEB";
 
 export async function isAdmin(req:Request, res: Response, next: () => void){
     const user = (req as any).user as User;
@@ -75,7 +77,6 @@ export async function deleteUser(req:Request, res:Response){
       res.status(500).json({ message: 'Failed to delete user' });
     }
 }
-
 
 export async function searchUsers(req: Request, res:Response){
     const email = req.query.email;
@@ -196,6 +197,117 @@ export async function top10Besties(req: Request, res:Response){
 
   res.json(topUsers)
 }
+
+export async function forgotPassword(req: Request, res:Response){
+  const email = req.body.email;
+  try{
+    const user =  await AppDataSource.getRepository(User).findOne({
+      where: {
+          email: email,
+      }
+    });
+    if(!user){
+        res.status(401).json({message: 'Ne postoji nalog sa unetim mejlom'});
+        return;
+    }
+    const secret = JWT_secret + user.password;
+    const token = jwt.sign({id:user.id, email:user.email}, secret,{expiresIn:'15m'} );
+
+
+    const link = `http://localhost:3001/reset-password/${user.id}/${token}`
+    
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'lenkanodemailer@gmail.com',
+        pass:'cncdgvktwruzcyej'
+      }
+    });
+
+    var mailOptions = {
+      from: 'lenkanodemailer@gmail.com',
+      to: email,
+      subject: 'Reset Password',
+      text: link
+    };
+     transporter.sendMail(mailOptions, function(error, info){
+       if (error) {
+         console.log(error);
+       } else {
+         console.log('Email sent: ' + info.response);
+       }
+     });
+
+    
+  } catch(ex){
+    console.log(ex);
+  }
+
+}
+
+export async function resetPassword(req:Request, res:Response){
+  const {id, token} = req.params;
+  const user =  await AppDataSource.getRepository(User).findOne({
+    where: {
+        id: id,
+    }
+  });
+  if(!user){
+      res.status(401).json({message: 'Ne postoji nalog.'});
+      return;
+  }
+  try{
+    const secret = JWT_secret + user.password;
+    const verify = jwt.verify(token, secret);
+    res.render("index.ejs", {email: verify.email, status:"Not verified"});
+  } catch(error){
+    res.status(401).json({message:"Not verified"});
+  }
+  console.log(req.params);
+}
+
+export async function resetPasswordPart2(req:Request, res:Response){
+  const {id, token} = req.params;
+  const {password, confirmPassword} = req.body;
+  console.log(req);
+  const user =  await AppDataSource.getRepository(User).findOne({
+    where: {
+        id: id,
+    }
+  });
+  if(!user){
+      res.status(401).json({message: 'Ne postoji nalog.'});
+      return;
+  }
+  
+  try{
+    const secret = JWT_secret + user.password;
+    const verify = jwt.verify(token, secret);
+
+    const newPassword = req.body.password;
+    const confirmPassword = req.body["confirm_password"];
+
+    console.log("New password:", newPassword);
+    console.log("Confirm password:", confirmPassword);
+    user.password = password;
+    console.log(req.body);
+    AppDataSource.getRepository(User).save(user)
+
+      .catch((error) => {
+        console.log('Error saving user', error);
+        return res.status(500).json({ message: 'Error changing password' });
+      });
+
+      res.render("index", {email: verify.email, status:"verified"})
+  } catch(error){
+    res.status(401).json({message:"Not verified"});
+  }
+  
+  console.log(req.params);
+}
+
+
+
 
 export async function firstUser(){
   const user = await AppDataSource.getRepository(User).save({

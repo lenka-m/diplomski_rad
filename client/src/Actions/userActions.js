@@ -47,6 +47,11 @@ export async function getUserStatistics(){
 export async function getTopTen(){
     return await getAll('/users/topTen')
 }
+
+export async function resetPassword(email){
+    console.log(email)
+    return await postObject('/forgot-password',email)
+}
 /*
 },{
     method: 'get',

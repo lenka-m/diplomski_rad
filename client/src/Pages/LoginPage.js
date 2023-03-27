@@ -3,11 +3,31 @@ import { loginUser } from "../Actions/userActions";
 import { useHistory } from "react-router-dom";
 import logoPhoto from "../img/logo.png";
 import Alert from '@mui/material/Alert';
+import {Modal, Box} from "@mui/material"
+import ResetPassword from "../Components/ResetPassword";
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  minwidth: 600,
+  bgcolor: '#0C2D48',
+  borderRadius: '10px',
+  boxShadow: 24,
+  p: 4,
+};
 
 function LoginPage({ loggedUser, setLoggedUser }) {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const history = useHistory();
+
+   // Za modal: 
+   const [openForgotPass, setOpenForgotPass] = React.useState(false);
+   const handleOpenForgotPass = () => setOpenForgotPass(true);
+   const handleCloseForgotPass = () => setOpenForgotPass(false);
 
   const handleChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -50,9 +70,23 @@ function LoginPage({ loggedUser, setLoggedUser }) {
           value={loginData.password}
           onChange={handleChange}
         />
+        
         {error && <Alert severity="error">{error}</Alert>}
         <button type="submit"> Login</button>
+        <div>
+        <u onClick={handleOpenForgotPass}>Zaboravili ste lozinku?</u>
+        </div>
       </form>
+      <Modal
+        open={openForgotPass}
+        onClose={handleCloseForgotPass}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} >
+          <ResetPassword/>
+        </Box>
+      </Modal>
     </div>
   );
 }

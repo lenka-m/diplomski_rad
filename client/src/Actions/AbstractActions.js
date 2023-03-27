@@ -41,6 +41,7 @@ export async function deleteObject(path, formData) {
 }
 
 export async function postObject(path, formData){
+  console.log(formData)
     const instance = getInstance();
     await instance.post(path, formData);
 }

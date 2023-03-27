@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPC-Reset Password</title>
+    <script>
+        var status ='<%- JSON.stringify(status) %>';
+        if(JSON.parse(status) == "verified"){
+            if(confirm("Lozinka uspesno promenjena. Nazad na login stranu?"))
+                window.location.href = "http://localhost:3000/"
+        }
+    </script>
+</head>
+<body>
+    
+    <form action = "" method = "post">
+        <h1 class="lenka"><%= email%></h1>
+        <input type = "password" name = "password" id="password" placeholder="new password"/>
+        <input type = "password" name = "confirm_password" id="confirm-password" placeholder="confirm password"/>
+        <input type = "submit" class = "button" value = "Submit" />
+    </form>
+
+
+   <style>
+    body {
+        width: 100vw;
+        height: 100vh;
+        background-color: #021b2e;
+        background-image: url("boje1.png");
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #0C2D48;
+        padding: 50px;
+        border-radius: 10px;
+    }
+    h1{
+        color: white;
+    }
+    input{
+        margin:10px;
+        padding:7px
+    }
+    .button{
+        background-color: rgb(3, 94, 3);
+        color:rgba(245, 245, 245, 0.833);
+        border:none;
+        border-radius: 10px;
+        padding: 10px;
+        min-width: 70px
+    }
+   </style>
+
+</body>
+</html>
