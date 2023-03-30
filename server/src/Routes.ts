@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 
 import path = require("path")
-import { createActivity, finalUpdateActivity, getAllActivities, updateActivity, deleteActivity, searchActivities } from "./actions/ActivityActions";
+import { createActivity, finalUpdateActivity, getAllActivities, updateActivity, deleteActivity, searchActivities, updateActivityPoints } from "./actions/ActivityActions";
 import { getAllProjects , insertNewProject, updateProjectVisibility} from "./actions/ProjectActions";
 import {deleteUser, getAllUsers, isAdmin, isEditor, isAdminOrEditor,registerNewUser, searchUsers, updatePic, changePassword, top10Besties} from "./actions/UserActions";
 import { postNewTeam, searchTeams } from "./actions/TeamActions";
@@ -97,6 +97,10 @@ export const Routes: Route[] = [
     method:'get',
     route: '/activity/search',
     actions: [searchActivities]
+},{
+    method:'patch',
+    route:'/patch-activityPoints',
+    actions:[isAdminOrEditor, updateActivityPoints]
 },{
     method: 'patch',
     route: '/patch-activity',

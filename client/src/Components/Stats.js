@@ -9,7 +9,7 @@ function Stats() {
   const [firstNumbers, setFirstNumbers] = useState([]);
   const [activityData, setActivityData] = useState({
     labels: ["Jan","Feb","Mart","April","Maj","Jun","Jul","Avgust","Septembar","Oktobar","Novembar","Decembar"],
-    datasets: [{jan:20, feb:30, mart:40,april:10,maj:100,jun:140,jul:400,avg:200,sept:300,okt:100, nov:400,dec:140}]
+    datasets: [{jan:200, feb:350, mart:480,april:190,maj:100,jun:140,jul:400,avg:200,sept:300,okt:100, nov:400,dec:140}]
     
   })
   const [userData, setUserData] = useState({

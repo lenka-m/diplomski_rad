@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getTopTen } from '../Actions/userActions';
-
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material'
 function TopTenMonth() {
 
     const [topUsers, setTopUsers] = useState([]);
@@ -8,17 +8,14 @@ function TopTenMonth() {
     useEffect(()=>{
         getTopTen().then((data)=>{
             setTopUsers(data);
-            console.log(data);
         })
     },[])
 
   return (
     <div className='HomepageContainer'>
-        <h1>Top 10 bestovaca u poslednjih mesec dana</h1>
-
-
+        <h1>Top 10</h1>
         {topUsers.length===0 ? (
-            <p>ne</p>
+            <p>-- trenutno niko nije aktivan --</p>
         ):(
             <div className='rowContainer'>
             <div className= 'topUserContainer'>
@@ -27,29 +24,32 @@ function TopTenMonth() {
                 
             </div>
             <div className='tableTopUsers'>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Ime</th>
-                            <th>Prezime</th>
-                            <th>Broj poena</th>
-                        </tr>
-                    </thead>
-                    
-                    {topUsers.map((user)=>{
-                        return(
-                        <tr key={user.rank}>
-                            <td>{user.rank}</td>
-                            <td>{user.firstName}</td>
-                            <td>{user.lastName}</td>
-                            <td>{user.points}</td>
-                        </tr>
-                        )
-                    })}
-
-                    
-                </table>
+                
+                <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+          <TableCell align="left">No.</TableCell>
+            <TableCell align="left">Clan</TableCell>
+            <TableCell align="left">Poeni</TableCell>
+            
+            
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {topUsers.map((user) => (
+            <TableRow
+              key={user.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell align="left">{user.rank}</TableCell>
+              <TableCell align="left">{user.firstName} {user.lastName}</TableCell>
+              <TableCell align="left">{user.points}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
             </div>
         </div>
         )}

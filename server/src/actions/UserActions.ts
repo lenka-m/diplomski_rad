@@ -212,8 +212,6 @@ export async function forgotPassword(req: Request, res:Response){
     }
     const secret = JWT_secret + user.password;
     const token = jwt.sign({id:user.id, email:user.email}, secret,{expiresIn:'15m'} );
-
-
     const link = `http://localhost:3001/reset-password/${user.id}/${token}`
     
     var transporter = nodemailer.createTransport({

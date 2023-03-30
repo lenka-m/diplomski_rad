@@ -17,6 +17,10 @@ export async function deleteActivity(activityId){
 export async function EditorPatchActivity(formData){
     await patchObject('/patch-activity', formData);
 }
+///
+export async function PatchActivityPoints(formData){
+    await patchObject('/patch-activityPoints', formData);
+}
 
 export async function adminPatchActivity(formData){
     await patchObject('/activity-final', formData);

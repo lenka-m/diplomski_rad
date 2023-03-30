@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { deleteActivity, adminPatchActivity, searchActivity } from '../Actions/ActivityActions';
-import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
+import { deleteActivity, adminPatchActivity, searchActivity, EditorPatchActivity } from '../Actions/ActivityActions';
+import { AiFillCheckCircle, AiFillCloseCircle, AiFillEdit } from 'react-icons/ai';
 import "../css/tableComponent.css"
 import {Alert, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 function AllActivitiesAdmin({loggedUser}) {
@@ -9,10 +9,15 @@ function AllActivitiesAdmin({loggedUser}) {
     const [filterValue, setFilterValue] = useState({isSet: false, activityStatus:'none'});
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    // Za editovanje poena:
+    const [editMode, SetEditMode] = useState({isEdit: false, activityId:null })
     const [numOfPoints, setNumOfPoints] = useState(0);
+
+    // Za pracenje koja aktivnost je prihvacena
     const [confirmActivitySuccess, setConfirmActivitySuccess] = useState({isSuccess:null, message:''});
     // Opsta funkcija za kupljenje svih aktivnosti:
-    function fetchAllActivities(){
+    async function fetchAllActivities(){
         searchActivity({userRole: loggedUser.userRole}).then(data => {
             setActivities(data);
             setFilteredActivities(data);
@@ -38,18 +43,36 @@ function AllActivitiesAdmin({loggedUser}) {
     function handleAccept(activity) {
         try{
             adminPatchActivity({activityId: activity.id, userConfirmedId: loggedUser.id, numOfPoints: activity.task.points})
-                .then(fetchAllActivities())
-            
-            setConfirmActivitySuccess({isSuccess: true, message:'Uspesno prihvacena aktivnost'});
-            setTimeout(()=>{
-                setConfirmActivitySuccess({isSuccess:null, message:''});
-            }, 2000)
-                
+                .then(()=>{fetchAllActivities().then(()=>{
+                    setConfirmActivitySuccess({isSuccess: true, message:'Uspesno prihvacena aktivnost'});
+                        setTimeout(()=>{
+                    setConfirmActivitySuccess({isSuccess:null, message:''});
+                }, 2000)       
+                })
+                })
         } catch(ex){
             console.log(ex);
         }
     }
-
+    // update number of points:
+    function handleUpdatePoints(){
+        const Formdata = {activityId: editMode.activityId, numOfPoints:numOfPoints}
+        try{
+            console.log(
+            'pozivamo handle update'
+            )
+            EditorPatchActivity(Formdata).then(()=>{
+                console.log('zovemo podatke nove')
+                fetchAllActivities().then(()=>{
+                    SetEditMode({isEdit:false, activityId:null});
+                    console.log('zatvaramo tu opciju')
+                })
+                
+            })
+        } catch(ex){
+            console.log(ex);
+        }
+    }
     
     // Klik na odbijanje aktivnosti: 
     function handleDeleteActivity(activity){
@@ -124,7 +147,25 @@ function AllActivitiesAdmin({loggedUser}) {
                             <TableCell>{activity.team.name}</TableCell>
                             <TableCell>{activity.task.name}</TableCell>
                             <TableCell>s</TableCell>
-                            <TableCell>{activity.task.points}</TableCell>
+                            {(editMode.isEdit===true && editMode.activityId===activity.id) ? (
+                                <TableCell>
+                                    <div>
+                                        <input style={{width:'50%', textAlign:'center'}} onChange={(e)=>{setNumOfPoints(e.target.value)}} value={numOfPoints}></input>
+                                        <AiFillCheckCircle onClick={handleUpdatePoints}/>
+                                    </div>
+                                </TableCell>
+                            ):(
+                                <TableCell>
+                                    <div style = {{display:'flex', alignItems:'row', justifyContent:'space-evenly'}}>
+                                        <p>{activity.numOfPoints}</p>
+                                        <AiFillEdit onClick={(()=>{
+                                            setNumOfPoints(activity.numOfPoints);
+                                            SetEditMode({isEdit: true, activityId:activity.id})
+                                        })} color='orange'/>
+                                    </div>
+                                </TableCell>
+                            )}
+                            
                             <TableCell>
                                 {activity.userConfirmed ?  
                                     (<p>{activity.userConfirmed.email}</p>) :

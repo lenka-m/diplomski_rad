@@ -21,6 +21,7 @@ export async function createActivity(req:Request, res:Response){
        project: project,
        team:team,
        task:task,
+       numOfPoints: task.points,
        status: "created",
        confirmation: false
     })
@@ -35,11 +36,21 @@ export async function updateActivity(req:Request, res:Response){
       { id: activityId },
       {
         confirmation: true,
-        numOfPoints: req.body.data.numOfPoints,
         userConfirmed: userConfirmed,
         status: "pending"
       }
     );
+   res.send('ok');
+}
+export async function updateActivityPoints(req:Request, res:Response){
+   const activityId = req.body.data.activityId;
+   await AppDataSource.getRepository(Activity).update(
+      {id: activityId},
+      {
+         numOfPoints: req.body.data.numOfPoints
+      }
+    
+   )
    res.send('ok');
 }
 
