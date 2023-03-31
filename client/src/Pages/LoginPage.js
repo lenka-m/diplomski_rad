@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import logoPhoto from "../img/logo.png";
 import Alert from '@mui/material/Alert';
 import {Modal, Box} from "@mui/material"
-import ResetPassword from "../Components/ResetPassword";
+import ChangePassword from "../Components/Change/ChangePassword";
 
 
 const style = {
@@ -43,8 +43,10 @@ function LoginPage({ loggedUser, setLoggedUser }) {
       const user1 = await loginUser(loginData.email, loginData.password);
       setLoggedUser(user1);
       history.push("/profile");
-    } catch (error) {
-      setError(error.response.data.message);
+    } catch (err) {
+      if(err.response.data){
+        setError(err.response.data);
+      }  else setError('Greška sa serverom')
     }
   }
 
@@ -84,7 +86,7 @@ function LoginPage({ loggedUser, setLoggedUser }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} >
-          <ResetPassword/>
+          <ChangePassword/>
         </Box>
       </Modal>
     </div>

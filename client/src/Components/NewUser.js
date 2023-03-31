@@ -33,7 +33,11 @@ function NewUser({setAllUsers}) {
         });
         setSuccess({isSuccess:true, message:'Uspesno napravljen profil!'})
     } catch(ex){
-        setSuccess({isSuccess: false, message:'Greska prilikom pravljenja naloga'}); 
+        console.log(ex.response.data);
+        if(ex.response.data){
+            setSuccess({isSuccess: false, message:ex.response.data}); 
+        } else setSuccess({isSuccess: false, message:'Greska prilikom pravljenja naloga'}); 
+        
     }
     }
 

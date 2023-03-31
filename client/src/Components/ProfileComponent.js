@@ -10,100 +10,47 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import {MdExpandMore} from 'react-icons/md'
 import {Alert} from '@mui/material';
+import ChangeProfilePicture from './Change/ChangeProfilePicture';
+import {Modal, Box} from '@mui/material'
+import ChangePassword from './Change/ChangePassword';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  minwidth: 600,
+  bgcolor: '#0C2D48',
+  borderRadius: '10px',
+  boxShadow: 24,
+  p: 4,
+};
 
 function ProfileComponent({loggedUser}) {
-  const user = loggedUser;
-  const [formData, setFormData] = useState({userId: loggedUser.id});
-  const [passwordData, setPasswordData] = useState({userId: loggedUser.id, oldPassword:'', newPassword:'', confirmNewPassword:''} )
-  const [successPass, setSuccessPass] = useState(null);
+  const user = loggedUser
+  // Za modal 'Promeni lozinku':
+  const [openChangePassword, setOpenChangePassword] = React.useState(false);
+  const handleOpenChangePassword = () => setOpenChangePassword(true);
+  const handleCloseChangePassword = () => setOpenChangePassword(false);
   
-  
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsBinaryString(file);
-    reader.onload = (evt) => {
-      const fileData = evt.target.result;
-      const extension = file.name.split('.').pop();
-      setFormData({ ...formData, profilePic:fileData, extension:extension  });
-    };
-  };
-
-      // Promena podataka u formi se prati:
-      const handlePasswordFormChange = (e) =>{ 
-        setPasswordData({...passwordData, [e.target.name]: e.target.value });
-    }
-
+  // Za modal 'ChangeProfilePicture:
+  const [openChangePic, setOpenChangePic] = React.useState(false);
+  const handleOpenChangePic = () => setOpenChangePic(true);
+  const handleCloseChangePic = () => setOpenChangePic(false);    
     
-    async function handlePasswordFormSubmit (e){
-        e.preventDefault(); // da ne refreshuje ceo element
-        if(passwordData.newPassword === passwordData.confirmNewPassword){
-
-          await changePassword(passwordData);
-          setSuccessPass(true);
-        } else{
-          setSuccessPass(false)
-          console.log("nisu iste sifre");
-        } 
-        
-    }
-
-
-  const handleSubmit = (event) => {
-    
-    updateProfilePic(formData)
-  };
-
   return (
 
       <div style={{marginTop:'30px'}} className='HomepageContainer profileContainer'>
         <div className='leftContainer'>
             <img className="profilePic" src={`http://localhost:3001/${user.profilePictureURL}`} alt="profilna" />
-          <Accordion sx={{width:'80%'}}>
-                  <AccordionSummary
-                    expandIcon={<MdExpandMore />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    sx={{backgroundColor:'transparent'}}
-                  >
-                    <Typography>Upload Profile Picture</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    
-                    <form onSubmit={handleSubmit}>
-                      <input type="file" id="profile-pic-upload" onChange={handleFileChange} />
-                      <button type="submit">Submit</button>
-                    </form>
-                  </AccordionDetails>
-          </Accordion>
-          <Accordion sx={{width:'80%'}}>
-                  <AccordionSummary
-                    expandIcon={<MdExpandMore />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    sx={{backgroundColor:'transparent'}}
-                  >
-                    <Typography>Change Password</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    
-                    <form onSubmit={handlePasswordFormSubmit}>
-                      <input onChange={(e)=>handlePasswordFormChange(e)}  name = 'oldPassword' value = {passwordData.oldPassword}  placeholder='old password'/><br/>
-                      <input onChange={(e)=>handlePasswordFormChange(e)}  name = 'newPassword' value = {passwordData.newPassword} type="password" placeholder='new password'/><br/>
-                      <input onChange={(e)=>handlePasswordFormChange(e)}  name = 'confirmNewPassword' value = {passwordData.confirmNewPassword} type="password"  placeholder='confirm new password'/><br/>
-                      <button type="submit">Submit</button>
-
-                    </form>
-                    {successPass && (<Alert>Uspesno</Alert>)}
-                    {successPass===false && (<Alert severity='warning'> Neuspesno</Alert>)}
-
-                  </AccordionDetails>
-          </Accordion>
+          
         </div>
         
         
         
+        <div className='rightContainer'>
         
+      </div>
         <div className='rightProfileContainer' >
         <div className='profileInfoContainer'>
           <div className='profileInfoHeader'>
@@ -117,7 +64,8 @@ function ProfileComponent({loggedUser}) {
               
               <p><GrMail/> <i>{user.email}</i></p>            
               <p><i><BsFillTelephoneFill/> {user.telephoneNumber}</i></p> 
-                     
+              <button className="btnAdd" onClick={handleOpenChangePic}>Promeni profilnu </button>
+              <button className="btnAdd" onClick={handleOpenChangePassword}>Promeni lozinku </button>       
             </div>
             
          </div>    
@@ -126,8 +74,29 @@ function ProfileComponent({loggedUser}) {
                 <h1>{user.totalPoints}</h1>
                 <h5 style = {{color:'white'}}> <i>{user.userStatus}</i>  </h5>
               </div>):(<div></div>)}    
-          
+              
         </div>  
+        
+        <Modal
+        open={openChangePic}
+        onClose={handleCloseChangePic}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} >
+            <ChangeProfilePicture loggedUser={loggedUser}/>
+        </Box>
+      </Modal>
+      <Modal
+        open={openChangePassword}
+        onClose={handleCloseChangePassword}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} >
+            <ChangePassword loggedUser={loggedUser}/>
+        </Box>
+      </Modal>
       </div>
   
   )

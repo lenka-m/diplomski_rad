@@ -43,18 +43,24 @@ AppDataSource.initialize().then(async () => {
     app.post('/login',async (req, res) =>{
         const {email, password} = req.body;
         const timestamp = new Date();
-        console.log('ee')
+
+        // Ukoliko ne postoji nalog sa emailom:
+        const existingUser = await AppDataSource.getRepository(User).findOne({ where:{ email: email }});
+        if (!existingUser) {
+            return res.status(400).send('Ne postoji nalog sa unetim mejlom');
+        } 
         const user =  await AppDataSource.getRepository(User).findOne({
             where: {
                 email: email,
                 password: password
             }
         });
-
+        // Ukoliko postoji nalog ali nije unet dobar mejl:
         if(!user){
-            res.status(401).json({message: 'Neispravna lozinka i/ili šifra. Pokušaj ponovo :)'});
+            return res.status(400).send('Neispravna lozinka. Pokušaj ponovo :)');
             return;
         }
+        // Loginovanje, apdejt tajmstempa i dodela tokena: 
         await AppDataSource.getRepository(User).update(
             { id: user.id },
             {

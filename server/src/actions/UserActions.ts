@@ -43,21 +43,27 @@ export async function registerNewUser(req:Request, res:Response){
   console.log(req.body);
   let status = calculateStatus(req.body.totalPoints);
   try{
-  const user = await AppDataSource.getRepository(User).save({
-    email: req.body.email,
-    profilePictureURL:'uploads/pands.jpeg',
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    password: req.body.password,
-    telephoneNumber: req.body.telephoneNumber,
-    userRole: req.body.userRole,
-    userRoleName: req.body.userRoleName!= '' ? (req.body.userRoleName): undefined,
-    userStatus: req.body.userRole ==='none' ? status: undefined,
-    totalPoints: req.body.totalPoints!= '' ? (req.body.totalPoints): undefined,
-    startingPoints: req.body.totalPoints!= '' ? (req.body.totalPoints): undefined,
-    birthday: req.body.birthday!= '' ? (req.body.birthday): undefined
-  })
-  res.json(user)
+    // Da li postoji korisnik sa emailom:
+    const existingUser = await AppDataSource.getRepository(User).findOne({ where:{ email: req.body.email }});
+    if (existingUser) {
+      return res.status(400).send('Korisnik za unetim mejlom vec postoji');
+    } 
+    // Ako ne postoji pravi korisnika:
+      const user = await AppDataSource.getRepository(User).save({
+        email: req.body.email,
+        profilePictureURL:'uploads/pands.jpeg',
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        password: req.body.password,
+        telephoneNumber: req.body.telephoneNumber,
+        userRole: req.body.userRole,
+        userRoleName: req.body.userRoleName!= '' ? (req.body.userRoleName): undefined,
+        userStatus: req.body.userRole ==='none' ? status: undefined,
+        totalPoints: req.body.totalPoints!= '' ? (req.body.totalPoints): undefined,
+        startingPoints: req.body.totalPoints!= '' ? (req.body.totalPoints): undefined,
+        birthday: req.body.birthday!= '' ? (req.body.birthday): undefined
+      })
+      res.json(user)
   } catch(ex){
     return res.status(400).send('Podaci')
   }
@@ -303,8 +309,6 @@ export async function resetPasswordPart2(req:Request, res:Response){
   
   console.log(req.params);
 }
-
-
 
 
 export async function firstUser(){

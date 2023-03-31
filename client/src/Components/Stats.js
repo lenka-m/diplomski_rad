@@ -3,6 +3,7 @@ import "../css/common.css"
 import { getUserStatistics } from '../Actions/userActions';
 import BarChart from './Charts/BarChart';
 import LineChart from './Charts/LineChart';
+import PieChart from './Charts/PieChart';
 
 
 function Stats() {
@@ -19,13 +20,13 @@ function Stats() {
   const [memberStatus, setMemberStatus] = useState({
     labels: ['Admin', 'Editor', 'None'],
     datasets: []
-    });
+  });
     
 
   useEffect(()=>{
     getUserStatistics().then((data)=>{
-     // console.log(data);
-      setUserData(data);
+      console.log(data);
+      //setUserData(data);
       //console.log(data);
       setMemberStatus({...memberStatus, 
         datasets: [{
@@ -75,10 +76,10 @@ function Stats() {
     </div>
     <div className='chartContainer'>
       <BarChart  chartData={memberStatus} title = {"Ukupan broj naloga"} />
-      <BarChart  chartData={userData} title = {"Odnos članova"}/>
+      {/* <PieChart  chartData={userData} title = {"Odnos članova"}/> */}
     </div>
     <div className='chartContainer' style = {{width:'100%', display:'flex', flexDirection:'column',alignItems:'center', justifyContent:'center'}}>
-    <LineChart style={{width:'100%'}} chartData={activityData} title = {"Aktivnosti"}/>
+    <LineChart style={{width:'100%'}} chartData={activityData} title = "Aktivnosti"/>
     </div>
   </div>
 

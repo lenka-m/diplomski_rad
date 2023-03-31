@@ -1,15 +1,54 @@
 import React from 'react'
-import {Chart as ChartJS, ArcElement, Tooltip,Legend} from "chart.js"
+import { CategoryScale, LinearScale, Chart as ChartJS, BarController, BarElement, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
 
 ChartJS.register(ArcElement, Tooltip,Legend)
 
-function PieChart() {
+function PieChart(chartData, title) {
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title:{
+        display:true,
+        text:title,
+        centered:true,
+        font:{
+            size:20
+        }
+      },
+      legend: {
+            display: true
+      }
+    },
+    scales: {
+      x: {
+        categoryPercentage: 0.9,
+        barPercentage: 0.9,
+        offset: true,
+        grid: {
+          display: true,
+          drawBorder: true,
+          drawOnChartArea: false,
+          drawTicks: true,
+        },
+      },
+      y: {
+        grid: {
+          display: true,
+          drawBorder: true,
+          drawOnChartArea: true,
+          drawTicks: true,
+        },
+      },
+    },
+  };
   return (
-    <Pie
-    data = {data}
-    options={options}
-    > </Pie>
+    <div className='BarChart'>
+      
+    <Pie  data={chartData} options={options} />
+  </div>
   )
 }
 
