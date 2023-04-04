@@ -3,7 +3,7 @@ import {Request, Response} from "express";
 import path = require("path")
 import { createActivity, finalUpdateActivity, getAllActivities, updateActivity, deleteActivity, searchActivities, updateActivityPoints } from "./actions/ActivityActions";
 import { getAllProjects , insertNewProject, updateProjectVisibility} from "./actions/ProjectActions";
-import {deleteUser, getAllUsers, isAdmin, isEditor, isAdminOrEditor,registerNewUser, searchUsers, updatePic, changePassword, top10Besties} from "./actions/UserActions";
+import {deleteUser, getAllUsers, isAdmin, isEditor, isAdminOrEditor,registerNewUser, searchUsers, updatePic, top10Besties} from "./actions/UserActions";
 import { postNewTeam, searchTeams } from "./actions/TeamActions";
 import { getAllTasks, postNewTask, searchTasks, updateTaskVisibility } from "./actions/TaskActions";
 import { createCall, searchCalls } from "./actions/CallActions";
@@ -69,10 +69,6 @@ export const Routes: Route[] = [
     method: 'get',
     route:'/users/stats',
     actions:[isAdmin, getUserStatistics]
-},{
-    method:'patch',
-    route: '/users-passwordChange',
-    actions: [changePassword]
 },{
     method: 'post',
     route: '/projects',

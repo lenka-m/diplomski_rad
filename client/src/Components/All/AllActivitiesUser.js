@@ -1,8 +1,7 @@
 import React from 'react'
-import {searchActivity } from '../Actions/ActivityActions';
+import {searchActivity } from '../../Actions/ActivityActions';
 import { useState, useEffect } from 'react';
-import "../css/tableComponent.css"
-import NewActivity from './NewActivity';
+import NewActivity from '../New//NewActivity';
 import {Box, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 
 const style = {

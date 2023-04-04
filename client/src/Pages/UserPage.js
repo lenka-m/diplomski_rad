@@ -1,6 +1,6 @@
 import React from 'react'
 import ProfileComponent from '../Components/ProfileComponent';
-import AllActivitiesUser from '../Components/AllActivitiesUser';
+import AllActivitiesUser from '../Components/All/AllActivitiesUser';
 
 
 function UserPage({loggedUser}) {

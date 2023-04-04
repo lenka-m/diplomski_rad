@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { getTopTen } from '../Actions/userActions';
+import { getTopTen } from '../../Actions/userActions';
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material'
+
+
 function TopTenMonth() {
 
     const [topUsers, setTopUsers] = useState([]);

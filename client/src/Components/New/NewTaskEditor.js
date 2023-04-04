@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import "../css/register.css";
-import { postTask} from '../Actions/TaskActivities';
+import { postTask} from '../../Actions/TaskActivities';
 import { Alert } from '@mui/material';
-import { searchTeams } from '../Actions/TeamActions';
+import { searchTeams } from '../../Actions/TeamActions';
 
 
 function NewTaskEditor({ handleCloseNewTask, team, setTeams, loggedUser}) { 

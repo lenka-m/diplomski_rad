@@ -1,12 +1,12 @@
 import React from "react";
 import "../css/profile.css";
 import ProfileComponent from '../Components/ProfileComponent'
-import AllActivitiesEditor from "../Components/AllActivitiesEditor";
+import AllActivitiesEditor from "../Components/All/AllActivitiesEditor";
 import { useEffect, useState } from "react";
 import { searchTeams } from "../Actions/TeamActions";
-import AllTasks from "../Components/AllTasks";
+import AllTasks from "../Components/All/AllTasks";
 import { Box, Tabs, Tab } from "@mui/material";
-import AllCallsEditor from "../Components/AllCallsEditor"
+import AllCallsEditor from "../Components/All/AllCallsEditor"
 
 function EditorPage({loggedUser}){
 

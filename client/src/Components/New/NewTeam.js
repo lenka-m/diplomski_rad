@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import "../css/register.css";
-import { searchUsers } from '../Actions/userActions';
-import { postTeam, searchTeams } from '../Actions/TeamActions';
+import { searchUsers } from '../../Actions/userActions';
+import { postTeam, searchTeams } from '../../Actions/TeamActions';
 import { Alert } from '@mui/material';
+
 
 function NewTeam({setTeams, handleCloseNewTeam}) { 
     

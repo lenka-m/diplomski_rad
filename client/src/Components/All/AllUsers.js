@@ -1,10 +1,10 @@
 import React, {useState, useEffect } from 'react';
-import { deleteUser, getAllUsers } from '../Actions/userActions';
-import NewUser from './NewUser';
-import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { deleteUser, getAllUsers } from '../../Actions/userActions';
+import NewUser from '../New/NewUser';
+import { AiFillDelete } from 'react-icons/ai';
 import {Alert, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 import {Box, Modal} from '@mui/material';
-import ProfileComponent from './ProfileComponent';
+import ProfileComponent from '../ProfileComponent';
 
 const style = {
   position: 'absolute',

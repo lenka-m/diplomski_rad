@@ -1,17 +1,6 @@
 import axios from "axios";
 
 const url = 'http://localhost:3001';
-const token = localStorage.getItem('token');
-const instance = axios.create({
-    baseURL: `${url}`,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Methods': 'PATCH',//Access-Control-Allow-Methods
-      'Access-Control-Allow-Origin': 'http://localhost:3000',
-      'Access-Control-Allow-Headers': 'Authorization, Content-Type, Access-Control-Allow-Headers',
-    },
-});
-
 export function getInstance() {
     const token = localStorage.getItem('token');
     return axios.create({

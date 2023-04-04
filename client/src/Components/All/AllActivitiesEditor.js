@@ -1,9 +1,9 @@
 import React from 'react'
-import { deleteActivity, EditorPatchActivity, PatchActivityPoints, searchActivity } from '../Actions/ActivityActions';
+import { deleteActivity, EditorPatchActivity, PatchActivityPoints, searchActivity } from '../../Actions/ActivityActions';
 import { useState, useEffect } from 'react';
 import { AiFillCheckCircle, AiFillCloseCircle, AiFillEdit } from 'react-icons/ai';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, typographyClasses} from '@mui/material';
-import "../css/tableComponent.css"
+
 
 
 

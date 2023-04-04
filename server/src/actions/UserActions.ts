@@ -7,6 +7,45 @@ import * as fs from 'fs';
 var nodemailer = require('nodemailer');
 const JWT_secret = "B6AB80B5A402FBF7F273339600E76E7A840DFF5351711EC82DA9677CE929CDEB";
 
+
+
+export async function login(req:Request, res:Response){
+        const {email, password} = req.body;
+        const timestamp = new Date();
+
+        // Ukoliko ne postoji nalog sa emailom:
+        const existingUser = await AppDataSource.getRepository(User).findOne({ where:{ email: email }});
+        if (!existingUser) {
+            return res.status(400).send('Ne postoji nalog sa unetim mejlom');
+        } 
+        const user =  await AppDataSource.getRepository(User).findOne({
+            where: {
+                email: email,
+                password: password
+            }
+        });
+        // Ukoliko postoji nalog ali nije unet dobar mejl:
+        if(!user){
+            return res.status(400).send('Neispravna lozinka. Pokušaj ponovo :)');
+            return;
+        }
+        // Loginovanje, apdejt tajmstempa i dodela tokena: 
+        await AppDataSource.getRepository(User).update(
+            { id: user.id },
+            {
+              lastLogin: timestamp
+            }
+        ); 
+        const token = jwt.sign({id: user.id}, 'jwttoken1252t', {expiresIn: '3h'});
+        console.log('setuje token');
+        res.json({
+            user, 
+            token
+        })
+
+      }
+
+
 export async function isAdmin(req:Request, res: Response, next: () => void){
     const user = (req as any).user as User;
     if(user.userRole != 'admin'){
@@ -112,31 +151,6 @@ export async function searchUsers(req: Request, res:Response){
     res.json(users);
 }
 
-export async function changePassword(req:Request, res:Response){
-  console.log('doso zahtev');
-  const userId = req.body.data.userId;
-  const oldPassword = req.body.data.oldPassword;
-  const newPassword = req.body.data.newPassword;
-  const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId } });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    if(user.password !== oldPassword){
-      return res.status(404).json({message:'Wrong password!'});
-    } else{
-      user.password = newPassword;
-
-      AppDataSource.getRepository(User).save(user)
-        .then(() => {
-          return res.status(200).json({ message: 'Password updated successfully', user });
-        })
-        .catch((error) => {
-          console.log('Error saving user', error);
-          return res.status(500).json({ message: 'Error changing password' });
-        });
-    }
-}
 
 export async function updatePic(req: Request, res: Response) {
   const userId = req.body.data.userId;

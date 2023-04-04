@@ -1,11 +1,11 @@
 import * as React from 'react';
 import ProfileComponent from "../Components/ProfileComponent";
-import AllUsers from "../Components/AllUsers";
-import Stats from "../Components/Stats"
+import AllUsers from "../Components/All/AllUsers";
+import Stats from "../Components/Charts/Stats"
 import "../css/profile.css";
-import AllProjekti from "../Components/AllProjekti";
-import AllTeams from "../Components/AllTeams";
-import AllActivitiesAdmin from "../Components/AllActivitiesAdmin";
+import AllProjekti from "../Components/All/AllProjekti";
+import AllTeams from "../Components/All/AllTeams";
+import AllActivitiesAdmin from "../Components/All/AllActivitiesAdmin";
 import { Box, Tabs, Tab } from "@mui/material";
 
 

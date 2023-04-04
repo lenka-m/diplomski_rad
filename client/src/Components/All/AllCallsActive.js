@@ -1,6 +1,8 @@
 import React, {useState,useEffect} from 'react'
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
-import { searchCall } from '../Actions/CallActions';
+import { searchCall } from '../../Actions/CallActions';
+
+
 const style = {
   position: 'absolute',
   top: '50%',

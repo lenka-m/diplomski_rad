@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import "../css/common.css"
-import { getUserStatistics } from '../Actions/userActions';
-import BarChart from './Charts/BarChart';
-import LineChart from './Charts/LineChart';
-import PieChart from './Charts/PieChart';
+import "../../css/common.css"
+import { getUserStatistics } from '../../Actions/userActions';
+import BarChart from './BarChart';
+import LineChart from './LineChart';
+
 
 
 function Stats() {

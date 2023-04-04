@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { getAllProjects } from '../Actions/ProjectActions';
-import { getAllTeams } from '../Actions/TeamActions';
-import { postCall, searchCall } from '../Actions/CallActions';
+import { getAllProjects } from '../../Actions/ProjectActions';
+import { getAllTeams } from '../../Actions/TeamActions';
+import { postCall, searchCall } from '../../Actions/CallActions';
 import { Alert } from '@mui/material';
 
 

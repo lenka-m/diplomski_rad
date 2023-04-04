@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { deleteActivity, adminPatchActivity, searchActivity, EditorPatchActivity } from '../Actions/ActivityActions';
+import { deleteActivity, adminPatchActivity, searchActivity, EditorPatchActivity } from '../../Actions/ActivityActions';
 import { AiFillCheckCircle, AiFillCloseCircle, AiFillEdit } from 'react-icons/ai';
-import "../css/tableComponent.css"
 import {Alert, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
+
+
 function AllActivitiesAdmin({loggedUser}) {
     const [activities, setActivities] = useState([]);
     const [filteredActivities, setFilteredActivities] = useState([]);

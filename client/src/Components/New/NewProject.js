@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { createProject } from '../Actions/ProjectActions';
-import { getAllProjects } from '../Actions/ProjectActions';
-import { searchUsers } from '../Actions/userActions';
-import "../css/register.css";
+import { createProject } from '../../Actions/ProjectActions';
+import { getAllProjects } from '../../Actions/ProjectActions';
+import { searchUsers } from '../../Actions/userActions';
 import { Alert } from '@mui/material';
 
 function NewProject({setProjects, handleCloseNewProject}) { 

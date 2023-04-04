@@ -1,8 +1,7 @@
 import React, {useEffect, useState } from 'react'
-import { postActivity,searchActivity } from '../Actions/ActivityActions';
-import { searchTeams } from '../Actions/TeamActions';
-import { getAllProjects } from '../Actions/ProjectActions';
-import "../css/register.css"
+import { postActivity,searchActivity } from '../../Actions/ActivityActions';
+import { searchTeams } from '../../Actions/TeamActions';
+import { getAllProjects } from '../../Actions/ProjectActions';
 import { Alert } from '@mui/material';
 
 function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity}) {    

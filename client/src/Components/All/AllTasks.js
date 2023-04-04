@@ -2,8 +2,8 @@ import React, { useState, useEffect }  from 'react'
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Modal, Box} from '@mui/material';
-import {searchTasks, updateTaskVisibility } from '../Actions/TaskActivities'
-import NewTaskEditor from './NewTaskEditor';
+import {searchTasks, updateTaskVisibility } from '../../Actions/TaskActivities'
+import NewTaskEditor from '../New/NewTaskEditor';
 
 const style = {
     position: 'absolute',

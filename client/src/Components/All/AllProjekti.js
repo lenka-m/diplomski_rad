@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { getAllProjects, updateProjectVisibility } from '../Actions/ProjectActions'
+import { getAllProjects, updateProjectVisibility } from '../../Actions/ProjectActions'
 import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
-import NewProject from './NewProject'
+import NewProject from '../New/NewProject'
 import {Alert, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 import {Box, Modal} from '@mui/material';
 

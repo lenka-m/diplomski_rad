@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import {Paper, Box, Modal, Table, IconButton, Collapse, TableRow,TableHead, TableContainer, TableCell, TableBody, Alert } from '@mui/material/';
 import { AiOutlineArrowDown, AiOutlineArrowUp, AiFillEye, AiFillEyeInvisible} from 'react-icons/ai';
-import {searchTeams } from '../Actions/TeamActions';
-import { updateTaskVisibility } from '../Actions/TaskActivities';
-import NewTeam from './NewTeam'
-import NewTask from './NewTask';
-import "../css/tableComponent.css";
+import {searchTeams } from '../../Actions/TeamActions';
+import { updateTaskVisibility } from '../../Actions/TaskActivities';
+import NewTeam from '../New/NewTeam'
+import NewTask from '../New/NewTask';
+
 
 const style = {
   position: 'absolute',

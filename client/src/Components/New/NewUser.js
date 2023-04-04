@@ -1,6 +1,6 @@
 import React, { useState }  from 'react';
-import { getAllUsers, postUser } from '../Actions/userActions';
-import "../css/register.css";
+import { getAllUsers, postUser } from '../../Actions/userActions';
+import "../../css/register.css";
 import { Alert } from '@mui/material';
 
 function NewUser({setAllUsers}) {

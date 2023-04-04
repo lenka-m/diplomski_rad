@@ -2,8 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 import {Box, Modal} from '@mui/material';
-import { searchCall } from '../Actions/CallActions'
-import NewCall from './NewCall'
+import { searchCall } from '../../Actions/CallActions'
+import NewCall from '../New/NewCall'
 
 const style = {
   position: 'absolute',

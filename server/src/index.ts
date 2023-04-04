@@ -9,6 +9,7 @@ const express = require('express');
 import { Routes } from "./Routes";
 import { searchCalls } from "./actions/CallActions";
 import { forgotPassword, resetPassword, resetPasswordPart2, top10Besties } from "./actions/UserActions";
+import { UnAuthRoutes } from "./UnAuthRoutes";
 
 AppDataSource.initialize().then(async () => {
     const app = express();
@@ -40,41 +41,7 @@ AppDataSource.initialize().then(async () => {
     app.post('/reset-password/:id/:token',async (req, res) => {
         resetPasswordPart2(req, res);
     })
-    app.post('/login',async (req, res) =>{
-        const {email, password} = req.body;
-        const timestamp = new Date();
-
-        // Ukoliko ne postoji nalog sa emailom:
-        const existingUser = await AppDataSource.getRepository(User).findOne({ where:{ email: email }});
-        if (!existingUser) {
-            return res.status(400).send('Ne postoji nalog sa unetim mejlom');
-        } 
-        const user =  await AppDataSource.getRepository(User).findOne({
-            where: {
-                email: email,
-                password: password
-            }
-        });
-        // Ukoliko postoji nalog ali nije unet dobar mejl:
-        if(!user){
-            return res.status(400).send('Neispravna lozinka. Pokušaj ponovo :)');
-            return;
-        }
-        // Loginovanje, apdejt tajmstempa i dodela tokena: 
-        await AppDataSource.getRepository(User).update(
-            { id: user.id },
-            {
-              lastLogin: timestamp
-            }
-        ); 
-        const token = jwt.sign({id: user.id}, 'jwttoken1252t', {expiresIn: '3h'});
-        console.log('setuje token');
-        res.json({
-            user, 
-            token
-        })
-
-    })
+    
     app.get('/call/search', (req, res) =>{
         searchCalls(req, res);
     })
@@ -82,7 +49,10 @@ AppDataSource.initialize().then(async () => {
     app.get('/users/topTen', (req, res)=>{
         top10Besties(req, res);
     })
-  
+    UnAuthRoutes.forEach( route =>{
+        app[route.method](route.route, ... route.actions);
+    });
+
 
     app.use(async(req, res, next) =>{
         const authorization = req.headers.authorization;
