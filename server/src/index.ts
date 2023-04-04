@@ -1,15 +1,9 @@
 import { AppDataSource } from "./data-source"
 import { User } from "./entity/User"
 import * as jwt from 'jsonwebtoken'
-
-
-
-const express = require('express');
-
 import { Routes } from "./Routes";
-import { searchCalls } from "./actions/CallActions";
-import { forgotPassword, resetPassword, resetPasswordPart2, top10Besties } from "./actions/UserActions";
 import { UnAuthRoutes } from "./UnAuthRoutes";
+const express = require('express');
 
 AppDataSource.initialize().then(async () => {
     const app = express();
@@ -17,42 +11,19 @@ AppDataSource.initialize().then(async () => {
 
     var cors = require('cors');
     app.set("view engine","ejs");
-    app.use(express.json({limit: '10mb'})); 
+    app.use(express.json({limit: '5mb'})); 
+    app.use('/uploads', express.static('uploads'));
+
     app.use(express.urlencoded({extended:false}));
     app.use(cors({
         origin: 'http://localhost:3000',
         methods: ['GET', 'POST', 'PATCH', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Authorization']
     }));
-    app.use((req, res, next) => {
-        res.setHeader('Cache-Control', 'no-cache');
-        next();
-      });
-
     
-    app.use('/uploads', express.static('uploads'));
-
-    app.post('/forgot-password',async (req, res) => {
-        forgotPassword(req, res);
-    })
-    app.get('/reset-password/:id/:token',async (req, res) => {
-        resetPassword(req, res);
-    })
-    app.post('/reset-password/:id/:token',async (req, res) => {
-        resetPasswordPart2(req, res);
-    })
-    
-    app.get('/call/search', (req, res) =>{
-        searchCalls(req, res);
-    })
-
-    app.get('/users/topTen', (req, res)=>{
-        top10Besties(req, res);
-    })
     UnAuthRoutes.forEach( route =>{
         app[route.method](route.route, ... route.actions);
     });
-
 
     app.use(async(req, res, next) =>{
         const authorization = req.headers.authorization;
