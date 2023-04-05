@@ -92,12 +92,12 @@ function calculateStatus(startDate, endDate) {
     
     const currentDate = new Date();
     currentDate.setHours(0,0,0,0); // poredi sa ponoc i onda je bitno resetovati.
-    console.log('currentDate:', currentDate);
+  //  console.log('currentDate:', currentDate);
 
     const parsedStartDate = new Date(startDate);
     const parsedEndDate = new Date(endDate);
-    console.log('start date:', parsedStartDate);
-    console.log('endDate:', parsedEndDate);
+   // console.log('start date:', parsedStartDate);
+    //console.log('endDate:', parsedEndDate);
     if (currentDate < parsedStartDate) {
         console.log('1');
         return "upcoming";

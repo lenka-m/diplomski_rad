@@ -46,8 +46,8 @@ function AllActivitiesUser({loggedUser}) {
   return (
     <div className='HomepageContainer'>
         <h1>Aktivnosti</h1>
-        <div className='rightContainer' style = {{marginBottom:'20px'}}>
-        <button className="btnAdd" onClick={handleOpenNewActivity}>Dodaj novu aktivnost </button>
+        <div className='rightContainerRow' style = {{marginBottom:'20px'}}>
+        <button className="greenBtn" onClick={handleOpenNewActivity}>Dodaj novu aktivnost </button>
       </div>
         {completedActivities.length===0 ? (<h3> -- Trenutno nema aktivnosti--</h3>):(
     

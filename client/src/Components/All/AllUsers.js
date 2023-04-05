@@ -123,9 +123,9 @@ function AllUsers({loggedUser}) {
 
     <div>
 
-      <h1 className='tableHeader' > Korisnici </h1>
-      <div className='rightContainer'>
-      <button className="btnAdd" onClick={handleOpenNewUser}>Dodaj novog korisnika </button>
+      <h1> Korisnici </h1>
+      <div className='rightContainerRow'>
+      <button className="greenBtn" onClick={handleOpenNewUser}>Dodaj novog korisnika </button>
       </div>
       <Paper className="Paper" sx={{ width: '100%', overflow: 'hidden', marginTop: '10px' }}>
         <TableContainer className="TableContainer" sx={{ maxHeight: 440 }}>

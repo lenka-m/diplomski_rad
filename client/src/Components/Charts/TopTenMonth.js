@@ -17,7 +17,7 @@ function TopTenMonth() {
     <div className='HomepageContainer'>
         <h1>Top 10</h1>
         {topUsers.length===0 ? (
-            <p>-- trenutno niko nije aktivan --</p>
+            <h3>-- trenutno niko nije aktivan --</h3>
         ):(
             <div className='rowContainer'>
             <div className= 'topUserContainer'>

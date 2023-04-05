@@ -51,8 +51,8 @@ function AllCallsEditor({loggedUser}) {
 
       <h1 className='tableHeader'> Pozivi </h1>
 
-      <div className='rightContainer'>
-        <button className="btnAdd" onClick={handleOpenNewCall}>Dodaj nov poziv </button>
+      <div className='rightContainerRow'>
+        <button className="greenBtn" onClick={handleOpenNewCall}>Dodaj nov poziv </button>
       </div>
 
       <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>

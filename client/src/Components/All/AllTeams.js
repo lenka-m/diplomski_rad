@@ -119,9 +119,9 @@ function AllTeams() {
       
     <h1 className='tableHeader'> Timovi </h1>
     
-    <div className='rightContainer'>
-        <button className="btnAdd" onClick={handleOpenNewTeam}>Dodaj nov tim </button>
-        <button className="btnAdd" onClick={handleOpenNewTask}>Dodaj nov task </button>
+    <div className='rightContainerRow'>
+        <button className="greenBtn" onClick={handleOpenNewTeam}>Dodaj nov tim </button>
+        <button className="greenBtn" onClick={handleOpenNewTask}>Dodaj nov task </button>
     </div>
     { taskVisibility.isSuccess === true && <Alert sx={{marginTop:'20px'}}> {taskVisibility.message}</Alert>      }
     { taskVisibility.isSuccess === false && <Alert sx={{marginTop:'20px'}} severity='error'> {taskVisibility.message}</Alert>      }

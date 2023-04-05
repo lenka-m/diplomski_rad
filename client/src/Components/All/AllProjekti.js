@@ -5,7 +5,7 @@ import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import NewProject from '../New/NewProject'
 import {Alert, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 import {Box, Modal} from '@mui/material';
-
+import '../../css/common.css'
 const style = {
   position: 'absolute',
   top: '50%',
@@ -76,8 +76,8 @@ function AllProjekti(user) {
 
       <h1 className='tableHeader'> Projekti </h1>
 
-      <div className='rightContainer'>
-        <button className="btnAdd" onClick={handleOpenNewProject}>Dodaj nov projekat </button>
+      <div className='rightContainerRow'>
+        <button className="greenBtn" onClick={handleOpenNewProject}>Dodaj nov projekat </button>
       </div>
 
       <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>

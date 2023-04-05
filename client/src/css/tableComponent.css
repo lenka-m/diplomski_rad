@@ -110,15 +110,7 @@
     width: 20px;
 }
 
-.btnAdd{
-    border:none;
-    padding:15px;
-    margin:15px;
-    border-radius: 10px;
-    background-color: #1fa32a;
-    font-size: 15px;
-    color: whitesmoke;
-}
+
 .btnContainer{
     display: flex;
     flex-direction: row;

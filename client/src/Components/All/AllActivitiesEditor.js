@@ -89,9 +89,9 @@ function AllActivitiesEditor({loggedUser}) {
   return (
     <div className='HomepageContainer'>
         <h1> Aktivnosti</h1>
-         {activities.length===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div>
+         {activities.length===0 ? (<h1>Nema Aktivnosti :D</h1>) : (<div style={{width:'100%'}}>
          <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>
-            <TableContainer className='TableContainer' sx={{ maxHeight: 440}}>
+            <TableContainer className='TableContainer' sx={{ width: '100%',maxHeight: 440}}>
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                 <TableRow >

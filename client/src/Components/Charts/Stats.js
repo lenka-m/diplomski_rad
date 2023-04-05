@@ -76,6 +76,7 @@ function Stats() {
     </div>
     <div className='chartContainer'>
       <BarChart  chartData={memberStatus} title = {"Ukupan broj naloga"} />
+      <BarChart  chartData={userData} title = {"Odnos članova"} />
       {/* <PieChart  chartData={userData} title = {"Odnos članova"}/> */}
     </div>
     <div className='chartContainer' style = {{width:'100%', display:'flex', flexDirection:'column',alignItems:'center', justifyContent:'center'}}>

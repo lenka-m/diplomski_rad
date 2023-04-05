@@ -60,9 +60,9 @@ function AllTasks({team, setTeams, loggedUser}) {
     <div className='tableContainer'>
       
       
-    <h1 className='tableHeader'> {team.name} Tim </h1>
-    <div className='rightContainer'>
-        <button className="btnAdd" onClick={handleOpenNewTask}>Dodaj nov task </button>
+    <h1 className='tableHeader' sx={{marginTop:'50px'}}> {team.name}</h1>
+    <div className='rightContainerRow'>
+        <button className="greenBtn" onClick={handleOpenNewTask}>Dodaj nov task </button>
     </div>
 
     <Paper className='Paper' sx={{ width: '100%', overflow: 'hidden', marginTop:'10px' }}>

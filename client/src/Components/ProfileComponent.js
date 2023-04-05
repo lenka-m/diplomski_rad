@@ -58,14 +58,15 @@ function ProfileComponent({loggedUser}) {
               {user.userRoleName && <h2>{user.userRoleName}</h2>}        
             </div>
             <div className = 'profileInfoBody'>
-            {user.userRole !== 'none' ? (<p><FaUserAlt/> <i>{user.userRole}</i></p>):(<div></div>)}
             {user.birthday !== null ? (<p><FaBirthdayCake/> <i>{user.birthday}</i></p>):(<div></div>)}
 
               
               <p><GrMail/> <i>{user.email}</i></p>            
               <p><i><BsFillTelephoneFill/> {user.telephoneNumber}</i></p> 
-              <button className="btnAdd" onClick={handleOpenChangePic}>Promeni profilnu </button>
-              <button className="btnAdd" onClick={handleOpenChangePassword}>Promeni lozinku </button>       
+              <div className='rightContainerRow'>
+                <button className="greenBtn" onClick={handleOpenChangePic}>Promeni profilnu </button>
+                <button className="greenBtn" onClick={handleOpenChangePassword}>Promeni lozinku </button>       
+              </div>
             </div>
             
          </div>    
