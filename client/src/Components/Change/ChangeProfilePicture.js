@@ -26,11 +26,11 @@ function ChangeProfilePicture({loggedUser}) {
 
 
   return (
-    <div style = {{display:'flex', flexDirection:'column', justifyContent:'center'}}>
-        <h1 style = {{color:'white', margin:'20px'}}>Promena profilne slike </h1>
-        <form onSubmit={handleSubmit} >
-            <input type="file" id="profile-pic-upload" onChange={handleFileChange} /><br/>
-            <button type="submit">Submit</button>
+    <div className='RegisterComponent'>
+        <h1 className='registerTitle' >Promena profilne slike </h1>
+        <form className='' onSubmit={handleSubmit} style={{padding:'20px'}}>
+            <input  type="file" id="profile-pic-upload" onChange={handleFileChange} /><br/>
+            <button className='registerSubmit' type="submit">Submit</button>
         </form>
     </div>
   )

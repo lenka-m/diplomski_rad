@@ -7,7 +7,7 @@ import {deleteUser, getAllUsers, isAdmin, isEditor, isAdminOrEditor,registerNewU
 import { postNewTeam, searchTeams } from "./actions/TeamActions";
 import { getAllTasks, postNewTask, searchTasks, updateTaskVisibility } from "./actions/TaskActions";
 import { createCall, searchCalls } from "./actions/CallActions";
-import { getUserStatistics } from "./actions/StatActions";
+import { getUserStatistics, pointsPerMonth } from "./actions/StatActions";
 
 export interface Route {
     method: 'get' | 'post' |  'patch' | 'delete',
@@ -85,6 +85,11 @@ export const Routes: Route[] = [
     method:'post',
     route:'/activity',
     actions: [createActivity]
+},{
+    method:'get',
+    route:'/activity/stats',
+    actions:[pointsPerMonth]
+
 },{
     method:'delete',
     route:'/activity',

@@ -3,10 +3,19 @@
     padding:10px;
     margin:15px;
     border-radius: 10px;
-    max-height: 40px;
+    min-height: 40px;
     background-color: #1fa32a;
     font-size: 15px;
     color: whitesmoke;
+}
+.clicked{
+    border:none;
+    padding:10px;
+    margin:15px;
+    border-radius: 10px;
+    max-height: 40px;
+    font-size: 15px;
+    color: #0C2D48;
 }
 .rightContainerRow{
     display: flex;

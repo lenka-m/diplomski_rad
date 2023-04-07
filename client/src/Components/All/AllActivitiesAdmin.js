@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { deleteActivity, adminPatchActivity, searchActivity, EditorPatchActivity } from '../../Actions/ActivityActions';
+import { deleteActivity, adminPatchActivity, searchActivity, EditorPatchActivity, PatchActivityPoints } from '../../Actions/ActivityActions';
 import { AiFillCheckCircle, AiFillCloseCircle, AiFillEdit } from 'react-icons/ai';
 import {Alert, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material';
 
@@ -62,7 +62,7 @@ function AllActivitiesAdmin({loggedUser}) {
             console.log(
             'pozivamo handle update'
             )
-            EditorPatchActivity(Formdata).then(()=>{
+            PatchActivityPoints(Formdata).then(()=>{
                 console.log('zovemo podatke nove')
                 fetchAllActivities().then(()=>{
                     SetEditMode({isEdit:false, activityId:null});
@@ -105,14 +105,14 @@ function AllActivitiesAdmin({loggedUser}) {
         <div style={{width:'100%'}}>
             <div className='titleContainer'>
                 <h1> Aktivnosti </h1>
-                <div className='filterButtons'>
+                <div className='rightContainerRow'>
                     <button
-                        className={(filterValue.activityStatus === 'created') ?  "clicked" : ""} 
+                        className={(filterValue.activityStatus === 'created') ?  "clicked" : "greenBtn"} 
                         value="created"   
                         onClick={(e) => handleFilter(e.target.value)}> 
-                        Potvrdjeno</button>
+                        Potvrđeno</button>
                     <button 
-                        className={(filterValue.activityStatus === 'pending') ?  "clicked" : ""} 
+                        className={(filterValue.activityStatus === 'pending') ?  "clicked" : "greenBtn"} 
                         value = "pending" 
                         onClick={(e) => handleFilter(e.target.value)}> 
                         Nisu potvrdjeni</button>

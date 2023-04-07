@@ -3,16 +3,13 @@ import "../../css/common.css"
 import { getUserStatistics } from '../../Actions/userActions';
 import BarChart from './BarChart';
 import LineChart from './LineChart';
+import { pointsPerMonth } from '../../Actions/ActivityActions';
 
 
 
 function Stats() {
   const [firstNumbers, setFirstNumbers] = useState([]);
-  const [activityData, setActivityData] = useState({
-    labels: ["Jan","Feb","Mart","April","Maj","Jun","Jul","Avgust","Septembar","Oktobar","Novembar","Decembar"],
-    datasets: [{jan:200, feb:350, mart:480,april:190,maj:100,jun:140,jul:400,avg:200,sept:300,okt:100, nov:400,dec:140}]
-    
-  })
+  const [activityData, setActivityData] = useState([]);
   const [userData, setUserData] = useState({
     labels: ['Full', 'Beba', 'Obzerver'],
     datasets:[]
@@ -25,7 +22,7 @@ function Stats() {
 
   useEffect(()=>{
     getUserStatistics().then((data)=>{
-      console.log(data);
+      //console.log(data);
       //setUserData(data);
       //console.log(data);
       setMemberStatus({...memberStatus, 
@@ -51,6 +48,10 @@ function Stats() {
       })
       //console.log(data)
     })
+
+    pointsPerMonth().then((data)=>{
+      setActivityData(data);
+    })
   },[])
 
   return (
@@ -65,14 +66,9 @@ function Stats() {
         <h2>Članova</h2>
       </div>
       <div className='StatCard'>
-      <h2>{firstNumbers.lastMonthCount}</h2>
-        <h2>Active last month</h2>
-      </div>
-      <div className='StatCard'>
       <h2>{firstNumbers.lastYearCount}</h2>
         <h2>Active last year</h2>
       </div>
-
     </div>
     <div className='chartContainer'>
       <BarChart  chartData={memberStatus} title = {"Ukupan broj naloga"} />

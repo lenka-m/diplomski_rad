@@ -29,3 +29,7 @@ export async function adminPatchActivity(formData){
 export async function searchActivity(formData){
     return await searchObject('/activity/search', formData);
 }
+///activity/stats
+export async function pointsPerMonth(){
+    return await getAll('/activity/stats');
+}

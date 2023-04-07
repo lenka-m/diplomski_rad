@@ -31,12 +31,18 @@ function ChangePassword({loggedUser}) {
   }
 
   return (
-    <div>
+    <div className='RegisterComponent'>
     {loggedUser ? (
-      <form className="loginForm" style={{width:'100%'}} onSubmit={(e) => handleSubmit(e)}> 
-        <h1>Potvrdi svoju email adresu:</h1>
-        <label>Email:</label>
+    <h1 className='registerTitle'>Potvrdi svoju email adresu:</h1>):(
+      <h1 className='registerTitle'>Unesi svoju email adresu:</h1>
+    )}
+    {loggedUser ? (
+      
+      <form className="registerForm" style={{width:'100%'}} onSubmit={(e) => handleSubmit(e)}> 
+        
+        <label className='registerLabel'>Email:</label>
         <input
+          className='registerInput'
           name="email"
           type="text"
           required
@@ -44,7 +50,7 @@ function ChangePassword({loggedUser}) {
           onChange={(e)=>{setEmail({email: e.target.value})}}
         />
         
-        <button type="submit" style={{padding:'10px'}}> Reset</button>
+        <button className='registerSubmit' type="submit"> Reset</button>
 
         {success.isSuccess===true && <Alert>{success.message}</Alert>}
         {success.isSuccess===false && <Alert severity='error'>{success.message}</Alert>}
@@ -52,10 +58,11 @@ function ChangePassword({loggedUser}) {
       </form>
     
     ):(
-      <form className="loginForm" style={{width:'100%'}} onSubmit={(e) => handleSubmit(e)}> 
+      <form className="registerForm" style={{width:'100%'}} onSubmit={(e) => handleSubmit(e)}> 
 
-        <label>Email:</label>
+        <label className='registerLabel'>Email:</label>
         <input
+          className='registerInput'
           name="email"
           type="text"
           required
@@ -63,7 +70,7 @@ function ChangePassword({loggedUser}) {
           onChange={(e)=>{setEmail({email: e.target.value})}}
         />
         
-        <button type="submit" style={{padding:'10px'}}> Reset</button>
+        <button type="submit" className='registerSubmit' > Send</button>
 
         {success.isSuccess===true && <Alert>{success.message}</Alert>}
         {success.isSuccess===false && <Alert severity='error'>{success.message}</Alert>}

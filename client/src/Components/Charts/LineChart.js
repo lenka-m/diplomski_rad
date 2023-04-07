@@ -7,10 +7,10 @@ ChartJS.register( LineElement, CategoryScale, LinearScale, PointElement, Title)
 
 function LineChart({chartData, title}) {
     const data = {
-        labels: ["Jan", "Feb","Mart","April","Maj","Jun","Jul","Avg","Sep","Okt","Nov","Dec"],
+        labels: chartData.labels,
         datasets:[{
             label:'Sales of the week',
-            data: [3,6,9, 12, 14, 245, 34,15,57,14,80,80],
+            data: chartData.numPoints,
             backgroundColor: '#86BD48',
             borderColor:'#86BD48',
             pointBorderColor:'#86BD48',
@@ -34,7 +34,7 @@ function LineChart({chartData, title}) {
     }
 
   return (
-    <div BarChart style={{width:'100%'}}>
+    <div  style={{width:'100%'}}>
         <Line
         data={data}
         options={options}

@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react'
 import { postActivity,searchActivity } from '../../Actions/ActivityActions';
 import { searchTeams } from '../../Actions/TeamActions';
 import { getAllProjects } from '../../Actions/ProjectActions';
-import { Alert } from '@mui/material';
+import { Alert, TextField } from '@mui/material';
 
 function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity}) {    
     const user = loggedUser;
@@ -37,10 +37,12 @@ function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity
         if(teams.length>0){
             setFormData({...formData, teamId:teams[0].id, taskId: teams[0].tasks[0].id}) 
         }
-    }, [ teams])
+    }, [teams])
+
     useEffect(() => {
         if(teams.length>0){
             setTasks(selectedTeam.tasks);
+            setFormData({...formData, taskId:selectedTeam.tasks[0].id})
         }
     }, [selectedTeam])
     
@@ -93,6 +95,7 @@ function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity
                 handleChange(e);
                 handleTeamChange(e);
                 setSelectedTeam(teams.find(team => team.id === parseInt(e.target.value, 10)));
+                
                 }} value = {formData.teamId}>
                 {teams && teams.map(team => (
                     <option key ={team.id} name = "teamId" value = {team.id}> {team.name}</option>
@@ -102,16 +105,17 @@ function NewActivity({loggedUser, setCompletedActivities, handleCloseNewActivity
             <label className='registerLabel'>Pozicija:</label>
              <select className='registerInput' onChange={(e)=> handleTaskChange(e)} value = {formData.taskId}>
                 {tasks && tasks.map(task => (
-                    <option key ={task.id} name = "taskId" onChange={(e)=> handleTaskChange(e)} value = {task.id}> {task.name}</option>
+
+                    task.visible && <option key ={task.id} name = "taskId" onChange={(e)=> handleTaskChange(e)} value = {task.id}> {task.name}</option>
                 ))}
             </select> 
             <label className='registerLabel'>Opis:</label>
-            <input className='registerInput' name = "opis" type = "text" placeholder='nije obavezno' value ={formData.opis} onChange={handleChange}/>
+            <textarea className='registerTextarea' name = "opis" type = "text" placeholder='nije obavezno' value ={formData.opis} onChange={handleChange}/>
 
             <button className='registerSubmit' type = "submit"> Posalji zahtev</button>
         </form>
 
-        {success.isSuccess===true && <Alert>{success.message}</Alert>};
+        {success.isSuccess===true && <Alert>{success.message}</Alert>}
         {success.isSuccess===false && <Alert severity='error'>{success.message}</Alert>}                    
 
     </div>

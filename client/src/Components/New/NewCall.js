@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { getAllProjects } from '../../Actions/ProjectActions';
-import { getAllTeams } from '../../Actions/TeamActions';
+
 import { postCall, searchCall } from '../../Actions/CallActions';
 import { Alert } from '@mui/material';
-
+import { searchTeams } from '../../Actions/TeamActions';
 
 export default function NewCall({setCalls, handleCloseNewCall, loggedUser}) {
   
@@ -57,7 +57,7 @@ export default function NewCall({setCalls, handleCloseNewCall, loggedUser}) {
         setProjects(data.filter((project)=>{return project.visible === true})); 
         setFormData({...formData, project: data[0].id})
       })
-    getAllTeams().then(data => {
+    searchTeams().then(data => {
         setTeams(data); 
       })
   }, [])
@@ -65,14 +65,14 @@ export default function NewCall({setCalls, handleCloseNewCall, loggedUser}) {
   
 
   return (
-    <div className='tableContainer'>
-      <h1>Nov poziv</h1>
+    <div className='registerComponent'>
+      <h1 className='registerTitle'>Novi Projekat</h1>
       <form className='registerForm' onSubmit = {(e)=>handleSubmit(e)}>
         <label className='registerLabel'>Naslov:</label>
         <input className='registerInput' name = "header" type = "text" required value ={formData.header} onChange={handleChange}/>
 
         <label className='registerLabel'>Link do prijave:</label>
-        <a style={{color:'white'}} href={formData.applyLink} target='_blank'><u>(TestirajLink)</u></a>
+        {/* <a style={{color:'white'}} href={formData.applyLink} target='_blank'><u>(TestirajLink)</u></a> */}
         <input className='registerInput' name = "applyLink" type = "text" required value ={formData.applyLink} onChange={handleChange}/>
         
 
@@ -98,6 +98,7 @@ export default function NewCall({setCalls, handleCloseNewCall, loggedUser}) {
           <input className='registerInput' name = "endDate" type = "date" required value ={formData.endDate} onChange={handleChange}/>
 
           <button className='registerSubmit' type = "submit"> Posalji zahtev</button><br/>
+          <p style={{color:'white', textAlign:'justify'}}><b>Napomena:</b> Ako poziv traje do npr. 13. juna uključujući, postaviti u formi 14.jun</p>
       </form>
       {success.isSuccess === true && <Alert severity="success">{success.message}</Alert>}
       {success.isSuccess === false && <Alert severity='error'>{success.message}</Alert>}

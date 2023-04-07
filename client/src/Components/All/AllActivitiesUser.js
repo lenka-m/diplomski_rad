@@ -61,7 +61,7 @@ function AllActivitiesUser({loggedUser}) {
             <TableCell>Pozicija:</TableCell>
             <TableCell>Datum</TableCell>
             <TableCell>Broj poena: </TableCell>
-            <TableCell>Status: </TableCell>
+            
 
         </TableRow>
         </TableHead>

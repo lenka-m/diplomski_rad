@@ -39,16 +39,13 @@ function TopTenMonth() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {topUsers.map((user) => (
-            <TableRow
-              key={user.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell align="left">{user.rank}</TableCell>
-              <TableCell align="left">{user.firstName} {user.lastName}</TableCell>
-              <TableCell align="left">{user.points}</TableCell>
-            </TableRow>
-          ))}
+        {topUsers.map((user, index) => (
+  <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+    <TableCell align="left">{user.rank}</TableCell>
+    <TableCell align="left">{user.firstName} {user.lastName}</TableCell>
+    <TableCell align="left">{user.points}</TableCell>
+  </TableRow>
+))}
         </TableBody>
       </Table>
     </TableContainer>

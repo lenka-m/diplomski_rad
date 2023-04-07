@@ -27,7 +27,10 @@
     padding: 5px;
   }
 
-
+  .registerTextarea {
+    width: 100%;
+    min-height: 150px;
+  }
   .registerLabel {
     color: white;
     margin-bottom: 5px;
