@@ -62,7 +62,7 @@ function AllCallsActive() {
                     return (
                         <TableRow hover role="checkbox" tabIndex={-1} key={call.id}>
                             <TableCell>{call.header}</TableCell>
-                            <TableCell>{call.postedBy.email}</TableCell>                          
+                            <TableCell>{call.postedBy.userRoleName}</TableCell>                          
                             <TableCell>{call.startDate}</TableCell>
                             <TableCell>{call.endDate}</TableCell>
                           {call.project ? (

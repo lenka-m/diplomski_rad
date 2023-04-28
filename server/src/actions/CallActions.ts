@@ -49,6 +49,7 @@ export async function searchCalls(req:Request, res: Response){
         "call.status",
         "call.project",
         "postedBy.email",
+        "postedBy.userRoleName",
         "postedBy.firstName",
         "postedBy.lastName",
         "project.name",

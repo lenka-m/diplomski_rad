@@ -212,7 +212,7 @@ export async function top10Besties(req: Request, res:Response){
     "SUM(activity.numOfPoints) AS points",
     "ROW_NUMBER() OVER (ORDER BY SUM(activity.numOfPoints) DESC) AS rank"])
   .where("activity.date >= :lastMonth", { lastMonth })
-  .andWhere("activity.confirmation = true")
+  .andWhere("activity.status = 'completed'")
   .groupBy("user.id")
   .orderBy("SUM(activity.numOfPoints)", "DESC")
   .limit(10)
