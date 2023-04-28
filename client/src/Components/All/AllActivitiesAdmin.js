@@ -43,7 +43,7 @@ function AllActivitiesAdmin({loggedUser}) {
     //Klik na potvrdu aktivnosti:
     function handleAccept(activity) {
         try{
-            adminPatchActivity({activityId: activity.id, userConfirmedId: loggedUser.id, numOfPoints: activity.task.points})
+            adminPatchActivity({activityId: activity.id, userConfirmedId: loggedUser.id, numOfPoints: activity.numOfPoints})
                 .then(()=>{fetchAllActivities().then(()=>{
                     setConfirmActivitySuccess({isSuccess: true, message:'Uspesno prihvacena aktivnost'});
                         setTimeout(()=>{
@@ -106,16 +106,17 @@ function AllActivitiesAdmin({loggedUser}) {
             <div className='titleContainer'>
                 <h1> Aktivnosti </h1>
                 <div className='rightContainerRow'>
-                    <button
-                        className={(filterValue.activityStatus === 'created') ?  "clicked" : "greenBtn"} 
-                        value="created"   
-                        onClick={(e) => handleFilter(e.target.value)}> 
-                        Potvrđeno</button>
-                    <button 
+                <button 
                         className={(filterValue.activityStatus === 'pending') ?  "clicked" : "greenBtn"} 
                         value = "pending" 
                         onClick={(e) => handleFilter(e.target.value)}> 
+                        Potvrđeno</button>
+                <button
+                        className={(filterValue.activityStatus === 'created') ?  "clicked" : "greenBtn"} 
+                        value="created"   
+                        onClick={(e) => handleFilter(e.target.value)}> 
                         Nisu potvrdjeni</button>
+                    
                 </div>
             </div>
             {filteredActivities.length === 0 ? (<h1> Nema aktivnosti</h1>) : (
