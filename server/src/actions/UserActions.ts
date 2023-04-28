@@ -147,6 +147,9 @@ export async function searchUsers(req: Request, res:Response){
         query.andWhere("user.userRole = :userRole", { userRole: userRole });
     }
 
+
+    console.log("nina i lena");
+
     const users = await query.getMany();
     res.json(users);
 }
