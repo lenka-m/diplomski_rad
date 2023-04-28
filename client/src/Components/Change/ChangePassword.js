@@ -18,14 +18,15 @@ function ChangePassword({loggedUser}) {
       if(loggedUser){
         if(loggedUser.email != email.email){
           setSuccess({isSuccess:false, message:'Niste dobro uneli svoj mejl '});
-          console.log(loggedUser.email)
-          console.log(email)
           return;
         }
-      } else await resetPassword(email);
-      setSuccess({isSuccess:true, message:'Uspešno poslat mejl za resetovanje lozinke.'})
+      } 
+      await resetPassword(email).then(()=>{
+        setSuccess({isSuccess:true, message:'Uspešno poslat mejl za resetovanje lozinke.'})
+      })
+      
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       setSuccess({isSuccess:false, message:'Greska prilikom oporavljanja lozinke.'})
     }
   }

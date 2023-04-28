@@ -1,15 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import "../css/profile.css";
 import {BsFillTelephoneFill} from 'react-icons/bs';
 import {GrMail} from 'react-icons/gr';
-import {FaUserAlt, FaBirthdayCake} from 'react-icons/fa';
-import { changePassword, updateProfilePic } from '../Actions/userActions';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import {MdExpandMore} from 'react-icons/md'
-import {Alert} from '@mui/material';
+import {FaBirthdayCake} from 'react-icons/fa';
 import ChangeProfilePicture from './Change/ChangeProfilePicture';
 import {Modal, Box} from '@mui/material'
 import ChangePassword from './Change/ChangePassword';
