@@ -27,7 +27,7 @@ export async function login(req:Request, res:Response){
         // Ukoliko postoji nalog ali nije unet dobar mejl:
         if(!user){
             return res.status(400).send('Neispravna lozinka. Pokušaj ponovo :)');
-            return;
+            //return;
         }
         // Loginovanje, apdejt tajmstempa i dodela tokena: 
         await AppDataSource.getRepository(User).update(
@@ -74,7 +74,7 @@ export async function isAdminOrEditor(req: Request, res: Response, next: () => v
 
 export async function getAllUsers(req: Request, res:Response){
     const user= await AppDataSource.getRepository(User).find();
-    console.log(user);
+    //console.log(user);
     res.json(user);
 }
 
@@ -110,7 +110,7 @@ export async function registerNewUser(req:Request, res:Response){
 
 export async function deleteUser(req:Request, res:Response){
     try {
-        console.log(`pozvanan funkcija + ${req.body.userId}`)
+        //console.log(`pozvanan funkcija + ${req.body.userId}`)
         const user = await AppDataSource.getRepository(User).delete({
         id:req.body.userId
       });
