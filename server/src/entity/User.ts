@@ -50,6 +50,10 @@ export class User {
 
     // Ako je none: 
     @Column({ nullable: true })
+    dateOfMembership: string
+
+    // Ako je none: 
+    @Column({ nullable: true })
     lastLogin: Date
 
     // Ako je none:

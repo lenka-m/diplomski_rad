@@ -96,11 +96,12 @@ export async function registerNewUser(req:Request, res:Response){
         password: req.body.password,
         telephoneNumber: req.body.telephoneNumber,
         userRole: req.body.userRole,
-        userRoleName: req.body.userRoleName!= '' ? (req.body.userRoleName): undefined,
-        userStatus: req.body.userRole ==='none' ? status: undefined,
-        totalPoints: req.body.totalPoints!= '' ? (req.body.totalPoints): undefined,
-        startingPoints: req.body.totalPoints!= '' ? (req.body.totalPoints): undefined,
-        birthday: req.body.birthday!= '' ? (req.body.birthday): undefined
+        userRoleName: req.body.userRoleName != '' ? (req.body.userRoleName) : undefined,
+        userStatus: req.body.userRole ==='none' ? status : undefined,
+        totalPoints: req.body.totalPoints != '' ? (req.body.totalPoints) : undefined,
+        startingPoints: req.body.totalPoints != '' ? (req.body.totalPoints) : undefined,
+        birthday: req.body.birthday != '' ? (req.body.birthday) : undefined,
+        dateOfMembership: req.body.dateOfMembership != '' ? (req.body.dateOfMembership) : undefined
       })
       res.json(user)
   } catch(ex){
@@ -188,9 +189,9 @@ export async function updatePic(req: Request, res: Response) {
 function calculateStatus(totalPoints) :string{
   console.log('pozvao funkciju');
   if(totalPoints< 30){
-    return "beba";
-  } else if(totalPoints>= 30 && totalPoints<80){
     return "obzerver";
+  } else if(totalPoints>= 30 && totalPoints<80){
+    return "beba";
   } else if(totalPoints>=80){
     console.log('evo usao u if')
     return "full"
@@ -340,6 +341,7 @@ export async function firstUser(){
     userRoleName: 'Admin',
     userStatus: undefined,
     totalPoints:  undefined,
-    birthday: undefined
+    birthday: undefined,
+    dateOfMembership: undefined
   })
 }
