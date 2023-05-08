@@ -101,7 +101,8 @@ export async function registerNewUser(req:Request, res:Response){
         totalPoints: req.body.totalPoints != '' ? (req.body.totalPoints) : undefined,
         startingPoints: req.body.totalPoints != '' ? (req.body.totalPoints) : undefined,
         birthday: req.body.birthday != '' ? (req.body.birthday) : undefined,
-        dateOfMembership: req.body.dateOfMembership != '' ? (req.body.dateOfMembership) : undefined
+        dateOfMembership: req.body.dateOfMembership != '' ? (req.body.dateOfMembership) : undefined,
+        faculty: req.body.faculty != '' ? (req.body.faculty) : undefined,
       })
       res.json(user)
   } catch(ex){
@@ -342,6 +343,7 @@ export async function firstUser(){
     userStatus: undefined,
     totalPoints:  undefined,
     birthday: undefined,
-    dateOfMembership: undefined
+    dateOfMembership: undefined,
+    faculty: undefined,
   })
 }

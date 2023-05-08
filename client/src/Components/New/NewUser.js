@@ -37,6 +37,8 @@ function NewUser({ setAllUsers }) {
         birthday: "",
         totalPoints: "",
         userStatus: "",
+        dateOfMembership: "",
+        faculty: "",
       });
     }
     if (formData.userRole === "none") {
@@ -128,7 +130,7 @@ function NewUser({ setAllUsers }) {
           name="userRole"
           onChange={handleChange}
         >
-          <option value="admin"> Admin</option>
+          <option value="admin">Admin</option>
           <option value="editor">Editor</option>
           <option value="none">Nema</option>
         </select>
@@ -155,7 +157,7 @@ function NewUser({ setAllUsers }) {
               name="userStatus"
               onChange={handleChange}
             >
-              <option value="obzerver"> Obzerver</option>
+              <option value="obzerver">Obzerver</option>
               <option value="beba">Beba</option>
               <option value="full">Full</option>
             </select>
@@ -169,6 +171,15 @@ function NewUser({ setAllUsers }) {
               onChange={handleChange}
             />
             <br></br>
+            <label className="registerLabel">Datum učlanjenja:</label>
+            <input
+              className="registerInput"
+              name="dateOfMembership"
+              type="month"
+              value={formData.dateOfMembership}
+              onChange={handleChange}
+            />
+            <br></br>
             <label className="registerLabel">Datum rođenja:</label>
             <input
               className="registerInput"
@@ -178,14 +189,32 @@ function NewUser({ setAllUsers }) {
               onChange={handleChange}
             />
             <br></br>
-            <label className="registerLabel">Datum učlanjenja:</label>
-            <input
+            <label className="registerLabel">Fakultet:</label>
+            <select
               className="registerInput"
-              name="dateOfMembership"
-              type="month"
-              value={formData.dateOfMembership}
+              name="faculty"
               onChange={handleChange}
-            />
+            >
+              <option value="-">--</option>
+              <option value="arh">Arhitektonski fakultet</option>
+              <option value="bio">Biološki fakultet</option>
+              <option value="etf">Elektrotehnički fakultet</option>
+              <option value="fon">Fakultet organizacionih nauka</option>
+              <option value="ffh">Fakultet za fizičku hemiju</option>
+              <option value="pharmacy">Farmaceutski fakultet</option>
+              <option value="ff">Fizički fakultet</option>
+              <option value="gef">Geografski fakultet</option>
+              <option value="grf">Građevinski fakultet</option>
+              <option value="chem">Hemijski fakultet</option>
+              <option value="mas">Mašinski fakultet</option>
+              <option value="matf">Matematički fakultet</option>
+              <option value="agrif">Poljoprivredni fakultet</option>
+              <option value="rgf">Rudarsko-geološki fakultet</option>
+              <option value="sf">Saobraćajni fakultet</option>
+              <option value="sfb">Šumarski fakultet</option>
+              <option value="tfbor">Tehnički fakultet u Boru</option>
+              <option value="tmf">Tehnološko-metalurški fakultet</option>
+            </select>
           </fieldset>
         ) : null}
 
