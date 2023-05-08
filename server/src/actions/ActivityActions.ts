@@ -23,7 +23,8 @@ export async function createActivity(req:Request, res:Response){
        task:task,
        numOfPoints: task.points,
        status: "created",
-       confirmation: false
+       confirmation: false,
+       description: req.body.description != '' ? (req.body.description) : undefined,
     })
    res.json(activity);
 }

@@ -1,54 +1,60 @@
+.RegisterComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+}
 
+.registerTitle {
+  color: white;
+  margin-bottom: 10px;
+}
 
-  
-  .RegisterComponent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-  }
-  
-  .registerTitle {
-    color: white;
-    margin-bottom: 10px;
-    }
-  
-  .registerForm {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 70px;
-    font-size: 25px;
-  }
-  .registerForm input, .registerForm select{
-    width: 100%;
-    font-size: 25px;
-    padding: 5px;
-  }
+.registerForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 70px;
+  font-size: 25px;
+}
+.registerForm input,
+.registerForm select {
+  width: 100%;
+  font-size: 25px;
+  padding: 5px;
+}
 
-  .registerTextarea {
-    width: 100%;
-    min-height: 150px;
-  }
-  .registerLabel {
-    color: white;
-    margin-bottom: 5px;
-  }
-  
-  .registerInput {
-    border-radius: 5px;
-    padding: 2px;
-    margin-bottom: 30px;
-  }
-  
-  .registerSubmit {
-    margin: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    border: none;
-    font-size: 20px;
-    color: white;
-    background-color: green;
-  }
-  
+.registerTextarea {
+  width: 100%;
+  min-height: 150px;
+  border-radius: 5px;
+  padding: 2px;
+  margin-bottom: 30px;
+  font-size: 25px;
+}
+
+.registerTextarea::placeholder {
+  color: rgb(175, 175, 175);
+}
+
+.registerLabel {
+  color: white;
+  margin-bottom: 5px;
+}
+
+.registerInput {
+  border-radius: 5px;
+  padding: 2px;
+  margin-bottom: 30px;
+}
+
+.registerSubmit {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 20px;
+  color: white;
+  background-color: green;
+}

@@ -38,6 +38,9 @@ export class Activity {
     
     @Column({nullable:true})
     status: string;
+
+    @Column({ nullable: true })
+    description: string;
    
 
 }
